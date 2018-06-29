@@ -13,6 +13,9 @@ epsilon/n chance of visiting one of the states/slot machines whose
 expected reward is not the highest (where k is the number of states with
 a tied max reward, such as 0.5, and n is the total number of possible HKL
 values to go to next).
+
+Code borrowed from:
+https://imaddabbura.github.io/blog/data%20science/2018/03/31/epsilon-Greedy-Algorithm.html
 """
 
 import random
@@ -34,7 +37,7 @@ class EpsilonGreedy():
 
     def initialize(self, n_actions):
         self.counts = np.zeros(n_actions, dtype=int)
-        self.values = np.zeros(n_actions, dtype=float)
+        self.rewards = np.zeros(n_actions, dtype=float)
 
     #Returns the indices of the tied states/HKL values with the best immediate reward
     def bestRewards():
@@ -50,7 +53,9 @@ class EpsilonGreedy():
 
     #Chooses a state/HKL value to go to
     def select_action(self):
-        coin = random.random()
+        coin = .rewards[chosenAction] = self.rewards[chosenAction]*(n-1.0)/n + float(reward)/n
+        return
+random.random()
         if coin > self.epsilon:
             #pick one of the best arms/choices and return its index
             return random.choice(bestRewards())
@@ -67,15 +72,27 @@ class EpsilonGreedy():
         self.rewards[chosenAction] = self.rewards[chosenAction]*(n-1.0)/n + float(reward)/n
         return
 
+#The pycrysfml stuff
 class getFit():
 ##    def __init__(self, holy crap pycrysfml is hard):
 ##    def fit():
         #do pycrysfml stuff here
     def chiSq(observed, expected):
-        chisq = 0
+        chisq = 0random.seed(1)
         for i in range(len(observed)):
             chisq += float(observed[i]-expected[i])**2 / expected
         return chisq
+
+#To be deleted later and replaced with pycrysfml stuff - getFit()
+class BernoulliArm:
+    def __init__(self, p):
+        self.p = p
+
+    def draw(self):
+        z = np.random.random()
+        if z > self.p:
+            return 0.0
+        return 1.0
 
 def test_algorithm(agent, actions, numEpochs, horizon):
     chosenActions = np.zeros((numEpochs, horizon))
@@ -88,7 +105,7 @@ def test_algorithm(agent, actions, numEpochs, horizon):
 
         agent.initialize(len(actions))
 
-        file = open("eGreedyResults" + t + ".txt", "w")
+        file = open("eGreedyResults" + epoch + ".txt", "w")
         file.write("HKL Value\t\tReward\tTotalReward\tChi Squared Value\n")
 
         for t in range(horizon):
@@ -110,4 +127,15 @@ def test_algorithm(agent, actions, numEpochs, horizon):
 
 
 def __main__():
+    #random.seed(1)
+    ##TODO what is this
+    #avgReward = [0.1, 0.2, 0.3, 0.8, 0.4]
+    #n_actions = len(avgReward)
+    #np.random.shuffle(avgReward)
+    #actions = list(map(lambda mu: BernoulliArm(mu), avgReward))
+    
+    #bestActionIndex = np.argmax(avgReward)
+    
+    agent = EpsilonGreedy(0.1, [0,0,0,0,0,0,0,0], [1,1,1,1,1,1,1,1])
+    hkls = [[1, 1, 1], [1, 1, 3], [1, 3, 1], [3, 1, 1], [1, 3, 3], [3, 1, 3], [3, 3, 1], [3, 3, 3]]
     
