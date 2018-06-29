@@ -53,13 +53,11 @@ class EpsilonGreedy():
 
     #Chooses a state/HKL value to go to
     def select_action(self):
-        coin = .rewards[chosenAction] = self.rewards[chosenAction]*(n-1.0)/n + float(reward)/n
-        return
-random.random()
+        coin = random.random()
         if coin > self.epsilon:
             #pick one of the best arms/choices and return its index
             return random.choice(bestRewards())
-        else:
+        else:									#TODO remove the possibility of selecting 
             #pick one of the choices randomly
             return random.randint(len(self.rewards))
 
@@ -78,7 +76,7 @@ class getFit():
 ##    def fit():
         #do pycrysfml stuff here
     def chiSq(observed, expected):
-        chisq = 0random.seed(1)
+        chisq = random.seed(1)
         for i in range(len(observed)):
             chisq += float(observed[i]-expected[i])**2 / expected
         return chisq
@@ -94,7 +92,9 @@ class BernoulliArm:
             return 0.0
         return 1.0
 
+#Have the agent complete the "game" <numEpochs> number of times with actions and a limit of horizon # of moves per game
 def test_algorithm(agent, actions, numEpochs, horizon):
+    
     chosenActions = np.zeros((numEpochs, horizon))
     rewards = np.zeros((numEpochs, horizon))
 
@@ -114,7 +114,7 @@ def test_algorithm(agent, actions, numEpochs, horizon):
             chosenActions[epoch, t] = action
 
             reward = actions[action]#.fit()
-            chiSq += actions[action]#.chiSq()            
+            chiSq += actions[action]#.chiSq()
             rewards[epoch, t] = reward
             totalReward += reward
             
@@ -138,4 +138,4 @@ def __main__():
     
     agent = EpsilonGreedy(0.1, [0,0,0,0,0,0,0,0], [1,1,1,1,1,1,1,1])
     hkls = [[1, 1, 1], [1, 1, 3], [1, 3, 1], [3, 1, 1], [1, 3, 3], [3, 1, 3], [3, 3, 1], [3, 3, 3]]
-    
+    test_algorithm(agent, hkls, 10, 8)
