@@ -23,9 +23,9 @@ import numpy as np
 import os
 
 #For using pycrysfml
-import fswig_hklgen as H
-import hkl_model as Mod
-import sxtal_model as S
+##import fswig_hklgen as H
+##import hkl_model as Mod
+##import sxtal_model as S
 
 
 class EpsilonGreedy():
@@ -35,12 +35,18 @@ class EpsilonGreedy():
         self.rewards = rewards      #expected reward for each possibility, associated by index
         return
 
-    def initialize(self, n_actions):
-        self.counts = np.zeros(n_actions, dtype=int)
-        self.rewards = np.zeros(n_actions, dtype=float)
+    def initialize(self, counts, rewards):
+        self.counts = counts #np.zeros(n_actions, dtype=int)
+        self.rewards = rewards #np.zeros(n_actions, dtype=float)
+
+    def getCounts(self):
+        return self.counts
+
+    def getRewards(self):
+        return self.rewards
 
     #Returns the indices of the tied states/HKL values with the best immediate reward
-    def bestRewards():
+    def bestRewards(self):
         rewardMax = 0
         rewardIndices = []
         for i in range(len(self.rewards)):
@@ -56,10 +62,10 @@ class EpsilonGreedy():
         coin = random.random()
         if coin > self.epsilon:
             #pick one of the best arms/choices and return its index
-            return random.choice(bestRewards())
+            return random.choice(self.bestRewards())
         else:									#TODO remove the possibility of selecting 
             #pick one of the choices randomly
-            return random.randint(len(self.rewards))
+            return random.randint(0,len(self.rewards))
 
     #Updates the aoijfaoijfaoisfj
     def update(self, chosenAction, reward):
@@ -71,15 +77,17 @@ class EpsilonGreedy():
         return
 
 #The pycrysfml stuff
-class getFit():
+##class getFit():
 ##    def __init__(self, holy crap pycrysfml is hard):
-##    def fit():
-        #do pycrysfml stuff here
-    def chiSq(observed, expected):
-        chisq = random.seed(1)
-        for i in range(len(observed)):
-            chisq += float(observed[i]-expected[i])**2 / expected
-        return chisq
+def fit():
+    #do pycrysfml stuff here
+    return 1
+def chiSq(observed, expected):
+    chisq = 0
+    for i in range(len(observed)):
+        for j in range(len(observed[0])):
+            chisq += float(observed[i][j]-expected[i][j])**2 / expected[i][j]
+    return chisq
 
 #To be deleted later and replaced with pycrysfml stuff - getFit()
 class BernoulliArm:
@@ -98,30 +106,34 @@ def test_algorithm(agent, actions, numEpochs, horizon):
     chosenActions = np.zeros((numEpochs, horizon))
     rewards = np.zeros((numEpochs, horizon))
 
+    realcrystal = [[2,2,2], [2,2,1], [2,1,2], [1,2,2], [2,1,1], [1,2,1], [1,1,2], [1,1,1]]
 
     for epoch in range(numEpochs):
         totalReward = 0
-        chiSq = 0
+        chiSqVal = 0
+        #this is hard coded
+        crystalApproximation = np.zeros((8,3))
 
-        agent.initialize(len(actions))
+        agent.initialize(agent.getCounts(), agent.getRewards())
 
-        file = open("eGreedyResults" + epoch + ".txt", "w")
+        file = open("eGreedyResults" + str(epoch) + ".txt", "w")
         file.write("HKL Value\t\tReward\tTotalReward\tChi Squared Value\n")
 
         for t in range(horizon):
             
             action = agent.select_action()
-            chosenActions[epoch, t] = action
+            chosenActions[epoch][t] = action
+            #do pycrysfml stuff to update crystalApproximation
 
-            reward = actions[action]#.fit()
-            chiSq += actions[action]#.chiSq()
+            reward = fit()#actions[action].fit()
+            chiSqVal = chiSq(crystalApproximation, realcrystal)#actions[action].chiSq()
             rewards[epoch, t] = reward
             totalReward += reward
             
-            agent.update(chosenAction, reward)
+            agent.update(chosenActions[epoch][t], reward)
             
             file.write(chosenActions[epoch, t].replace("[","").replace("]","").replace(",",""))
-            file.write("\t\t" + str(reward) + "\t" + str(totalReward) + "\t" + str(chiSq) + "\n")
+            file.write("\t\t" + str(reward) + "\t" + str(totalReward) + "\t" + str(chiSqVal) + "\n")
             
     return 
 
@@ -136,6 +148,9 @@ def __main__():
     
     #bestActionIndex = np.argmax(avgReward)
     
-    agent = EpsilonGreedy(0.1, [0,0,0,0,0,0,0,0], [1,1,1,1,1,1,1,1])
+    agent = EpsilonGreedy(0.1, [0,0,0,0,0,0,0,0], [.1,.1,.1,.1,.1,.1,.1,.1])
     hkls = [[1, 1, 1], [1, 1, 3], [1, 3, 1], [3, 1, 1], [1, 3, 3], [3, 1, 3], [3, 3, 1], [3, 3, 3]]
     test_algorithm(agent, hkls, 10, 8)
+
+
+__main__()
