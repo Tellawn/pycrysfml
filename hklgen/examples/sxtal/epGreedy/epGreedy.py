@@ -156,7 +156,7 @@ def __main__():
     for epsilon in [0.1, 0.2, 0.3, 0.4, 0.5]:
         algo = EpsilonGreedy(epsilon, [], [])
         algo.initialize(n_actions, avgReward)
-        results = test_algorithm(algo, arms, 500, 250)
+        results = test_algorithm(algo, actions, 500, 250)
         for i in range(len(results[0])):
             f.write(str(epsilon) + "\t")
             f.write("\t".join([str(results[j][i]) for j in range(len(results))]) + "\n")
