@@ -139,18 +139,27 @@ def test_algorithm(agent, actions, numEpochs, horizon):
 
 
 def __main__():
-    #random.seed(1)
+    f = open("results.txt", "w")
+    random.seed(1)
     ##TODO what is this
-    #avgReward = [0.1, 0.2, 0.3, 0.8, 0.4]
-    #n_actions = len(avgReward)
-    #np.random.shuffle(avgReward)
-    #actions = list(map(lambda mu: BernoulliArm(mu), avgReward))
+    avgReward = [0.1, 0.2, 0.3, 0.8, 0.4]
+    n_actions = len(avgReward)
+    np.random.shuffle(avgReward)
+    actions = list(map(lambda mu: BernoulliArm(mu), avgReward))
     
     #bestActionIndex = np.argmax(avgReward)
     
-    agent = EpsilonGreedy(0.1, [0,0,0,0,0,0,0,0], [.1,.1,.1,.1,.1,.1,.1,.1])
-    hkls = [[1, 1, 1], [1, 1, 3], [1, 3, 1], [3, 1, 1], [1, 3, 3], [3, 1, 3], [3, 3, 1], [3, 3, 3]]
-    test_algorithm(agent, hkls, 10, 8)
+##    agent = EpsilonGreedy(0.1, [0,0,0,0,0,0,0,0], [.1,.1,.1,.1,.1,.1,.1,.1])
+##    hkls = [[1, 1, 1], [1, 1, 3], [1, 3, 1], [3, 1, 1], [1, 3, 3], [3, 1, 3], [3, 3, 1], [3, 3, 3]]
+##    test_algorithm(agent, hkls, 10, 8)
 
+    for epsilon in [0.1, 0.2, 0.3, 0.4, 0.5]:
+        algo = EpsilonGreedy(epsilon, [], [])
+        algo.initialize(n_actions, avgReward)
+        results = test_algorithm(algo, arms, 500, 250)
+        for i in range(len(results[0])):
+            f.write(str(epsilon) + "\t")
+            f.write("\t".join([str(results[j][i]) for j in range(len(results))]) + "\n")
+    f.close()
 
 __main__()
