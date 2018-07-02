@@ -435,10 +435,10 @@ class Model(object):
                 resid.append(peak.sfs2-calcPeaks[calcPeaks.index(peak)].sfs2)
             else:
                 resid.append(peak.sfs2)
-        return np.array(resid)/(np.sqrt(self.observed)+1)
+        return np.array(resid)/(np.sqrt(self.observed)+1) #doesn't match Dr. Kienzle's def
 
     def nllf(self):
-        return np.sum(self.residuals()**2)
+        return np.sum(self.residuals()**2)#/2
 
     def plot(self, view="linear"):
         import pylab

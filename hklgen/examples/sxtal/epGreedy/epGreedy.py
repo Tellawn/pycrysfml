@@ -1,5 +1,4 @@
 """
-
 Filename: epGreedy.py
 Authors: Ryan Cho and Telon Yan
 
@@ -67,7 +66,7 @@ class EpsilonGreedy():
             #pick one of the choices randomly
             return random.randint(0,len(self.rewards))
 
-    #Updates the aoijfaoijfaoisfj
+    #Updates the 
     def update(self, chosenAction, reward):
         self.counts[chosenAction] += 1
         n = self.counts[chosenAction]
