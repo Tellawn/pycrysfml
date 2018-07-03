@@ -106,17 +106,21 @@ class EpsilonGreedy():
 
     #Returns the indices of the HKL values with the best immediate reward
     def bestReward(self):
-        rewardMax = 0
+        rewardMax = -99999
         maxIndices = []
-        for i in range(len(self.values)):
-            if self.values[i] > rewardMax:
-                rewardMax = self.values[i]
-        for i in range(len(self.values)):
-            if self.values[i] == rewardMax:
+        choices = list(self.values)
+        for i in self.visited:
+            choices.pop(i)
+            
+        for i in range(len(choices)):
+            if choices[i] > rewardMax:
+                rewardMax = choices[i]
+        for i in range(len(choices)):
+            if choices[i] == rewardMax:
                 maxIndices.append(i)
         return maxIndices
 
-    #Chooses an HKL value to go to using bestReward, ignoring 
+    #Chooses an HKL value to go to using bestReward, ignoring hkls already visited. Returns the index of the hkl chosen
     def select_action(self):
         coin = random.random()
         choice = 0
@@ -128,9 +132,9 @@ class EpsilonGreedy():
             
         #Explore - Pick a choice at random
         else:
-            possibleChoices = self.values
-            for i in visited:
-                possibleChoices.remove(i)
+            possibleChoices = list(self.values)
+            for i in self.visited:
+                possibleChoices.pop(i)
                 
             choice = random.randint(0, len(possibleChoices)-1)
             self.visited.append(choice)
@@ -151,6 +155,7 @@ class EpsilonGreedy():
 def test_algorithm(agent, actions, num_sims, horizon):
     
     for simulation in range(num_sims):
+        agent.reset()
         total_reward = 0
 
         chosen_actionList = np.zeros((horizon,3))
@@ -166,7 +171,8 @@ def test_algorithm(agent, actions, num_sims, horizon):
         file.write("HKL Value\t\tReward\tTotalReward\tChi Squared Value\n")
 
         for t in range(horizon):
-
+            #print(agent.getValues())
+            #print(agent.visited)
             #This is the index of the action/hkl to go to at this timestep
             chosen_action = agent.select_action()
             chosen_actionList[t] = actions[chosen_action]
@@ -215,7 +221,7 @@ def test_algorithm(agent, actions, num_sims, horizon):
                     
                 rewards[t] = reward
                 total_reward += reward
-                agent.update(chosen_actionList[t], reward)
+                agent.update(chosen_action, reward)
                 
                 prevChiSq = chiSq
             
