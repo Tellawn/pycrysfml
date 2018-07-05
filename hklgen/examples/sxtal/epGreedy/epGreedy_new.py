@@ -1,18 +1,15 @@
 """
 Filename: epGreedy_new.py
 Authors: Ryan Cho and Telon Yan
-
 Implements a modified epsilon-greedy algorithm for pycrysfml, but can be
 used for similar scenarios. For crystallography, since one may not visit
 individual HKL values more than once, what happens is:
-
 We have a 1 - epsilon + k*epsilon/n chance of visiting a state/machine
 whose expected reward is highest (e.g. 0.5, there may be ties) and an
 epsilon/n chance of visiting one of the states/slot machines whose
 expected reward is not the highest (where k is the number of states with
 a tied max reward, such as 0.5, and n is the total number of possible HKL
 values to go to next).
-
 Code borrowed from:
 https://imaddabbura.github.io/blog/data%20science/2018/03/31/epsilon-Greedy-Algorithm.html
 https://github.com/scattering/crystal-rl
@@ -105,21 +102,30 @@ class EpsilonGreedy():
         return self.values
 
     #Returns the indices of the HKL values with the best immediate reward
+    #Returns the indices of the HKL values with the best immediate reward
     def bestReward(self):
-        rewardMax = -99999
+        #rewardMax = -99999
         maxIndices = []
         choices = list(self.values)
+        choices_indices = []
+        for i in range(len(self.values)):
+           choices_indices.append(i)
+
+        popTimes = 0
         for i in self.visited:
-            choices.pop(i)
-            
-        for i in range(len(choices)):
-            if choices[i] > rewardMax:
-                rewardMax = choices[i]
+            print(i-popTimes)
+            choices_indices.remove(i)
+            choices.pop(i-popTimes)
+            popTimes += 1
+
+        rewardMax = choices[np.argmax(choices)]
+        #for i in range(len(choices)):
+        #    if choices[i] > rewardMax:
+        #        rewardMax = choices[i]
         for i in range(len(choices)):
             if choices[i] == rewardMax:
-                maxIndices.append(i)
+                maxIndices.append(choices_indices[i])
         return maxIndices
-
     #Chooses an HKL value to go to using bestReward, ignoring hkls already visited. Returns the index of the hkl chosen
     def select_action(self):
         coin = random.random()
@@ -127,19 +133,26 @@ class EpsilonGreedy():
         
         #Exploit - Pick among the options (tied) with the best expected reward
         if coin > self.epsilon:
+            print("Exploit")
             choice = random.choice(self.bestReward())
             self.visited.append(choice)
+            self.visited.sort()
             
         #Explore - Pick a choice at random
         else:
-            possibleChoices = list(self.values)
+            print("Explore")
+            choices = list(self.values)
+            choices_indices = []
+            for i in range(len(self.values)):
+                choices_indices.append(i)
             for i in self.visited:
-                possibleChoices.pop(i)
+                choices_indices.remove(i)
                 
-            choice = random.randint(0, len(possibleChoices)-1)
+            choice = random.choice(choices_indices)
             self.visited.append(choice)
+            self.visited.sort()
             
-        return choice
+        return int(choice)
 
     #Updates the counts of hkls visited and their expected reward with new data
     def update(self, chosen_action, reward):
@@ -199,11 +212,9 @@ def test_algorithm(agent, actions, num_sims, horizon):
             #Need more data than parameters, have to wait to the second step to fit
             if t > 0:
                 x, dx, chisq = fit(model)
-
                 reward -= 1
                 if (prevX2 != None and chisq < prevX2):
                     reward += 1.5
-
                 #Update expected rewards here or something
                 #qtable[stateIndex, actionIndex] =  qtable[stateIndex, actionIndex] + \
                 #                                   alpha*(reward + gamma*(np.max(qtable[stateIndex,:])) - \
