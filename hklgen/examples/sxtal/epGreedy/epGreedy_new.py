@@ -1,5 +1,5 @@
 """
-Filename: epGreedy.py
+Filename: epGreedy_new.py
 Authors: Ryan Cho and Telon Yan
 
 Implements a modified epsilon-greedy algorithm for pycrysfml, but can be
@@ -26,16 +26,16 @@ import os
 
 
 #So apparently you just can't run pycrysfml on Windows because you'd have to build all of its dependencies first
-#import fswig_hklgen as H
-#import hkl_model as Mod
-#import sxtal_model as S
+import fswig_hklgen as H
+import hkl_model as Mod
+import sxtal_model as S
 
-#import  bumps.names  as bumps
-#import bumps.fitters as fitter
-#from bumps.formatnum import format_uncertainty_pm
+import  bumps.names  as bumps
+import bumps.fitters as fitter
+from bumps.formatnum import format_uncertainty_pm
 
 #Crystal model stuff
-"""
+
 np.seterr(divide="ignore",invalid="ignore")
 
 #Set data files
@@ -72,7 +72,7 @@ def fit(model):
     fitted = fitter.LevenbergMarquardtFit(problem)
     x, dx = fitted.solve(monitors=[monitor])
     return x, dx, problem.chisq()
-"""
+
 #Beacuse I don't actually know how to use pycrysfml and bumps yet and just want something working, here's a fakeFit method that fakes the fit() method
 def fakeFit(model):
     #x should be the predicted hkl positon, dx is the error, and chisq is the chi squared value
@@ -155,14 +155,16 @@ class EpsilonGreedy():
 def test_algorithm(agent, actions, num_sims, horizon):
     
     for simulation in range(num_sims):
+	print("simulation \#" + str(simulation))
         agent.reset()
         total_reward = 0
 
-        chosen_actionList = np.zeros((horizon,3))
+        chosen_actionList = []
+	observed_intensities = []
         rewards = np.zeros(horizon)	
 
-        #|------------------------------------------------------------------------------------------------THIS IS IMPORTANT FOR BUMPS-------------------------------------------------|
-        #model = setInitParams()
+        #|--------------------------------Bumps stuff----------------------------------------------|
+        model = setInitParams()
         prevChiSq = None
         
 
@@ -175,23 +177,25 @@ def test_algorithm(agent, actions, num_sims, horizon):
             #print(agent.visited)
             #This is the index of the action/hkl to go to at this timestep
             chosen_action = agent.select_action()
-            chosen_actionList[t] = actions[chosen_action]
+	    #print(chosen_action)
+            chosen_actionList.append(actions[chosen_action])
 
-            #|------------------------------------------------------------THIS IS IMPORTANT FOR BUMPS--------------------------------------------------------------------------------|
-            """
+            #|-Bumps stuff-|
             #TODO figure out how this actually works and how we should actually implement it
             #feed actions[chosen_action] into bumps to get "reward" to use in agent.update() which updates expected reward
             #Find the data for this hkl value and add it to the model
+
+	    #because refList Objects are hard to change, make a new reflist each time with the new data
             model.refList = H.ReflectionList(chosen_actionList)
             model._set_reflections()
 
-            model.error.append(error[actionIndex])
-            model.tt = np.append(model.tt, [tt[actionIndex]])
+            model.error.append(error[chosen_action])
+            model.tt = np.append(model.tt, [tt[chosen_action]])
 
-            observed.append(sfs2[actionIndex])
-            model._set_observations(observed)
+            observed_intensities.append(sfs2[chosen_action])
+            model._set_observations(observed_intensities)
             model.update()
-            
+            """
             #Need more data than parameters, have to wait to the second step to fit
             if t > 0:
                 x, dx, chisq = fit(model)
@@ -206,18 +210,17 @@ def test_algorithm(agent, actions, num_sims, horizon):
                 #                                   qtable[stateIndex, actionIndex])
                 
                 prevX2 = chisq
-            """            
-            
+            """
             reward = 0
             chiSq = 0
             
             if t > 0:
                 #This line is fake pycrysfml/bumps fitting
-                x, dx, chiSq = fakeFit("fakeModel")
+                x, dx, chiSq = fit(model)
                 
-                reward = -1# * abs(dx) #This would scale for error
+                reward = -1 # * abs(dx) #This would scale for error
                 if (prevChiSq != None and chiSq < prevChiSq):
-                    reward += 1.5# * abs(dx)
+                    reward += 1.5 # * abs(dx)
                     
                 rewards[t] = reward
                 total_reward += reward
@@ -225,7 +228,7 @@ def test_algorithm(agent, actions, num_sims, horizon):
                 
                 prevChiSq = chiSq
             
-            file.write(str(chosen_actionList[t]).replace("[","").replace("]","").replace(",",""))
+            file.write(str(chosen_actionList[t].hkl).replace("[","").replace("]","").replace(",",""))
             file.write("\t\t" + str(reward) + "\t" + str(total_reward) + "\t" + str(chiSq) + "\n")
             
         file.close()
@@ -233,5 +236,9 @@ def test_algorithm(agent, actions, num_sims, horizon):
     return
 
 #def __main__():
-agent = EpsilonGreedy(0.1, [0,0,0,0], [0.1,0.1,0.1,0.1])
-test_algorithm(agent, [[1,1,1],[1,1,3],[1,3,1],[3,1,1]], 10, 4)
+#for i in refList:
+#    for j in i:
+#        print(j)
+agent = EpsilonGreedy(0.1, np.zeros(len(refList)), np.ones(len(refList)))
+test_algorithm(agent, refList, 10, len(refList))	#TODO fix repeati
+print("done")

@@ -531,8 +531,15 @@ class MagReflection(magh_type):
 class ReflectionList(reflection_list_type, magh_list_type):
     def __init__(self, cast_list=None, magnetic=None):
         self.index = -1
-        if cast_list != None:
-            # copy constructor
+	self.magnetic = magnetic
+        if cast_list is None:
+            if not magnetic:
+                reflection_list_type.__init__(self)
+            else:
+                magh_list_type.__init__(self)
+                self.magnetic = magnetic
+        else:
+	    # copy constructor
             if isinstance(cast_list[0], magh_type):
                 self.magnetic = True
                 magh_list_type.__init__(self)
@@ -546,12 +553,6 @@ class ReflectionList(reflection_list_type, magh_list_type):
             for i in range(len(cast_list)):
                 ref = cast_list[i]
                 self[i]=ref
-        else:
-            if not magnetic:
-                reflection_list_type.__init__(self)
-            else:
-                magh_list_type.__init__(self)
-            self.magnetic = magnetic                
     def __len__(self):
         #    return int(self.numReflections)
         if self.magnetic:

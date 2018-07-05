@@ -1,0 +1,43 @@
+SOURCES= Src/CFML_Atom_Mod.f90 Src/CFML_BVSpar.f90 Src/CFML_Bonds_Table.f90 Src/CFML_Chem_Scatt.f90 Src/CFML_Conf_Calc.f90 Src/CFML_Cryst_Types.f90 Src/CFML_Diffpatt.f90 Src/CFML_Export_Vtk_LF95.f90 Src/CFML_Extinction_Correction.f90 Src/CFML_FFTs.f90 Src/CFML_Form_CIF.f90 Src/CFML_Geom_Calc.f90 Src/CFML_GlobalDeps_Linux.f90 Src/CFML_ILL_Instrm_Data.f90 Src/CFML_IO_Mess.f90 Src/CFML_LSQ_TypeDef.f90 Src/CFML_MagSymm.f90 Src/CFML_Magnetic_Groups.f90 Src/CFML_Maps.f90 Src/CFML_Math_3D.f90 Src/CFML_Math_Gen.f90 Src/CFML_Molecules.f90 Src/CFML_Msfac.f90 Src/CFML_Optimization.f90 Src/CFML_Optimization_LSQ.f90 Src/CFML_Percolation.f90 Src/CFML_Polar.f90 Src/CFML_Profile_Finger.f90 Src/CFML_Profile_Functs.f90 Src/CFML_Profile_TOF.f90 Src/CFML_Propagk.f90 Src/CFML_Random.f90 Src/CFML_Rational_Arithmetic.f90 Src/CFML_Refcodes.f90 Src/CFML_Reflct_Util.f90 Src/CFML_SXTAL_Geom.f90 Src/CFML_Sfac.f90 Src/CFML_Spher_Harm.f90 Src/CFML_String_Util.f90 Src/CFML_Sym_Table.f90 Src/CFML_Symmetry.f90 Src/cfml_python.f90 Src/f2kcli.f90 
+
+Src/CFML_Atom_Mod.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_Math_Gen.o Src/CFML_String_Util.o Src/CFML_Math_3D.o Src/CFML_Cryst_Types.o Src/CFML_Symmetry.o
+Src/CFML_Bonds_Table.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_Chem_Scatt.o
+Src/CFML_Conf_Calc.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_Math_3D.o Src/CFML_Math_Gen.o Src/CFML_String_Util.o Src/CFML_Chem_Scatt.o Src/CFML_Cryst_Types.o Src/CFML_Symmetry.o Src/CFML_Atom_Mod.o Src/CFML_Geom_Calc.o Src/CFML_Export_Vtk_LF95.o Src/CFML_BVSpar.o
+Src/CFML_BVSpar.o : Src/CFML_GlobalDeps_Linux.o
+Src/CFML_Cryst_Types.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_Math_Gen.o Src/CFML_Math_3D.o
+Src/CFML_Symmetry.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_Math_Gen.o Src/CFML_Math_3D.o Src/CFML_String_Util.o Src/CFML_Sym_Table.o
+Src/CFML_Diffpatt.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_Math_Gen.o Src/CFML_String_Util.o
+Src/CFML_Export_Vtk_LF95.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_Cryst_Types.o Src/CFML_Atom_Mod.o Src/CFML_Symmetry.o Src/CFML_String_Util.o Src/CFML_Math_Gen.o
+Src/CFML_Extinction_Correction.o : Src/CFML_GlobalDeps_Linux.o
+Src/CFML_FFTs.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_GlobalDeps_Linux.o Src/CFML_GlobalDeps_Linux.o Src/CFML_GlobalDeps_Linux.o Src/CFML_GlobalDeps_Linux.o
+Src/CFML_Geom_Calc.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_Math_Gen.o Src/CFML_Math_3D.o Src/CFML_String_Util.o Src/CFML_Cryst_Types.o Src/CFML_Atom_Mod.o Src/CFML_Symmetry.o
+Src/CFML_SXTAL_Geom.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_Math_Gen.o Src/CFML_Math_3D.o Src/CFML_Cryst_Types.o Src/CFML_Geom_Calc.o Src/CFML_ILL_Instrm_Data.o
+Src/CFML_ILL_Instrm_Data.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_Math_Gen.o Src/CFML_String_Util.o Src/CFML_Math_3D.o Src/CFML_Diffpatt.o
+Src/CFML_Form_CIF.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_Math_Gen.o Src/CFML_String_Util.o Src/CFML_Cryst_Types.o Src/CFML_Symmetry.o Src/CFML_Atom_Mod.o Src/CFML_Molecules.o Src/CFML_Geom_Calc.o
+Src/CFML_IO_Mess.o : Src/CFML_GlobalDeps_Linux.o
+Src/CFML_Refcodes.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_Math_Gen.o Src/CFML_String_Util.o Src/CFML_Symmetry.o Src/CFML_Atom_Mod.o Src/CFML_Molecules.o Src/CFML_Form_CIF.o Src/CFML_MagSymm.o Src/CFML_Math_3D.o
+Src/CFML_LSQ_TypeDef.o : Src/CFML_GlobalDeps_Linux.o
+Src/CFML_Magnetic_Groups.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_Symmetry.o Src/CFML_String_Util.o Src/CFML_Math_3D.o Src/CFML_Math_Gen.o
+Src/CFML_Msfac.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_Math_Gen.o Src/CFML_String_Util.o Src/CFML_Chem_Scatt.o Src/CFML_Cryst_Types.o Src/CFML_Symmetry.o Src/CFML_MagSymm.o Src/CFML_Reflct_Util.o Src/CFML_Atom_Mod.o Src/CFML_Propagk.o
+Src/CFML_MagSymm.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_Math_Gen.o Src/CFML_Math_3D.o Src/CFML_Sym_Table.o Src/CFML_Symmetry.o Src/CFML_String_Util.o Src/CFML_Form_CIF.o Src/CFML_Atom_Mod.o Src/CFML_Chem_Scatt.o Src/CFML_Propagk.o Src/CFML_Cryst_Types.o Src/CFML_Magnetic_Groups.o
+Src/CFML_Maps.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_Symmetry.o Src/CFML_Cryst_Types.o Src/CFML_Geom_Calc.o
+Src/CFML_Math_3D.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_Math_Gen.o
+Src/CFML_Math_Gen.o : Src/CFML_GlobalDeps_Linux.o
+Src/CFML_Molecules.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_Math_Gen.o Src/CFML_Math_3D.o Src/CFML_Symmetry.o Src/CFML_Atom_Mod.o Src/CFML_Cryst_Types.o Src/CFML_String_Util.o Src/CFML_Geom_Calc.o Src/CFML_Chem_Scatt.o
+Src/CFML_Optimization.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_String_Util.o Src/CFML_GlobalDeps_Linux.o Src/CFML_GlobalDeps_Linux.o Src/CFML_GlobalDeps_Linux.o Src/CFML_GlobalDeps_Linux.o Src/CFML_GlobalDeps_Linux.o Src/CFML_GlobalDeps_Linux.o Src/CFML_GlobalDeps_Linux.o Src/CFML_GlobalDeps_Linux.o Src/CFML_GlobalDeps_Linux.o
+Src/CFML_Optimization_LSQ.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_LSQ_TypeDef.o Src/CFML_Math_Gen.o Src/CFML_GlobalDeps_Linux.o Src/CFML_GlobalDeps_Linux.o Src/CFML_LSQ_TypeDef.o Src/CFML_GlobalDeps_Linux.o Src/CFML_GlobalDeps_Linux.o Src/CFML_GlobalDeps_Linux.o Src/CFML_GlobalDeps_Linux.o Src/CFML_GlobalDeps_Linux.o Src/CFML_GlobalDeps_Linux.o Src/CFML_GlobalDeps_Linux.o Src/CFML_GlobalDeps_Linux.o Src/CFML_GlobalDeps_Linux.o Src/CFML_GlobalDeps_Linux.o Src/CFML_LSQ_TypeDef.o
+Src/CFML_Percolation.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_Cryst_Types.o Src/CFML_Maps.o
+Src/CFML_Polar.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_Cryst_Types.o Src/CFML_Math_3D.o Src/CFML_Math_Gen.o Src/CFML_Msfac.o Src/CFML_MagSymm.o Src/CFML_SXTAL_Geom.o
+Src/CFML_Profile_Functs.o : Src/CFML_GlobalDeps_Linux.o
+Src/CFML_Profile_Finger.o : Src/CFML_GlobalDeps_Linux.o
+Src/CFML_Profile_TOF.o : Src/CFML_GlobalDeps_Linux.o
+Src/CFML_Propagk.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_Math_Gen.o Src/CFML_Symmetry.o Src/CFML_Reflct_Util.o
+Src/cfml_python.o : Src/CFML_Form_CIF.o Src/CFML_Reflct_Util.o Src/CFML_MagSymm.o Src/CFML_GlobalDeps_Linux.o Src/CFML_Cryst_Types.o Src/CFML_Symmetry.o Src/CFML_Atom_Mod.o Src/CFML_Msfac.o Src/CFML_Profile_Functs.o Src/CFML_ILL_Instrm_Data.o Src/CFML_Diffpatt.o
+Src/CFML_Random.o : Src/CFML_GlobalDeps_Linux.o
+Src/CFML_Rational_Arithmetic.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_String_Util.o Src/CFML_Math_Gen.o
+Src/CFML_Reflct_Util.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_Math_Gen.o Src/CFML_String_Util.o Src/CFML_Symmetry.o Src/CFML_Cryst_Types.o
+Src/CFML_Chem_Scatt.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_String_Util.o
+Src/CFML_Spher_Harm.o : Src/CFML_GlobalDeps_Linux.o
+Src/CFML_String_Util.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_Math_Gen.o
+Src/CFML_Sfac.o : Src/CFML_Form_CIF.o Src/CFML_GlobalDeps_Linux.o Src/CFML_Math_Gen.o Src/CFML_String_Util.o Src/CFML_Chem_Scatt.o Src/CFML_Symmetry.o Src/CFML_Reflct_Util.o Src/CFML_Atom_Mod.o
+Src/CFML_Sym_Table.o : Src/CFML_GlobalDeps_Linux.o Src/CFML_String_Util.o

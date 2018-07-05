@@ -1,0 +1,1218 @@
+Warning: Wrapping higher-dimensional arrays as pointers can lead to ambiguity if writing SWIG typemaps for pointers.
+Error: Missing argument definitions in procedure convol: g, f
+Error: Missing argument definitions in procedure convol_peaks: g, f
+Warning: COMPLEX data not supported
+Error: Untyped return value in fft3d: ft
+Error: Untyped return value in fft4d: ft
+Error: Untyped return value in fft5d: ft
+Error: Untyped return value in fft6d: ft
+Error: Untyped return value in fft7d: ft
+Error: Missing argument definitions in procedure cg_quasi_newton: model_functn
+Error: Missing argument definitions in procedure csendes_global: model_functn
+Error: Missing argument definitions in procedure fun: model_functn
+Error: Missing argument definitions in procedure local_dfp: model_functn
+Error: Missing argument definitions in procedure local_min_dfp: model_functn
+Error: Missing argument definitions in procedure local_min_rand: model_functn
+Error: Missing argument definitions in procedure local_optimize: model_functn
+Error: Missing argument definitions in procedure local_rand: model_functn
+Error: Missing argument definitions in procedure nelder_mead_simplex: model_functn
+Error: Missing argument definitions in procedure curfit_v1: model_functn
+Error: Missing argument definitions in procedure curfit_v2: model_functn
+Error: Missing argument definitions in procedure fdjac2: fcn
+Error: Missing argument definitions in procedure lm_der: model_functn
+Error: Missing argument definitions in procedure lm_derv: model_functn
+Error: Missing argument definitions in procedure lm_dif: model_functn
+Error: Missing argument definitions in procedure lmder: fcn
+Error: Missing argument definitions in procedure lmder1: model_functn
+Error: Missing argument definitions in procedure lmdif: ipvt, fcn
+Error: Missing argument definitions in procedure lmdif1: model_functn
+Error: Missing argument definitions in procedure marquardt_fit_v1: model_functn
+Error: Missing argument definitions in procedure marquardt_fit_v2: model_functn
+Error: Error opening file /pycrysfml/Src/CFML_String_Util_gf.f90
+Warning: Some procedures not wrapped:
+ wrt_lab
+ merge_atoms_peaks
+ complete_table
+ complete_table_bvel
+ cart_u_vector
+ cart_vector
+ convert_b_betas
+ convert_b_u
+ convert_betas_b
+ convert_betas_u
+ convert_u_b
+ convert_u_betas
+ get_betas_from_biso
+ metrics
+ rot_matrix
+ add_diffraction_patterns
+ read_pattern_isis_m
+ read_pattern_mult
+ set_background_inter
+ set_background_poly
+ array3d_pointdata_2_vts
+ write_grid_vesta
+ convol
+ g
+ convol_peaks
+ g
+ f_fft
+ fft1d
+ fft2d
+ fft3d
+ fft4d
+ fft5d
+ fft6d
+ fft7d
+ fftn
+ fftradix
+ get_job_info
+ read_atom
+ read_cell
+ read_cif_atom
+ read_cif_cell
+ read_cif_chemicalname
+ read_cif_cont
+ read_cif_hall
+ read_cif_hm
+ read_cif_lambda
+ read_cif_pressure
+ read_cif_temp
+ read_cif_symm
+ read_cif_title
+ read_cif_z
+ read_file_atomlist
+ read_file_pointlist
+ read_file_cellc
+ read_file_cellt
+ read_file_lambda
+ read_file_rngsintl
+ read_file_spg
+ read_file_transf
+ read_shx_atom
+ read_shx_cell
+ read_shx_cont
+ read_shx_fvar
+ read_shx_latt
+ read_shx_symm
+ read_shx_titl
+ readn_set_xtal_cfl
+ readn_set_xtal_cfl_molec
+ readn_set_xtal_cif
+ readn_set_xtal_pcr
+ readn_set_xtal_shx
+ get_phases_file
+ get_nphases_ciffile
+ get_nphases_pcrfile
+ angle_modv
+ angle_uvi
+ angle_uvr
+ coord_modv
+ matrix_phithechi
+ matrix_rx
+ matrix_ry
+ matrix_rz
+ adding_numors_d1a_diffpattern
+ adding_numors_d1b_d20
+ adding_numors_d4_diffpattern
+ allocate_powder_numors
+ allocate_sxtal_numors
+ get_single_frame_2d
+ number_keytypes_on_file
+ powdernumors_to_diffpattern
+ read_a_keytype
+ read_f_keytype
+ read_i_keytype
+ read_j_keytype
+ read_r_keytype
+ read_s_keytype
+ read_v_keytype
+ set_keytypes_on_file
+ modify_codes_state_vector
+ applymso
+ is_lattice_vec
+ get_magnetic_form_factor
+ get_magmatsymb
+ readn_set_magnetic_space_group
+ get_morbit
+ get_morbit_mom
+ get_stabilizerm
+ peak_position
+ vertice_point_cal
+ vertice_point_fix
+ vertices_cube
+ xy_sect
+ calculate_contour2d
+ calculate_mesh
+ load_extendedmap
+ load_section
+ peak_list
+ search_peaks
+ statistic_map
+ cross_product_cmpl_dp
+ cross_product_cmpl_sp
+ cross_product_dp
+ cross_product_in
+ cross_product_sp
+ invert_dp
+ invert_sp
+ mat_cross_cmpl_dp
+ mat_cross_cmpl_sp
+ mat_cross_dp
+ mat_cross_in
+ mat_cross_sp
+ polyhedron_volume
+ rotate_ox
+ rotate_oy
+ rotate_oz
+ tensor_product_cmpl_dp
+ tensor_product_cmpl_sp
+ tensor_product_dp
+ tensor_product_in
+ tensor_product_sp
+ get_baricentre
+ get_centroid_coord
+ get_plane_from_points
+ cheval
+ co_linear_c
+ co_linear_i
+ co_linear_r
+ co_prime
+ equal_matrix_i
+ equal_matrix_r
+ equal_vector_i
+ equal_vector_r
+ euclidean_norm
+ imaxloc_i
+ imaxloc_r
+ iminloc_i
+ iminloc_r
+ in_limits_int
+ in_limits_dp
+ in_limits_sp
+ locate_i
+ locate_ib
+ locate_r
+ locate_rb
+ lower_triangular_i
+ lower_triangular_r
+ modulo_lat
+ norm_i
+ norm_r
+ outerprod_dp
+ outerprod_sp
+ scalar_i
+ scalar_r
+ trace_c
+ trace_i
+ trace_r
+ upper_triangular_i
+ upper_triangular_r
+ zbelongm
+ zbelongv
+ co_prime_vector
+ determinant_c
+ determinant_r
+ diagonalize_herm
+ diagonalize_symm
+ eigsrt
+ first_derivative
+ in_sort
+ invert_matrix
+ linear_dependentc
+ linear_dependenti
+ linear_dependentr
+ lu_backsub
+ lu_decomp
+ matinv
+ partition
+ points_in_line2d
+ rank_dp
+ rank_sp
+ second_derivative
+ smoothingvec
+ sort_i
+ sort_r
+ sort_strings
+ spline
+ splint
+ svdcmp_dp
+ svdcmp_sp
+ swap_c
+ swap_cm
+ swap_cv
+ swap_im
+ swap_iv
+ swap_rm
+ swap_rv
+ masked_swap_rm
+ masked_swap_rv
+ tqli1
+ tqli2
+ tred1
+ tred2
+ read_free_atoms
+ read_molecule_in_var
+ write_free_atoms
+ modify_msf
+ cg_quasi_newton
+ chola
+ csendes_global
+ fun
+ local_dfp
+ local_min_dfp
+ local_min_rand
+ local_optimize
+ local_rand
+ nelder_mead_simplex
+ print_tri_matrix
+ put_in_box
+ set_opt_conditions
+ syminv
+ update
+ fchisq
+ curfit_v1
+ curfit_v2
+ fdjac2
+ info_lsq_lm_v
+ info_lsq_output
+ lm_der
+ lm_derv
+ lm_dif
+ lmder
+ lmder1
+ lmdif
+ lmdif1
+ lmpar
+ marquardt_fit_v1
+ marquardt_fit_v2
+ qrfac
+ qrsolv
+ im_nm_y
+ im_nm_z
+ mag_y
+ mag_z
+ magn_inter_vec_pf
+ mm
+ nuc_contr
+ real_nm_y
+ real_nm_z
+ tchiral
+ calc_polar
+ get_pol_tensor_pc
+ calc_polar_dom
+ set_polar_info
+ calc_polar_dom_efficiency
+ calc_polar_crsec
+ calc_pseudo_voigt
+ back_to_back_exp
+ exponential
+ gaussian
+ hat
+ ikeda_carpenter
+ lorentzian
+ pseudovoigt
+ split_pseudovoigt
+ tch_pvoigt
+ expi_e1
+ allocate_restparam_mult
+ split_operations
+ split_goperations
+ split_moperations
+ asu_hkl
+ asu_hkl_cubic
+ asu_hkl_hexagonal
+ asu_hkl_monoclinic
+ asu_hkl_orthorhombic
+ asu_hkl_tetragonal
+ asu_hkl_triclinic
+ asu_hkl_trigonal
+ get_hequiv_asu
+ hkl_lat_absent
+ hr_i
+ hr_r
+ unit_cart_hkli
+ unit_cart_hklr
+ hkl_gen
+ hkl_gen_shub
+ hkl_gen_sxtal_reflection
+ hkl_uni_reflect
+ hkl_uni_reflection
+ search_extinctions_file
+ get_flatcone_angles_d10
+ normal_beam_angles
+ calc_general_strfactor
+ modify_sf
+ sphjn
+ applyso
+ is_hexa
+ is_new_op
+ product_symop
+ sym_prod
+ check_symbol_hm
+ get_centring_vectors
+ get_crystal_system_r_op
+ get_crystal_system_r_st
+ get_generators_from_spgsymbol
+ get_gensymb_from_gener
+ get_lattice_type
+ get_orbit
+ get_so_from_fix
+ get_so_from_gener
+ get_so_from_hall
+ get_so_from_hms
+ get_stabilizer
+ get_suborbits
+ get_t_subgroups
+ max_conv_lattice_type
+ set_intersection_spg
+ set_spg_mult_table
+ wyckoff_orbit
+ get_atom_equiv_list_atm
+ set_atom_equiv_list_atm
+ atom_equiv_list_type_ctor
+ get_atom_equiv_x
+ set_atom_equiv_x
+ get_atom_equiv_lab
+ set_atom_equiv_lab
+ atom_equiv_type_ctor
+ get_atom_list_atom
+ set_atom_list_atom
+ atom_list_type_ctor
+ get_atoms_cell_distance
+ set_atoms_cell_distance
+ get_atoms_cell_ddist
+ set_atoms_cell_ddist
+ get_atoms_cell_xyz
+ set_atoms_cell_xyz
+ get_atoms_cell_charge
+ set_atoms_cell_charge
+ get_atoms_cell_ddlab
+ set_atoms_cell_ddlab
+ get_atoms_cell_noms
+ set_atoms_cell_noms
+ get_atoms_cell_moment
+ set_atoms_cell_moment
+ get_atoms_cell_neighb_atom
+ set_atoms_cell_neighb_atom
+ get_atoms_cell_var_free
+ set_atoms_cell_var_free
+ get_atoms_cell_trans
+ set_atoms_cell_trans
+ get_atoms_cell_neighb
+ set_atoms_cell_neighb
+ atoms_cell_type_ctor
+ get_matom_list_atom
+ set_matom_list_atom
+ matom_list_type_ctor
+ get_file_list_line
+ set_file_list_line
+ file_list_type_ctor
+ get_job_info_dtt1
+ set_job_info_dtt1
+ get_job_info_dtt2
+ set_job_info_dtt2
+ get_job_info_range_2theta
+ set_job_info_range_2theta
+ get_job_info_range_tof
+ set_job_info_range_tof
+ get_job_info_cmd
+ set_job_info_cmd
+ get_job_info_range_stl
+ set_job_info_range_stl
+ get_job_info_range_d
+ set_job_info_range_d
+ get_job_info_patt_typ
+ set_job_info_patt_typ
+ get_job_info_phas_nam
+ set_job_info_phas_nam
+ get_job_info_range_q
+ set_job_info_range_q
+ get_job_info_ratio
+ set_job_info_ratio
+ get_job_info_range_energy
+ set_job_info_range_energy
+ get_job_info_lambda
+ set_job_info_lambda
+ job_info_type_ctor
+ get_magsymm_k_symopsymb
+ set_magsymm_k_symopsymb
+ get_magsymm_k_msymopsymb
+ set_magsymm_k_msymopsymb
+ get_magsymm_k_msymop
+ set_magsymm_k_msymop
+ get_magsymm_k_irrep_action
+ set_magsymm_k_irrep_action
+ get_magsymm_k_irrep_direction
+ set_magsymm_k_irrep_direction
+ get_magsymm_k_basf
+ set_magsymm_k_basf
+ get_magsymm_k_symop
+ set_magsymm_k_symop
+ get_magsymm_k_irrep_id
+ set_magsymm_k_irrep_id
+ magsymm_k_type_ctor
+ get_magnetic_domain_lab
+ set_magnetic_domain_lab
+ magnetic_domain_type_ctor
+ get_magnetic_space_group_alatt_trans
+ set_magnetic_space_group_alatt_trans
+ get_magnetic_space_group_msymopsymb
+ set_magnetic_space_group_msymopsymb
+ get_magnetic_space_group_latt_trans
+ set_magnetic_space_group_latt_trans
+ get_magnetic_space_group_wyck_symb
+ set_magnetic_space_group_wyck_symb
+ get_magnetic_space_group_irrep_id
+ set_magnetic_space_group_irrep_id
+ get_magnetic_space_group_msymop
+ set_magnetic_space_group_msymop
+ get_magnetic_space_group_small_irrep_dim
+ set_magnetic_space_group_small_irrep_dim
+ get_magnetic_space_group_symopsymb
+ set_magnetic_space_group_symopsymb
+ get_magnetic_space_group_kv_label
+ set_magnetic_space_group_kv_label
+ get_magnetic_space_group_irrep_action
+ set_magnetic_space_group_irrep_action
+ get_magnetic_space_group_irrep_direction
+ set_magnetic_space_group_irrep_direction
+ get_magnetic_space_group_symop
+ set_magnetic_space_group_symop
+ get_magnetic_space_group_irrep_dim
+ set_magnetic_space_group_irrep_dim
+ get_magnetic_space_group_irrep_modes_number
+ set_magnetic_space_group_irrep_modes_number
+ get_magnetic_space_group_kv
+ set_magnetic_space_group_kv
+ magnetic_space_group_type_ctor
+ get_maghd_list_mh
+ set_maghd_list_mh
+ maghd_list_type_ctor
+ get_maghd_mivc
+ set_maghd_mivc
+ get_maghd_msf
+ set_maghd_msf
+ get_maghd_amiv
+ set_maghd_amiv
+ get_maghd_miv
+ set_maghd_miv
+ maghd_type_ctor
+ get_magh_list_mh
+ set_magh_list_mh
+ magh_list_type_ctor
+ get_magh_mivc
+ set_magh_mivc
+ get_magh_msf
+ set_magh_msf
+ get_magh_miv
+ set_magh_miv
+ magh_type_ctor
+ get_reflection_list_ref
+ set_reflection_list_ref
+ reflection_list_type_ctor
+ get_ns_space_group_symopsymb
+ set_ns_space_group_symopsymb
+ get_ns_space_group_latt_trans
+ set_ns_space_group_latt_trans
+ get_ns_space_group_symop
+ set_ns_space_group_symop
+ ns_space_group_type_ctor
+ get_space_group_latt_trans
+ set_space_group_latt_trans
+ get_space_group_symopsymb
+ set_space_group_symopsymb
+ get_space_group_symop
+ set_space_group_symop
+ space_group_type_ctor
+ get_wyck_pos_str_orbit
+ set_wyck_pos_str_orbit
+ wyck_pos_type_ctor
+ get_wyckoff_orbit
+ set_wyckoff_orbit
+ wyckoff_type_ctor
+ get_powder_numor_counts
+ set_powder_numor_counts
+ get_powder_numor_tmc_ang
+ set_powder_numor_tmc_ang
+ powder_numor_type_ctor
+ get_diffraction_pattern_nd
+ set_diffraction_pattern_nd
+ get_diffraction_pattern_ycalc
+ set_diffraction_pattern_ycalc
+ get_diffraction_pattern_istat
+ set_diffraction_pattern_istat
+ diffraction_pattern_type_ctor
+LOADED 40 FILES FROM LIST
+Associating procedure: space_group_type.set_atom_equiv_list
+Associating procedure: space_group_type.set_formal_charges
+Associating procedure: atoms_conf_list_type.set_table_bvel_params
+Associating procedure: atoms_conf_list_type.set_table_d0_b
+Associating procedure: crystal_cell_type.change_setting_cell
+Associating procedure: crystal_cell_type.get_cryst_family
+Associating procedure: crystal_cell_type.get_deriv_orth_cell
+Associating procedure: crystal_cell_type.get_transfm_matrix
+Associating procedure: crystal_cell_type.get_twofold_axes
+Associating procedure: space_group_type.set_new_asymunit
+Associating procedure: space_group_type.set_orbits_inlist
+Associating procedure: group_k_type.set_gk
+Associating procedure: atom_list_type.set_form_factors
+Associating procedure: space_group_type.get_hallsymb_from_gener
+Associating procedure: space_group_type.get_laue_pg
+Associating procedure: atom_list_type.get_atom_list_element
+Associating procedure: atom_equiv_list_type.get_atom_equiv_list_element
+Associating procedure: matom_list_type.get_matom_list_element
+Associating procedure: magh_list_type.get_magh_list_element
+Associating procedure: maghd_list_type.get_maghd_list_element
+Associating procedure: reflection_list_type.get_reflection_list_element
+Associating procedure: magsymm_k_type.get_basis_element
+Associating procedure: matom_type.get_matom_basis_element
+Associating procedure: magsymm_k_type.get_kvector
+Associating procedure: atom_list_type.set_atom_list_element
+Associating procedure: atom_equiv_list_type.set_atom_equiv_list_element
+Associating procedure: matom_list_type.set_matom_list_element
+Associating procedure: magh_list_type.set_magh_list_element
+Associating procedure: maghd_list_type.set_maghd_list_element
+Associating procedure: reflection_list_type.set_reflection_list_element
+Associating procedure: magsymm_k_type.set_basis_element
+Associating procedure: matom_type.set_matom_basis_element
+Associating procedure: magh_type.get_msf
+Associating procedure: magh_type.set_msf
+Associating procedure: magh_type.get_miv
+Associating procedure: magh_type.set_miv
+Associating procedure: atom_equiv_list_type.get_atom_equiv_list_nauas
+Associating procedure: atom_equiv_list_type.set_atom_equiv_list_nauas
+Associating procedure: atom_equiv_type.get_atom_equiv_chemsymb
+Associating procedure: atom_equiv_type.set_atom_equiv_chemsymb
+Associating procedure: atom_equiv_type.get_atom_equiv_mult
+Associating procedure: atom_equiv_type.set_atom_equiv_mult
+Associating procedure: atom_list_type.get_atom_list_natoms
+Associating procedure: atom_list_type.set_atom_list_natoms
+Associating procedure: atom_type.get_atom_locc
+Associating procedure: atom_type.set_atom_locc
+Associating procedure: atom_type.get_atom_lvarf
+Associating procedure: atom_type.set_atom_lvarf
+Associating procedure: atom_type.get_atom_utype
+Associating procedure: atom_type.set_atom_utype
+Associating procedure: atom_type.get_atom_mbiso
+Associating procedure: atom_type.set_atom_mbiso
+Associating procedure: atom_type.get_atom_occ
+Associating procedure: atom_type.set_atom_occ
+Associating procedure: atom_type.get_atom_charge
+Associating procedure: atom_type.set_atom_charge
+Associating procedure: atom_type.get_atom_sfacsymb
+Associating procedure: atom_type.set_atom_sfacsymb
+Associating procedure: atom_type.get_atom_lab
+Associating procedure: atom_type.set_atom_lab
+Associating procedure: atom_type.get_atom_mvarf
+Associating procedure: atom_type.set_atom_mvarf
+Associating procedure: atom_type.get_atom_moment
+Associating procedure: atom_type.set_atom_moment
+Associating procedure: atom_type.get_atom_lu
+Associating procedure: atom_type.set_atom_lu
+Associating procedure: atom_type.get_atom_mocc
+Associating procedure: atom_type.set_atom_mocc
+Associating procedure: atom_type.get_atom_active
+Associating procedure: atom_type.set_atom_active
+Associating procedure: atom_type.get_atom_mult
+Associating procedure: atom_type.set_atom_mult
+Associating procedure: atom_type.get_atom_x_std
+Associating procedure: atom_type.set_atom_x_std
+Associating procedure: atom_type.get_atom_u_std
+Associating procedure: atom_type.set_atom_u_std
+Associating procedure: atom_type.get_atom_nvar
+Associating procedure: atom_type.set_atom_nvar
+Associating procedure: atom_type.get_atom_wyck
+Associating procedure: atom_type.set_atom_wyck
+Associating procedure: atom_type.get_atom_biso_std
+Associating procedure: atom_type.set_atom_biso_std
+Associating procedure: atom_type.get_atom_lbiso
+Associating procedure: atom_type.set_atom_lbiso
+Associating procedure: atom_type.get_atom_biso
+Associating procedure: atom_type.set_atom_biso
+Associating procedure: atom_type.get_atom_varf
+Associating procedure: atom_type.set_atom_varf
+Associating procedure: atom_type.get_atom_u
+Associating procedure: atom_type.set_atom_u
+Associating procedure: atom_type.get_atom_occ_std
+Associating procedure: atom_type.set_atom_occ_std
+Associating procedure: atom_type.get_atom_x
+Associating procedure: atom_type.set_atom_x
+Associating procedure: atom_type.get_atom_z
+Associating procedure: atom_type.set_atom_z
+Associating procedure: atom_type.get_atom_mu
+Associating procedure: atom_type.set_atom_mu
+Associating procedure: atom_type.get_atom_lx
+Associating procedure: atom_type.set_atom_lx
+Associating procedure: atom_type.get_atom_chemsymb
+Associating procedure: atom_type.set_atom_chemsymb
+Associating procedure: atom_type.get_atom_ind
+Associating procedure: atom_type.set_atom_ind
+Associating procedure: atom_type.get_atom_thtype
+Associating procedure: atom_type.set_atom_thtype
+Associating procedure: atom_type.get_atom_atminfo
+Associating procedure: atom_type.set_atom_atminfo
+Associating procedure: atom_type.get_atom_ueq
+Associating procedure: atom_type.set_atom_ueq
+Associating procedure: atom_type.get_atom_mx
+Associating procedure: atom_type.set_atom_mx
+Associating procedure: atoms_cell_type.get_atoms_cell_ndist
+Associating procedure: atoms_cell_type.set_atoms_cell_ndist
+Associating procedure: atoms_cell_type.get_atoms_cell_nat
+Associating procedure: atoms_cell_type.set_atoms_cell_nat
+Associating procedure: matom_list_type.get_matom_list_natoms
+Associating procedure: matom_list_type.set_matom_list_natoms
+Associating procedure: matom_type.get_matom_mmphas
+Associating procedure: matom_type.set_matom_mmphas
+Associating procedure: matom_type.get_matom_locc
+Associating procedure: matom_type.set_matom_locc
+Associating procedure: matom_type.get_matom_ski_std
+Associating procedure: matom_type.set_matom_ski_std
+Associating procedure: matom_type.get_matom_lvarf
+Associating procedure: matom_type.set_matom_lvarf
+Associating procedure: matom_type.get_matom_utype
+Associating procedure: matom_type.set_matom_utype
+Associating procedure: matom_type.get_matom_mbiso
+Associating procedure: matom_type.set_matom_mbiso
+Associating procedure: matom_type.get_matom_occ
+Associating procedure: matom_type.set_matom_occ
+Associating procedure: matom_type.get_matom_lbas
+Associating procedure: matom_type.set_matom_lbas
+Associating procedure: matom_type.get_matom_charge
+Associating procedure: matom_type.set_matom_charge
+Associating procedure: matom_type.get_matom_sfacsymb
+Associating procedure: matom_type.set_matom_sfacsymb
+Associating procedure: matom_type.get_matom_imat
+Associating procedure: matom_type.set_matom_imat
+Associating procedure: matom_type.get_matom_lmphas
+Associating procedure: matom_type.set_matom_lmphas
+Associating procedure: matom_type.get_matom_mphas
+Associating procedure: matom_type.set_matom_mphas
+Associating procedure: matom_type.get_matom_spher_ski
+Associating procedure: matom_type.set_matom_spher_ski
+Associating procedure: matom_type.get_matom_skr
+Associating procedure: matom_type.set_matom_skr
+Associating procedure: matom_type.get_matom_lskr
+Associating procedure: matom_type.set_matom_lskr
+Associating procedure: matom_type.get_matom_lab
+Associating procedure: matom_type.set_matom_lab
+Associating procedure: matom_type.get_matom_moment
+Associating procedure: matom_type.set_matom_moment
+Associating procedure: matom_type.get_matom_lu
+Associating procedure: matom_type.set_matom_lu
+Associating procedure: matom_type.get_matom_mocc
+Associating procedure: matom_type.set_matom_mocc
+Associating procedure: matom_type.get_matom_active
+Associating procedure: matom_type.set_matom_active
+Associating procedure: matom_type.get_matom_ski
+Associating procedure: matom_type.set_matom_ski
+Associating procedure: matom_type.get_matom_mult
+Associating procedure: matom_type.set_matom_mult
+Associating procedure: matom_type.get_matom_spher_skr_std
+Associating procedure: matom_type.set_matom_spher_skr_std
+Associating procedure: matom_type.get_matom_x_std
+Associating procedure: matom_type.set_matom_x_std
+Associating procedure: matom_type.get_matom_u_std
+Associating procedure: matom_type.set_matom_u_std
+Associating procedure: matom_type.get_matom_lski
+Associating procedure: matom_type.set_matom_lski
+Associating procedure: matom_type.get_matom_nvar
+Associating procedure: matom_type.set_matom_nvar
+Associating procedure: matom_type.get_matom_wyck
+Associating procedure: matom_type.set_matom_wyck
+Associating procedure: matom_type.get_matom_biso_std
+Associating procedure: matom_type.set_matom_biso_std
+Associating procedure: matom_type.get_matom_lbiso
+Associating procedure: matom_type.set_matom_lbiso
+Associating procedure: matom_type.get_matom_mphas_std
+Associating procedure: matom_type.set_matom_mphas_std
+Associating procedure: matom_type.get_matom_mvarf
+Associating procedure: matom_type.set_matom_mvarf
+Associating procedure: matom_type.get_matom_biso
+Associating procedure: matom_type.set_matom_biso
+Associating procedure: matom_type.get_matom_varf
+Associating procedure: matom_type.set_matom_varf
+Associating procedure: matom_type.get_matom_u
+Associating procedure: matom_type.set_matom_u
+Associating procedure: matom_type.get_matom_occ_std
+Associating procedure: matom_type.set_matom_occ_std
+Associating procedure: matom_type.get_matom_x
+Associating procedure: matom_type.set_matom_x
+Associating procedure: matom_type.get_matom_z
+Associating procedure: matom_type.set_matom_z
+Associating procedure: matom_type.get_matom_nvk
+Associating procedure: matom_type.set_matom_nvk
+Associating procedure: matom_type.get_matom_mbas
+Associating procedure: matom_type.set_matom_mbas
+Associating procedure: matom_type.get_matom_spher_ski_std
+Associating procedure: matom_type.set_matom_spher_ski_std
+Associating procedure: matom_type.get_matom_spher_skr
+Associating procedure: matom_type.set_matom_spher_skr
+Associating procedure: matom_type.get_matom_mski
+Associating procedure: matom_type.set_matom_mski
+Associating procedure: matom_type.get_matom_skr_std
+Associating procedure: matom_type.set_matom_skr_std
+Associating procedure: matom_type.get_matom_mu
+Associating procedure: matom_type.set_matom_mu
+Associating procedure: matom_type.get_matom_mskr
+Associating procedure: matom_type.set_matom_mskr
+Associating procedure: matom_type.get_matom_lx
+Associating procedure: matom_type.set_matom_lx
+Associating procedure: matom_type.get_matom_chemsymb
+Associating procedure: matom_type.set_matom_chemsymb
+Associating procedure: matom_type.get_matom_cbas
+Associating procedure: matom_type.set_matom_cbas
+Associating procedure: matom_type.get_matom_ind
+Associating procedure: matom_type.set_matom_ind
+Associating procedure: matom_type.get_matom_cbas_std
+Associating procedure: matom_type.set_matom_cbas_std
+Associating procedure: matom_type.get_matom_thtype
+Associating procedure: matom_type.set_matom_thtype
+Associating procedure: matom_type.get_matom_atminfo
+Associating procedure: matom_type.set_matom_atminfo
+Associating procedure: matom_type.get_matom_ueq
+Associating procedure: matom_type.set_matom_ueq
+Associating procedure: matom_type.get_matom_mx
+Associating procedure: matom_type.set_matom_mx
+Associating procedure: crystal_cell_type.get_crystal_cell_lang
+Associating procedure: crystal_cell_type.set_crystal_cell_lang
+Associating procedure: crystal_cell_type.get_crystal_cell_rcellvol
+Associating procedure: crystal_cell_type.set_crystal_cell_rcellvol
+Associating procedure: crystal_cell_type.get_crystal_cell_cell_std
+Associating procedure: crystal_cell_type.set_crystal_cell_cell_std
+Associating procedure: crystal_cell_type.get_crystal_cell_ang
+Associating procedure: crystal_cell_type.set_crystal_cell_ang
+Associating procedure: crystal_cell_type.get_crystal_cell_bl_minv
+Associating procedure: crystal_cell_type.set_crystal_cell_bl_minv
+Associating procedure: crystal_cell_type.get_crystal_cell_gr
+Associating procedure: crystal_cell_type.set_crystal_cell_gr
+Associating procedure: crystal_cell_type.get_crystal_cell_cr_orth_cel
+Associating procedure: crystal_cell_type.set_crystal_cell_cr_orth_cel
+Associating procedure: crystal_cell_type.get_crystal_cell_bl_m
+Associating procedure: crystal_cell_type.set_crystal_cell_bl_m
+Associating procedure: crystal_cell_type.get_crystal_cell_orth_cr_cel
+Associating procedure: crystal_cell_type.set_crystal_cell_orth_cr_cel
+Associating procedure: crystal_cell_type.get_crystal_cell_carttype
+Associating procedure: crystal_cell_type.set_crystal_cell_carttype
+Associating procedure: crystal_cell_type.get_crystal_cell_rang
+Associating procedure: crystal_cell_type.set_crystal_cell_rang
+Associating procedure: crystal_cell_type.get_crystal_cell_rcell
+Associating procedure: crystal_cell_type.set_crystal_cell_rcell
+Associating procedure: crystal_cell_type.get_crystal_cell_cell
+Associating procedure: crystal_cell_type.set_crystal_cell_cell
+Associating procedure: crystal_cell_type.get_crystal_cell_gd
+Associating procedure: crystal_cell_type.set_crystal_cell_gd
+Associating procedure: crystal_cell_type.get_crystal_cell_cellvol
+Associating procedure: crystal_cell_type.set_crystal_cell_cellvol
+Associating procedure: crystal_cell_type.get_crystal_cell_ang_std
+Associating procedure: crystal_cell_type.set_crystal_cell_ang_std
+Associating procedure: crystal_cell_type.get_crystal_cell_lcell
+Associating procedure: crystal_cell_type.set_crystal_cell_lcell
+Associating procedure: zone_axis_type.get_zone_axis_nlayer
+Associating procedure: zone_axis_type.set_zone_axis_nlayer
+Associating procedure: zone_axis_type.get_zone_axis_rx
+Associating procedure: zone_axis_type.set_zone_axis_rx
+Associating procedure: zone_axis_type.get_zone_axis_ry
+Associating procedure: zone_axis_type.set_zone_axis_ry
+Associating procedure: zone_axis_type.get_zone_axis_uvw
+Associating procedure: zone_axis_type.set_zone_axis_uvw
+Associating procedure: file_list_type.get_file_list_nlines
+Associating procedure: file_list_type.set_file_list_nlines
+Associating procedure: job_info_type.get_job_info_title
+Associating procedure: job_info_type.set_job_info_title
+Associating procedure: job_info_type.get_job_info_num_phases
+Associating procedure: job_info_type.set_job_info_num_phases
+Associating procedure: job_info_type.get_job_info_num_patterns
+Associating procedure: job_info_type.set_job_info_num_patterns
+Associating procedure: job_info_type.get_job_info_num_cmd
+Associating procedure: job_info_type.set_job_info_num_cmd
+Associating procedure: interval_type.get_interval_maxb
+Associating procedure: interval_type.set_interval_maxb
+Associating procedure: interval_type.get_interval_mina
+Associating procedure: interval_type.set_interval_mina
+Associating procedure: msym_oper_type.get_msym_oper_phas
+Associating procedure: msym_oper_type.set_msym_oper_phas
+Associating procedure: msym_oper_type.get_msym_oper_rot
+Associating procedure: msym_oper_type.set_msym_oper_rot
+Associating procedure: magsymm_k_type.get_magsymm_k_latt
+Associating procedure: magsymm_k_type.set_magsymm_k_latt
+Associating procedure: magsymm_k_type.get_magsymm_k_numops
+Associating procedure: magsymm_k_type.set_magsymm_k_numops
+Associating procedure: magsymm_k_type.get_magsymm_k_bns_symbol
+Associating procedure: magsymm_k_type.set_magsymm_k_bns_symbol
+Associating procedure: magsymm_k_type.get_magsymm_k_bns_number
+Associating procedure: magsymm_k_type.set_magsymm_k_bns_number
+Associating procedure: magsymm_k_type.get_magsymm_k_mcentred
+Associating procedure: magsymm_k_type.set_magsymm_k_mcentred
+Associating procedure: magsymm_k_type.get_magsymm_k_magmodel
+Associating procedure: magsymm_k_type.set_magsymm_k_magmodel
+Associating procedure: magsymm_k_type.get_magsymm_k_kvec
+Associating procedure: magsymm_k_type.set_magsymm_k_kvec
+Associating procedure: magsymm_k_type.get_magsymm_k_nmsym
+Associating procedure: magsymm_k_type.set_magsymm_k_nmsym
+Associating procedure: magsymm_k_type.get_magsymm_k_num_lat
+Associating procedure: magsymm_k_type.set_magsymm_k_num_lat
+Associating procedure: magsymm_k_type.get_magsymm_k_small_irrep_dim
+Associating procedure: magsymm_k_type.set_magsymm_k_small_irrep_dim
+Associating procedure: magsymm_k_type.get_magsymm_k_ltr
+Associating procedure: magsymm_k_type.set_magsymm_k_ltr
+Associating procedure: magsymm_k_type.get_magsymm_k_parent_num
+Associating procedure: magsymm_k_type.set_magsymm_k_parent_num
+Associating procedure: magsymm_k_type.get_magsymm_k_sk_type
+Associating procedure: magsymm_k_type.set_magsymm_k_sk_type
+Associating procedure: magsymm_k_type.get_magsymm_k_nirreps
+Associating procedure: magsymm_k_type.set_magsymm_k_nirreps
+Associating procedure: magsymm_k_type.get_magsymm_k_magtype
+Associating procedure: magsymm_k_type.set_magsymm_k_magtype
+Associating procedure: magsymm_k_type.get_magsymm_k_og_number
+Associating procedure: magsymm_k_type.set_magsymm_k_og_number
+Associating procedure: magsymm_k_type.get_magsymm_k_irrep_dim
+Associating procedure: magsymm_k_type.set_magsymm_k_irrep_dim
+Associating procedure: magsymm_k_type.get_magsymm_k_irrep_modes_number
+Associating procedure: magsymm_k_type.set_magsymm_k_irrep_modes_number
+Associating procedure: magsymm_k_type.get_magsymm_k_nkv
+Associating procedure: magsymm_k_type.set_magsymm_k_nkv
+Associating procedure: magsymm_k_type.get_magsymm_k_centred
+Associating procedure: magsymm_k_type.set_magsymm_k_centred
+Associating procedure: magsymm_k_type.get_magsymm_k_parent_spg
+Associating procedure: magsymm_k_type.set_magsymm_k_parent_spg
+Associating procedure: magsymm_k_type.get_magsymm_k_og_symbol
+Associating procedure: magsymm_k_type.set_magsymm_k_og_symbol
+Associating procedure: magsymm_k_type.get_magsymm_k_nbas
+Associating procedure: magsymm_k_type.set_magsymm_k_nbas
+Associating procedure: magsymm_k_type.get_magsymm_k_icomp
+Associating procedure: magsymm_k_type.set_magsymm_k_icomp
+Associating procedure: magsymm_k_type.get_magsymm_k_multip
+Associating procedure: magsymm_k_type.set_magsymm_k_multip
+Associating procedure: magnetic_domain_type.get_magnetic_domain_chir
+Associating procedure: magnetic_domain_type.set_magnetic_domain_chir
+Associating procedure: magnetic_domain_type.get_magnetic_domain_pop_std
+Associating procedure: magnetic_domain_type.set_magnetic_domain_pop_std
+Associating procedure: magnetic_domain_type.get_magnetic_domain_mpop
+Associating procedure: magnetic_domain_type.set_magnetic_domain_mpop
+Associating procedure: magnetic_domain_type.get_magnetic_domain_nd
+Associating procedure: magnetic_domain_type.set_magnetic_domain_nd
+Associating procedure: magnetic_domain_type.get_magnetic_domain_lpop
+Associating procedure: magnetic_domain_type.set_magnetic_domain_lpop
+Associating procedure: magnetic_domain_type.get_magnetic_domain_pop
+Associating procedure: magnetic_domain_type.set_magnetic_domain_pop
+Associating procedure: magnetic_domain_type.get_magnetic_domain_twin
+Associating procedure: magnetic_domain_type.set_magnetic_domain_twin
+Associating procedure: magnetic_domain_type.get_magnetic_domain_dmat
+Associating procedure: magnetic_domain_type.set_magnetic_domain_dmat
+Associating procedure: magnetic_domain_type.get_magnetic_domain_dt
+Associating procedure: magnetic_domain_type.set_magnetic_domain_dt
+Associating procedure: magnetic_domain_type.get_magnetic_domain_trans
+Associating procedure: magnetic_domain_type.set_magnetic_domain_trans
+Associating procedure: magnetic_group_type.get_magnetic_group_tinv
+Associating procedure: magnetic_group_type.set_magnetic_group_tinv
+Associating procedure: magnetic_group_type.get_magnetic_group_shubnikov
+Associating procedure: magnetic_group_type.set_magnetic_group_shubnikov
+Associating procedure: magnetic_group_type.get_magnetic_group_spg
+Associating procedure: magnetic_group_type.set_magnetic_group_spg
+Associating procedure: magnetic_space_group_type.get_magnetic_space_group_m_constr
+Associating procedure: magnetic_space_group_type.set_magnetic_space_group_m_constr
+Associating procedure: magnetic_space_group_type.get_magnetic_space_group_centre_coord
+Associating procedure: magnetic_space_group_type.set_magnetic_space_group_centre_coord
+Associating procedure: magnetic_space_group_type.get_magnetic_space_group_n_wyck
+Associating procedure: magnetic_space_group_type.set_magnetic_space_group_n_wyck
+Associating procedure: magnetic_space_group_type.get_magnetic_space_group_bns_symbol
+Associating procedure: magnetic_space_group_type.set_magnetic_space_group_bns_symbol
+Associating procedure: magnetic_space_group_type.get_magnetic_space_group_bns_number
+Associating procedure: magnetic_space_group_type.set_magnetic_space_group_bns_number
+Associating procedure: magnetic_space_group_type.get_magnetic_space_group_sh_number
+Associating procedure: magnetic_space_group_type.set_magnetic_space_group_sh_number
+Associating procedure: magnetic_space_group_type.get_magnetic_space_group_crystalsys
+Associating procedure: magnetic_space_group_type.set_magnetic_space_group_crystalsys
+Associating procedure: magnetic_space_group_type.get_magnetic_space_group_m_cell
+Associating procedure: magnetic_space_group_type.set_magnetic_space_group_m_cell
+Associating procedure: magnetic_space_group_type.get_magnetic_space_group_num_lat
+Associating procedure: magnetic_space_group_type.set_magnetic_space_group_num_lat
+Associating procedure: magnetic_space_group_type.get_magnetic_space_group_num_alat
+Associating procedure: magnetic_space_group_type.set_magnetic_space_group_num_alat
+Associating procedure: magnetic_space_group_type.get_magnetic_space_group_centred
+Associating procedure: magnetic_space_group_type.set_magnetic_space_group_centred
+Associating procedure: magnetic_space_group_type.get_magnetic_space_group_spg_lat
+Associating procedure: magnetic_space_group_type.set_magnetic_space_group_spg_lat
+Associating procedure: magnetic_space_group_type.get_magnetic_space_group_parent_num
+Associating procedure: magnetic_space_group_type.set_magnetic_space_group_parent_num
+Associating procedure: magnetic_space_group_type.get_magnetic_space_group_magtype
+Associating procedure: magnetic_space_group_type.set_magnetic_space_group_magtype
+Associating procedure: magnetic_space_group_type.get_magnetic_space_group_n_kv
+Associating procedure: magnetic_space_group_type.set_magnetic_space_group_n_kv
+Associating procedure: magnetic_space_group_type.get_magnetic_space_group_og_number
+Associating procedure: magnetic_space_group_type.set_magnetic_space_group_og_number
+Associating procedure: magnetic_space_group_type.get_magnetic_space_group_n_irreps
+Associating procedure: magnetic_space_group_type.set_magnetic_space_group_n_irreps
+Associating procedure: magnetic_space_group_type.get_magnetic_space_group_spg_latsy
+Associating procedure: magnetic_space_group_type.set_magnetic_space_group_spg_latsy
+Associating procedure: magnetic_space_group_type.get_magnetic_space_group_num_gen
+Associating procedure: magnetic_space_group_type.set_magnetic_space_group_num_gen
+Associating procedure: magnetic_space_group_type.get_magnetic_space_group_standard_setting
+Associating procedure: magnetic_space_group_type.set_magnetic_space_group_standard_setting
+Associating procedure: magnetic_space_group_type.get_magnetic_space_group_parent_spg
+Associating procedure: magnetic_space_group_type.set_magnetic_space_group_parent_spg
+Associating procedure: magnetic_space_group_type.get_magnetic_space_group_og_symbol
+Associating procedure: magnetic_space_group_type.set_magnetic_space_group_og_symbol
+Associating procedure: magnetic_space_group_type.get_magnetic_space_group_centre
+Associating procedure: magnetic_space_group_type.set_magnetic_space_group_centre
+Associating procedure: magnetic_space_group_type.get_magnetic_space_group_mcif
+Associating procedure: magnetic_space_group_type.set_magnetic_space_group_mcif
+Associating procedure: magnetic_space_group_type.get_magnetic_space_group_numops
+Associating procedure: magnetic_space_group_type.set_magnetic_space_group_numops
+Associating procedure: magnetic_space_group_type.get_magnetic_space_group_trn_to_standard
+Associating procedure: magnetic_space_group_type.set_magnetic_space_group_trn_to_standard
+Associating procedure: magnetic_space_group_type.get_magnetic_space_group_trn_from_parent
+Associating procedure: magnetic_space_group_type.set_magnetic_space_group_trn_from_parent
+Associating procedure: magnetic_space_group_type.get_magnetic_space_group_multip
+Associating procedure: magnetic_space_group_type.set_magnetic_space_group_multip
+Associating procedure: maghd_list_type.get_maghd_list_nref
+Associating procedure: maghd_list_type.set_maghd_list_nref
+Associating procedure: maghd_type.get_maghd_sqamiv
+Associating procedure: maghd_type.set_maghd_sqamiv
+Associating procedure: maghd_type.get_maghd_num_k
+Associating procedure: maghd_type.set_maghd_num_k
+Associating procedure: maghd_type.get_maghd_h
+Associating procedure: maghd_type.set_maghd_h
+Associating procedure: maghd_type.get_maghd_sqmiv
+Associating procedure: maghd_type.set_maghd_sqmiv
+Associating procedure: maghd_type.get_maghd_s
+Associating procedure: maghd_type.set_maghd_s
+Associating procedure: maghd_type.get_maghd_signp
+Associating procedure: maghd_type.set_maghd_signp
+Associating procedure: maghd_type.get_maghd_keqv_minus
+Associating procedure: maghd_type.set_maghd_keqv_minus
+Associating procedure: magh_list_type.get_magh_list_nref
+Associating procedure: magh_list_type.set_magh_list_nref
+Associating procedure: magh_type.get_magh_num_k
+Associating procedure: magh_type.set_magh_num_k
+Associating procedure: magh_type.get_magh_h
+Associating procedure: magh_type.set_magh_h
+Associating procedure: magh_type.get_magh_sqmiv
+Associating procedure: magh_type.set_magh_sqmiv
+Associating procedure: magh_type.get_magh_s
+Associating procedure: magh_type.set_magh_s
+Associating procedure: magh_type.get_magh_signp
+Associating procedure: magh_type.set_magh_signp
+Associating procedure: magh_type.get_magh_keqv_minus
+Associating procedure: magh_type.set_magh_keqv_minus
+Associating procedure: magh_type.get_magh_mult
+Associating procedure: magh_type.set_magh_mult
+Associating procedure: reflect_type.get_reflect_h
+Associating procedure: reflect_type.set_reflect_h
+Associating procedure: reflect_type.get_reflect_s
+Associating procedure: reflect_type.set_reflect_s
+Associating procedure: reflect_type.get_reflect_mult
+Associating procedure: reflect_type.set_reflect_mult
+Associating procedure: reflection_list_type.get_reflection_list_nref
+Associating procedure: reflection_list_type.set_reflection_list_nref
+Associating procedure: reflection_type.get_reflection_a
+Associating procedure: reflection_type.set_reflection_a
+Associating procedure: reflection_type.get_reflection_aa
+Associating procedure: reflection_type.set_reflection_aa
+Associating procedure: reflection_type.get_reflection_b
+Associating procedure: reflection_type.set_reflection_b
+Associating procedure: reflection_type.get_reflection_bb
+Associating procedure: reflection_type.set_reflection_bb
+Associating procedure: reflection_type.get_reflection_h
+Associating procedure: reflection_type.set_reflection_h
+Associating procedure: reflection_type.get_reflection_sfo
+Associating procedure: reflection_type.set_reflection_sfo
+Associating procedure: reflection_type.get_reflection_s
+Associating procedure: reflection_type.set_reflection_s
+Associating procedure: reflection_type.get_reflection_fc
+Associating procedure: reflection_type.set_reflection_fc
+Associating procedure: reflection_type.get_reflection_w
+Associating procedure: reflection_type.set_reflection_w
+Associating procedure: reflection_type.get_reflection_phase
+Associating procedure: reflection_type.set_reflection_phase
+Associating procedure: reflection_type.get_reflection_mult
+Associating procedure: reflection_type.set_reflection_mult
+Associating procedure: reflection_type.get_reflection_fo
+Associating procedure: reflection_type.set_reflection_fo
+Associating procedure: ns_space_group_type.get_ns_space_group_centred
+Associating procedure: ns_space_group_type.set_ns_space_group_centred
+Associating procedure: ns_space_group_type.get_ns_space_group_numspg
+Associating procedure: ns_space_group_type.set_ns_space_group_numspg
+Associating procedure: ns_space_group_type.get_ns_space_group_crystalsys
+Associating procedure: ns_space_group_type.set_ns_space_group_crystalsys
+Associating procedure: ns_space_group_type.get_ns_space_group_numlat
+Associating procedure: ns_space_group_type.set_ns_space_group_numlat
+Associating procedure: ns_space_group_type.get_ns_space_group_pg
+Associating procedure: ns_space_group_type.set_ns_space_group_pg
+Associating procedure: ns_space_group_type.get_ns_space_group_hall
+Associating procedure: ns_space_group_type.set_ns_space_group_hall
+Associating procedure: ns_space_group_type.get_ns_space_group_info
+Associating procedure: ns_space_group_type.set_ns_space_group_info
+Associating procedure: ns_space_group_type.get_ns_space_group_spg_lat
+Associating procedure: ns_space_group_type.set_ns_space_group_spg_lat
+Associating procedure: ns_space_group_type.get_ns_space_group_laue
+Associating procedure: ns_space_group_type.set_ns_space_group_laue
+Associating procedure: ns_space_group_type.get_ns_space_group_spg_latsy
+Associating procedure: ns_space_group_type.set_ns_space_group_spg_latsy
+Associating procedure: ns_space_group_type.get_ns_space_group_num_gen
+Associating procedure: ns_space_group_type.set_ns_space_group_num_gen
+Associating procedure: ns_space_group_type.get_ns_space_group_bravais
+Associating procedure: ns_space_group_type.set_ns_space_group_bravais
+Associating procedure: ns_space_group_type.get_ns_space_group_sg_setting
+Associating procedure: ns_space_group_type.set_ns_space_group_sg_setting
+Associating procedure: ns_space_group_type.get_ns_space_group_ghall
+Associating procedure: ns_space_group_type.set_ns_space_group_ghall
+Associating procedure: ns_space_group_type.get_ns_space_group_spg_symb
+Associating procedure: ns_space_group_type.set_ns_space_group_spg_symb
+Associating procedure: ns_space_group_type.get_ns_space_group_centre_coord
+Associating procedure: ns_space_group_type.set_ns_space_group_centre_coord
+Associating procedure: ns_space_group_type.get_ns_space_group_centre
+Associating procedure: ns_space_group_type.set_ns_space_group_centre
+Associating procedure: ns_space_group_type.get_ns_space_group_numops
+Associating procedure: ns_space_group_type.set_ns_space_group_numops
+Associating procedure: ns_space_group_type.get_ns_space_group_multip
+Associating procedure: ns_space_group_type.set_ns_space_group_multip
+Associating procedure: ns_sym_oper_type.get_ns_sym_oper_tr
+Associating procedure: ns_sym_oper_type.set_ns_sym_oper_tr
+Associating procedure: ns_sym_oper_type.get_ns_sym_oper_rot
+Associating procedure: ns_sym_oper_type.set_ns_sym_oper_rot
+Associating procedure: space_group_type.get_space_group_centred
+Associating procedure: space_group_type.set_space_group_centred
+Associating procedure: space_group_type.get_space_group_centre_coord
+Associating procedure: space_group_type.set_space_group_centre_coord
+Associating procedure: space_group_type.get_space_group_hexa
+Associating procedure: space_group_type.set_space_group_hexa
+Associating procedure: space_group_type.get_space_group_numspg
+Associating procedure: space_group_type.set_space_group_numspg
+Associating procedure: space_group_type.get_space_group_crystalsys
+Associating procedure: space_group_type.set_space_group_crystalsys
+Associating procedure: space_group_type.get_space_group_numlat
+Associating procedure: space_group_type.set_space_group_numlat
+Associating procedure: space_group_type.get_space_group_pg
+Associating procedure: space_group_type.set_space_group_pg
+Associating procedure: space_group_type.get_space_group_wyckoff
+Associating procedure: space_group_type.set_space_group_wyckoff
+Associating procedure: space_group_type.get_space_group_hall
+Associating procedure: space_group_type.set_space_group_hall
+Associating procedure: space_group_type.get_space_group_info
+Associating procedure: space_group_type.set_space_group_info
+Associating procedure: space_group_type.get_space_group_spg_lat
+Associating procedure: space_group_type.set_space_group_spg_lat
+Associating procedure: space_group_type.get_space_group_laue
+Associating procedure: space_group_type.set_space_group_laue
+Associating procedure: space_group_type.get_space_group_spg_latsy
+Associating procedure: space_group_type.set_space_group_spg_latsy
+Associating procedure: space_group_type.get_space_group_num_gen
+Associating procedure: space_group_type.set_space_group_num_gen
+Associating procedure: space_group_type.get_space_group_bravais
+Associating procedure: space_group_type.set_space_group_bravais
+Associating procedure: space_group_type.get_space_group_sg_setting
+Associating procedure: space_group_type.set_space_group_sg_setting
+Associating procedure: space_group_type.get_space_group_ghall
+Associating procedure: space_group_type.set_space_group_ghall
+Associating procedure: space_group_type.get_space_group_spg_symb
+Associating procedure: space_group_type.set_space_group_spg_symb
+Associating procedure: space_group_type.get_space_group_centre
+Associating procedure: space_group_type.set_space_group_centre
+Associating procedure: space_group_type.get_space_group_numops
+Associating procedure: space_group_type.set_space_group_numops
+Associating procedure: space_group_type.get_space_group_r_asym_unit
+Associating procedure: space_group_type.set_space_group_r_asym_unit
+Associating procedure: space_group_type.get_space_group_multip
+Associating procedure: space_group_type.set_space_group_multip
+Associating procedure: sym_oper_type.get_sym_oper_tr
+Associating procedure: sym_oper_type.set_sym_oper_tr
+Associating procedure: sym_oper_type.get_sym_oper_rot
+Associating procedure: sym_oper_type.set_sym_oper_rot
+Associating procedure: wyck_pos_type.get_wyck_pos_norb
+Associating procedure: wyck_pos_type.set_wyck_pos_norb
+Associating procedure: wyck_pos_type.get_wyck_pos_str_orig
+Associating procedure: wyck_pos_type.set_wyck_pos_str_orig
+Associating procedure: wyck_pos_type.get_wyck_pos_multp
+Associating procedure: wyck_pos_type.set_wyck_pos_multp
+Associating procedure: wyck_pos_type.get_wyck_pos_site
+Associating procedure: wyck_pos_type.set_wyck_pos_site
+Associating procedure: wyckoff_type.get_wyckoff_num_orbit
+Associating procedure: wyckoff_type.set_wyckoff_num_orbit
+Associating procedure: powder_numor_type.get_powder_numor_nbang
+Associating procedure: powder_numor_type.set_powder_numor_nbang
+Associating procedure: powder_numor_type.get_powder_numor_manip
+Associating procedure: powder_numor_type.set_powder_numor_manip
+Associating procedure: powder_numor_type.get_powder_numor_icalc
+Associating procedure: powder_numor_type.set_powder_numor_icalc
+Associating procedure: powder_numor_type.get_powder_numor_monitor
+Associating procedure: powder_numor_type.set_powder_numor_monitor
+Associating procedure: powder_numor_type.get_powder_numor_nbdata
+Associating procedure: powder_numor_type.set_powder_numor_nbdata
+Associating procedure: powder_numor_type.get_powder_numor_title
+Associating procedure: powder_numor_type.set_powder_numor_title
+Associating procedure: powder_numor_type.get_powder_numor_numor
+Associating procedure: powder_numor_type.set_powder_numor_numor
+Associating procedure: powder_numor_type.get_powder_numor_instrm
+Associating procedure: powder_numor_type.set_powder_numor_instrm
+Associating procedure: powder_numor_type.get_powder_numor_wave
+Associating procedure: powder_numor_type.set_powder_numor_wave
+Associating procedure: powder_numor_type.get_powder_numor_header
+Associating procedure: powder_numor_type.set_powder_numor_header
+Associating procedure: powder_numor_type.get_powder_numor_scantype
+Associating procedure: powder_numor_type.set_powder_numor_scantype
+Associating procedure: powder_numor_type.get_powder_numor_icdesc
+Associating procedure: powder_numor_type.set_powder_numor_icdesc
+Associating procedure: powder_numor_type.get_powder_numor_angles
+Associating procedure: powder_numor_type.set_powder_numor_angles
+Associating procedure: powder_numor_type.get_powder_numor_time
+Associating procedure: powder_numor_type.set_powder_numor_time
+Associating procedure: powder_numor_type.get_powder_numor_nframes
+Associating procedure: powder_numor_type.set_powder_numor_nframes
+Associating procedure: powder_numor_type.get_powder_numor_conditions
+Associating procedure: powder_numor_type.set_powder_numor_conditions
+Associating procedure: powder_numor_type.get_powder_numor_scans
+Associating procedure: powder_numor_type.set_powder_numor_scans
+Associating procedure: diffraction_pattern_type.get_diffraction_pattern_scal
+Associating procedure: diffraction_pattern_type.set_diffraction_pattern_scal
+Associating procedure: diffraction_pattern_type.get_diffraction_pattern_conv
+Associating procedure: diffraction_pattern_type.set_diffraction_pattern_conv
+Associating procedure: diffraction_pattern_type.get_diffraction_pattern_instr
+Associating procedure: diffraction_pattern_type.set_diffraction_pattern_instr
+Associating procedure: diffraction_pattern_type.get_diffraction_pattern_yax_text
+Associating procedure: diffraction_pattern_type.set_diffraction_pattern_yax_text
+Associating procedure: diffraction_pattern_type.get_diffraction_pattern_diff_kind
+Associating procedure: diffraction_pattern_type.set_diffraction_pattern_diff_kind
+Associating procedure: diffraction_pattern_type.get_diffraction_pattern_xmin
+Associating procedure: diffraction_pattern_type.set_diffraction_pattern_xmin
+Associating procedure: diffraction_pattern_type.get_diffraction_pattern_norm_mon
+Associating procedure: diffraction_pattern_type.set_diffraction_pattern_norm_mon
+Associating procedure: diffraction_pattern_type.get_diffraction_pattern_ymin
+Associating procedure: diffraction_pattern_type.set_diffraction_pattern_ymin
+Associating procedure: diffraction_pattern_type.get_diffraction_pattern_monitor
+Associating procedure: diffraction_pattern_type.set_diffraction_pattern_monitor
+Associating procedure: diffraction_pattern_type.get_diffraction_pattern_filepath
+Associating procedure: diffraction_pattern_type.set_diffraction_pattern_filepath
+Associating procedure: diffraction_pattern_type.get_diffraction_pattern_title
+Associating procedure: diffraction_pattern_type.set_diffraction_pattern_title
+Associating procedure: diffraction_pattern_type.get_diffraction_pattern_filename
+Associating procedure: diffraction_pattern_type.set_diffraction_pattern_filename
+Associating procedure: diffraction_pattern_type.get_diffraction_pattern_scat_var
+Associating procedure: diffraction_pattern_type.set_diffraction_pattern_scat_var
+Associating procedure: diffraction_pattern_type.get_diffraction_pattern_step
+Associating procedure: diffraction_pattern_type.set_diffraction_pattern_step
+Associating procedure: diffraction_pattern_type.get_diffraction_pattern_x
+Associating procedure: diffraction_pattern_type.set_diffraction_pattern_x
+Associating procedure: diffraction_pattern_type.get_diffraction_pattern_ct_step
+Associating procedure: diffraction_pattern_type.set_diffraction_pattern_ct_step
+Associating procedure: diffraction_pattern_type.get_diffraction_pattern_xax_text
+Associating procedure: diffraction_pattern_type.set_diffraction_pattern_xax_text
+Associating procedure: diffraction_pattern_type.get_diffraction_pattern_ymax
+Associating procedure: diffraction_pattern_type.set_diffraction_pattern_ymax
+Associating procedure: diffraction_pattern_type.get_diffraction_pattern_col_time
+Associating procedure: diffraction_pattern_type.set_diffraction_pattern_col_time
+Associating procedure: diffraction_pattern_type.get_diffraction_pattern_tset
+Associating procedure: diffraction_pattern_type.set_diffraction_pattern_tset
+Associating procedure: diffraction_pattern_type.get_diffraction_pattern_tsamp
+Associating procedure: diffraction_pattern_type.set_diffraction_pattern_tsamp
+Associating procedure: diffraction_pattern_type.get_diffraction_pattern_bgr
+Associating procedure: diffraction_pattern_type.set_diffraction_pattern_bgr
+Associating procedure: diffraction_pattern_type.get_diffraction_pattern_xmax
+Associating procedure: diffraction_pattern_type.set_diffraction_pattern_xmax
+Associating procedure: diffraction_pattern_type.get_diffraction_pattern_y
+Associating procedure: diffraction_pattern_type.set_diffraction_pattern_y
+Associating procedure: diffraction_pattern_type.get_diffraction_pattern_npts
+Associating procedure: diffraction_pattern_type.set_diffraction_pattern_npts
+Associating procedure: diffraction_pattern_type.get_diffraction_pattern_sigma
+Associating procedure: diffraction_pattern_type.set_diffraction_pattern_sigma

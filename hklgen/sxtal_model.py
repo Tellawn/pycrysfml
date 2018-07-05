@@ -86,10 +86,10 @@ def makeXtalPeaks(sfs2, svalues, refList, peaks=None, error=None):
     if peaks == None:
         peaks = []
     for i in range(len(svalues)):
-        if error != None:
-            p = sXtalPeak(sfs2[i], svalues[i], refList[i].hkl, error[i])
-        else:
+        if error is None:
             p = sXtalPeak(sfs2[i], svalues[i], refList[i].hkl)
+        else:
+            p = sXtalPeak(sfs2[i], svalues[i], refList[i].hkl, error[i])
         if p not in peaks:
             peaks.append(p)
         else:
@@ -111,7 +111,7 @@ def checkInt(value, sCalc):
 def getXtalIntensity(peaks, sList=None, background=None, exclusions=None, base=0, scale=1):
     if background == None:
         background = np.zeros(len(sList))
-    if sList == None:
+    if sList is None:
         return (np.array([peak.sfs2 for peak in peaks])*scale)
     else:
         intensities = []
@@ -365,10 +365,11 @@ class Model(object):
         self.wavelength = wavelength
         self.cell = cell
         self.exclusions = exclusions
-        self.ttMin = min(self.tt)
-        self.ttMax = max(self.tt)
-        self.sMin = getS(self.ttMin, self.wavelength)
-        self.sMax = getS(self.ttMax, self.wavelength)
+	if self.tt != None:
+            self.ttMin = min(self.tt)
+            self.ttMax = max(self.tt)
+            self.sMin = getS(self.ttMin, self.wavelength)
+            self.sMax = getS(self.ttMax, self.wavelength)
         self.magnetic = magnetic
         if magnetic:
             self.symmetry = symmetry
@@ -387,7 +388,13 @@ class Model(object):
             self.magRefList = satelliteGen(self.cell.cell, self.symmetry, np.sin(179.5/2)/self.wavelength, hkls=self.refList)
             self.magReflections = self.magRefList[:]
         self.reflections = self.refList
-            
+
+    def _set_observations(self, observed):
+        self.obspeaks = makeXtalPeaks(observed, [getS(ttval, self.wavelength) for ttval in self.tt], 
+        refList=self.refList, error=self.error)
+        self.sList = np.array([peak.svalue for peak in self.obspeaks])
+        self.observed = np.array([peak.sfs2 for peak in self.obspeaks])
+
     def __getstate__(self):
         state = self.__dict__.copy()
         del state["refList"]
@@ -467,12 +474,13 @@ class Model(object):
             self.peaks = makeXtalPeaks(sfs2, svalues, self.magRefList)
             #self.sList = np.array([peak.svalue for peak in self.peaks])
             #self.peaks.extend(makeXtalPeaks(sfs2, svalues))        
-        hkls = [reflection.hkl for reflection in self.reflections]
-        sList = calcS(self.cell.cell, hkls)
-        for i in xrange(len(self.reflections)):
-            self.reflections[i].set_reflection_s(sList[i])
-        sfs2, svalues = calcXtalIntensity(self.refList, self.atomListModel.atomList, self.spaceGroup, self.wavelength, extinctions=[ext.value for ext in self.extinctions], scale=self.scale.value)
-        self.intensities = sfs2
-        if not self.magnetic: self.peaks = None
-        self.peaks = makeXtalPeaks(sfs2, svalues, self.refList, peaks=self.peaks)
+        if self.reflections != None:
+	    hkls = [reflection.hkl for reflection in self.reflections]
+            sList = calcS(self.cell.cell, hkls)
+            for i in xrange(len(self.reflections)):
+            	self.reflections[i].set_reflection_s(sList[i])
+       	    sfs2, svalues = calcXtalIntensity(self.refList, self.atomListModel.atomList, self.spaceGroup, self.wavelength, extinctions=[ext.value for ext in self.extinctions], scale=self.scale.value)
+            self.intensities = sfs2
+            if not self.magnetic: self.peaks = None
+            self.peaks = makeXtalPeaks(sfs2, svalues, self.refList, peaks=self.peaks)
         #self.sList = svalues
