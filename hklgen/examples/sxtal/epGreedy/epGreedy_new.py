@@ -20,7 +20,7 @@ import os,sys;sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os
 import random
 import numpy as np
 import os
-
+import matplotlib.pyplot as plt
 
 #So apparently you just can't run pycrysfml on Windows because you'd have to build all of its dependencies first
 import fswig_hklgen as H
@@ -113,7 +113,7 @@ class EpsilonGreedy():
 
         popTimes = 0
         for i in self.visited:
-            print(i-popTimes)
+            #print(i-popTimes)
             choices_indices.remove(i)
             choices.pop(i-popTimes)
             popTimes += 1
@@ -162,11 +162,10 @@ class EpsilonGreedy():
         self.values[chosen_action] = value * (n-1.0)/n + float(reward)/n
         return
 
-
 #agent is the EpsilonGreedy() object, actions is a list of HKLs 
 #(each element of the list is a length 3 list: [h, k, l]), num_sims is an int, horizon is an int
 def test_algorithm(agent, actions, num_sims, horizon):
-    
+    master_file = open("MASTERFILE.txt", "w")
     for simulation in range(num_sims):
 	print("simulation \#" + str(simulation))
         agent.reset()
@@ -183,8 +182,8 @@ def test_algorithm(agent, actions, num_sims, horizon):
 
         #agent.initialize(agent.getCounts(), agent.getRewards()) #this line is kinda pointless
         file = open("eGreedyResults" + str(simulation) + ".txt", "w")
-        file.write("HKL Value\t\tReward\tTotalReward\tChi Squared Value\n")
-
+        file.write("HKL Value\t\tReward\tTotalReward\tChi Squared Value\tZ Coordinate Approximation\n")
+	master_file.write("Z Coordinate Approximation, Simulation #" + str(simulation))
         for t in range(horizon):
             #print(agent.getValues())
             #print(agent.visited)
@@ -240,10 +239,11 @@ def test_algorithm(agent, actions, num_sims, horizon):
                 prevChiSq = chiSq
             
             file.write(str(chosen_actionList[t].hkl).replace("[","").replace("]","").replace(",",""))
-            file.write("\t\t" + str(reward) + "\t" + str(total_reward) + "\t" + str(chiSq) + "\n")
-            
+            file.write("\t\t\t" + str(reward) + "\t" + str(total_reward) + "\t\t" + str(chiSq) + "\t\t" + str(model.atomListModel.atomModels[0].z.value) + "\n")
+            master_file.write(str(model.atomListModel.atomModels[0].z.value) + "\n")
         file.close()
         
+    master_file.close()
     return
 
 #def __main__():
@@ -251,5 +251,5 @@ def test_algorithm(agent, actions, num_sims, horizon):
 #    for j in i:
 #        print(j)
 agent = EpsilonGreedy(0.1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 10, len(refList))	#TODO fix repeati
+test_algorithm(agent, refList, 2, len(refList))	#TODO fix repeati
 print("done")
