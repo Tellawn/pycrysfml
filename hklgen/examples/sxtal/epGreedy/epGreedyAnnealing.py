@@ -135,14 +135,14 @@ class EpsilonGreedy():
         
         #Exploit - Pick among the options (tied) with the best expected reward
         if coin > self.epsilon:
-            print("Exploit")
+#            prin)
             choice = random.choice(self.bestReward())
             self.visited.append(choice)
             self.visited.sort()
             
         #Explore - Pick a choice at random
         else:
-            print("Explore")
+#            print
             choices = list(self.values)
             choices_indices = []
             for i in range(len(self.values)):
@@ -171,7 +171,7 @@ class EpsilonGreedy():
 #(each element of the list is a length 3 list: [h, k, l]), num_sims is an int, horizon is an int
 def test_algorithm(agent, actions, num_sims, horizon):
     for simulation in range(num_sims):
-	print("simulation \#" + str(simulation))
+	print("simulation #" + str(simulation))
         agent.reset()
         total_reward = 0
 
@@ -239,5 +239,5 @@ def test_algorithm(agent, actions, num_sims, horizon):
 #    for j in i:
 #        print(j)
 agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 3, len(refList))
+test_algorithm(agent, refList, 3000, len(refList))
 print("done")
