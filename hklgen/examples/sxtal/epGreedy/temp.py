@@ -4,8 +4,8 @@ import matplotlib as mpl
 import numpy as np
 
 
-for i in range(10):
-    file = open("eGreedyResults" + str(i) + ".txt","r")
+for i in range(3):
+    file = open("epGreedyAnnealingScaledResults" + str(i) + ".txt","r")
     file.readline()
     data = file.read()
     print(data)
@@ -33,7 +33,7 @@ for i in range(10):
     mpl.pyplot.xlabel("t")
     mpl.pyplot.ylabel("Z Values")
     fig.show()
-    fig.savefig("z" + str(i) + ".png")
+    fig.savefig("zAnnealingScaled" + str(i) + ".png")
     
     file.close()
     
