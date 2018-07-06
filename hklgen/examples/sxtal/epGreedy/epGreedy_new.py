@@ -20,6 +20,8 @@ import os,sys;sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os
 import random
 import numpy as np
 import os
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 
 #So apparently you just can't run pycrysfml on Windows because you'd have to build all of its dependencies first
@@ -183,7 +185,7 @@ def test_algorithm(agent, actions, num_sims, horizon):
         #agent.initialize(agent.getCounts(), agent.getRewards()) #this line is kinda pointless
         file = open("eGreedyResults" + str(simulation) + ".txt", "w")
         file.write("HKL Value\t\tReward\tTotalReward\tChi Squared Value\tZ Coordinate Approximation\n")
-	master_file.write("Z Coordinate Approximation, Simulation #" + str(simulation))
+	master_file.write("\n")
         for t in range(horizon):
             #print(agent.getValues())
             #print(agent.visited)
@@ -246,10 +248,18 @@ def test_algorithm(agent, actions, num_sims, horizon):
     master_file.close()
     return
 
+
 #def __main__():
 #for i in refList:
 #    for j in i:
 #        print(j)
 agent = EpsilonGreedy(0.1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 2, len(refList))	#TODO fix repeati
+test_algorithm(agent, refList, 1, len(refList))	#TODO fix repeati
 print("done")
+
+
+file = open("MASTERFILE.txt", "r")
+zs = file.split()
+print(zs)
+fig = plt.figure()
+plt.pyplot.plot()
