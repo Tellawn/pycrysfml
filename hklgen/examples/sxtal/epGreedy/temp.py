@@ -14,12 +14,18 @@ print("test")
 #fig.set_xlabel("t")
 #fig.set_ylabel("Z Approximation")
 
+numbers = np.zeros(len(data))
 
 for i in range(len(data)):
-    if (data[i] != ''):
-        data[i] = float(data[i])
+    data[i] = float(data[i])
+    numbers[i] = i    
+#print(data)
 
-mpl.pyplot.plot(data)
+mpl.pyplot.plot(numbers, data)
 mpl.pyplot.xlabel("t")
 mpl.pyplot.ylabel("Z Values")
 fig.show()
+fig.savefig("z.png")
+
+
+print("done")
