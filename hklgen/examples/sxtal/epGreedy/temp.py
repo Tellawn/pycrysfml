@@ -3,29 +3,40 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 import numpy as np
 
-file = open("MASTERFILE.txt","r")
-data = file.read()
-data = data.split("\n")
 
-fig = plt.figure()
-print("test")
-
-#fig.set_title("Z Coords")
-#fig.set_xlabel("t")
-#fig.set_ylabel("Z Approximation")
-
-numbers = np.zeros(len(data))
-
-for i in range(len(data)):
-    data[i] = float(data[i])
-    numbers[i] = i    
-#print(data)
-
-mpl.pyplot.plot(numbers, data)
-mpl.pyplot.xlabel("t")
-mpl.pyplot.ylabel("Z Values")
-fig.show()
-fig.savefig("z.png")
+for i in range(10):
+    file = open("eGreedyResults" + str(i) + ".txt","r")
+    file.readline()
+    data = file.read()
+    print(data)
+    data = data.split("\n")
+    for j in range(len(data)):
+        #print(data[j])
+        data[j] = data[j].split()
+        
+    fig = plt.figure()
+    print("test")
+    
+    #fig.set_title("Z Coords")
+    #fig.set_xlabel("t")
+    #fig.set_ylabel("Z Approximation")
+    
+    numbers = np.zeros(len(data))
+    zs = np.zeros(len(data))
+    for j in range(len(data)):
+        if (data[j][0] != ''):
+            zs[j] = float(data[j][6])
+            numbers[j] = j
+    #print(data)
+    
+    mpl.pyplot.plot(numbers, zs)
+    mpl.pyplot.xlabel("t")
+    mpl.pyplot.ylabel("Z Values")
+    fig.show()
+    fig.savefig("z" + str(i) + ".png")
+    
+    file.close()
+    
 
 
 print("done")

@@ -1,5 +1,5 @@
 """
-Filename: epGreedy_new.py
+Filename: epGreedyAnnealing.py
 Authors: Ryan Cho and Telon Yan
 Implements a modified epsilon-greedy algorithm for pycrysfml, but can be
 used for similar scenarios. For crystallography, since one may not visit
@@ -162,6 +162,9 @@ class EpsilonGreedy():
         n = self.counts[chosen_action]
         value = self.values[chosen_action]
         self.values[chosen_action] = value * (n-1.0)/n + float(reward)/n
+	
+	t = np.sum(self.counts) + 1
+	self.epsilon = self.epsilon / np.log(t + 0.0000001)
         return
 
 #agent is the EpsilonGreedy() object, actions is a list of HKLs 
@@ -183,7 +186,7 @@ def test_algorithm(agent, actions, num_sims, horizon):
         
 
         #agent.initialize(agent.getCounts(), agent.getRewards()) #this line is kinda pointless
-        file = open("eGreedyResults" + str(simulation+5) + ".txt", "w")
+        file = open("epGreedyAnnealingResults" + str(simulation+5) + ".txt", "w")
         file.write("HKL Value\t\tReward\tTotalReward\tChi Squared Value\tZ Coordinate Approximation\n")
 	master_file.write("\n")
         for t in range(horizon):
