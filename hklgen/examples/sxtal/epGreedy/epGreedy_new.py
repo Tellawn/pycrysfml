@@ -183,7 +183,7 @@ def test_algorithm(agent, actions, num_sims, horizon):
         
 
         #agent.initialize(agent.getCounts(), agent.getRewards()) #this line is kinda pointless
-        file = open("eGreedyResults" + str(simulation) + ".txt", "w")
+        file = open("eGreedyResults" + str(simulation+5) + ".txt", "w")
         file.write("HKL Value\t\tReward\tTotalReward\tChi Squared Value\tZ Coordinate Approximation\n")
 	master_file.write("\n")
         for t in range(horizon):
@@ -253,13 +253,6 @@ def test_algorithm(agent, actions, num_sims, horizon):
 #for i in refList:
 #    for j in i:
 #        print(j)
-agent = EpsilonGreedy(0.1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 1, len(refList))	#TODO fix repeati
+agent = EpsilonGreedy(0.25, np.zeros(len(refList)), np.ones(len(refList)))
+test_algorithm(agent, refList, 5, len(refList))	#TODO fix repeati
 print("done")
-
-
-file = open("MASTERFILE.txt", "r")
-zs = file.split()
-print(zs)
-fig = plt.figure()
-plt.pyplot.plot()
