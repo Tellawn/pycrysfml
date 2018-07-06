@@ -58,7 +58,7 @@ def setInitParams():
     #Define a model
     m = S.Model([], [], backg, wavelength, spaceGroup, cell,
                 [atomList], exclusions,
-                scale=0.06298, error=[],  extinction=[0.0001054])
+                scale=0.62978, error=[],  extinction=[0.000105])
     #Set a range on the x value of the first atom in the model
     m.atomListModel.atomModels[0].z.value = 0.3
     m.atomListModel.atomModels[0].z.range(0,0.5)
@@ -164,13 +164,12 @@ class EpsilonGreedy():
         self.values[chosen_action] = value * (n-1.0)/n + float(reward)/n
 	
 	t = np.sum(self.counts) + 1
-	self.epsilon = self.epsilon / np.log(t + 0.0000001)
+	self.epsilon = 1 / np.log(t + 0.0000001)
         return
 
 #agent is the EpsilonGreedy() object, actions is a list of HKLs 
 #(each element of the list is a length 3 list: [h, k, l]), num_sims is an int, horizon is an int
 def test_algorithm(agent, actions, num_sims, horizon):
-    master_file = open("MASTERFILE.txt", "w")
     for simulation in range(num_sims):
 	print("simulation \#" + str(simulation))
         agent.reset()
@@ -178,7 +177,7 @@ def test_algorithm(agent, actions, num_sims, horizon):
 
         chosen_actionList = []
 	observed_intensities = []
-        rewards = np.zeros(horizon)	
+        rewards = np.zeros(horizon)
 
         #|--------------------------------Bumps stuff----------------------------------------------|
         model = setInitParams()
@@ -186,9 +185,8 @@ def test_algorithm(agent, actions, num_sims, horizon):
         
 
         #agent.initialize(agent.getCounts(), agent.getRewards()) #this line is kinda pointless
-        file = open("epGreedyAnnealingResults" + str(simulation+5) + ".txt", "w")
-        file.write("HKL Value\t\tReward\tTotalReward\tChi Squared Value\tZ Coordinate Approximation\n")
-	master_file.write("\n")
+        file = open("epGreedyAnnealingUnscaledResults" + str(simulation) + ".txt", "w")
+        file.write("HKL Value\t\tReward\tTotalReward\tChi Squared Value\tZ Coordinate Approximation\t\tdx")
         for t in range(horizon):
             #print(agent.getValues())
             #print(agent.visited)
@@ -212,30 +210,16 @@ def test_algorithm(agent, actions, num_sims, horizon):
             observed_intensities.append(sfs2[chosen_action])
             model._set_observations(observed_intensities)
             model.update()
-            """
-            #Need more data than parameters, have to wait to the second step to fit
-            if t > 0:
-                x, dx, chisq = fit(model)
-                reward -= 1
-                if (prevX2 != None and chisq < prevX2):
-                    reward += 1.5
-                #Update expected rewards here or something
-                #qtable[stateIndex, actionIndex] =  qtable[stateIndex, actionIndex] + \
-                #                                   alpha*(reward + gamma*(np.max(qtable[stateIndex,:])) - \
-                #                                   qtable[stateIndex, actionIndex])
-                
-                prevX2 = chisq
-            """
+
             reward = 0
             chiSq = 0
-            
+	    dx = 0
+
             if t > 0:
-                #This line is fake pycrysfml/bumps fitting
                 x, dx, chiSq = fit(model)
-                
-                reward = -1 # * abs(dx) #This would scale for error
+                reward = -1 #/ abs(error[chosen_action])
                 if (prevChiSq != None and chiSq < prevChiSq):
-                    reward += 1.5 # * abs(dx)
+                    reward += 1.5 #/ abs(error[chosen_action])
                     
                 rewards[t] = reward
                 total_reward += reward
@@ -243,12 +227,10 @@ def test_algorithm(agent, actions, num_sims, horizon):
                 
                 prevChiSq = chiSq
             
-            file.write(str(chosen_actionList[t].hkl).replace("[","").replace("]","").replace(",",""))
-            file.write("\t\t\t" + str(reward) + "\t" + str(total_reward) + "\t\t" + str(chiSq) + "\t\t" + str(model.atomListModel.atomModels[0].z.value) + "\n")
-            master_file.write(str(model.atomListModel.atomModels[0].z.value) + "\n")
+            file.write("\n" + str(chosen_actionList[t].hkl).replace("[","").replace("]","").replace(",",""))
+            file.write("\t\t\t" + str(reward) + "\t" + str(total_reward) + "\t\t" + str(chiSq) + "\t\t" + str(model.atomListModel.atomModels[0].z.value) + "\t\t" + str(dx) + "\t\t" + str(error[chosen_action]))
         file.close()
         
-    master_file.close()
     return
 
 
@@ -256,6 +238,6 @@ def test_algorithm(agent, actions, num_sims, horizon):
 #for i in refList:
 #    for j in i:
 #        print(j)
-agent = EpsilonGreedy(0.25, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 5, len(refList))	#TODO fix repeati
+agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
+test_algorithm(agent, refList, 15, len(refList))	#TODO fix repeati
 print("done")
