@@ -58,7 +58,7 @@ def setInitParams():
     #Define a model
     m = S.Model([], [], backg, wavelength, spaceGroup, cell,
                 [atomList], exclusions,
-                scale=0.62978, error=[],  extinction=[0.000105])
+                scale=0.062978, error=[],  extinction=[0.000105])
     #Set a range on the x value of the first atom in the model
     m.atomListModel.atomModels[0].z.value = 0.3
     m.atomListModel.atomModels[0].z.range(0,0.5)
@@ -181,11 +181,11 @@ def test_algorithm(agent, actions, num_sims, horizon):
 
         #|--------------------------------Bumps stuff----------------------------------------------|
         model = setInitParams()
-        prevChiSq = None
+        prevChiSq = 0
         
 
         #agent.initialize(agent.getCounts(), agent.getRewards()) #this line is kinda pointless
-        file = open("epGreedyAnnealingUnscaledResults" + str(simulation) + ".txt", "w")
+        file = open("epGreedyAnnealingScaledResults" + str(simulation) + ".txt", "w")
         file.write("HKL Value\t\tReward\tTotalReward\tChi Squared Value\tZ Coordinate Approximation\t\tdx")
         for t in range(horizon):
             #print(agent.getValues())
@@ -217,9 +217,9 @@ def test_algorithm(agent, actions, num_sims, horizon):
 
             if t > 0:
                 x, dx, chiSq = fit(model)
-                reward = -1 #/ abs(error[chosen_action])
-                if (prevChiSq != None and chiSq < prevChiSq):
-                    reward += 1.5 #/ abs(error[chosen_action])
+                reward = -1 * abs(chiSq - prevChiSq)
+                if (prevChiSq != 0 and chiSq < prevChiSq):
+                    reward += 1.5 * abs(chiSq - prevChiSq)
                     
                 rewards[t] = reward
                 total_reward += reward
@@ -239,5 +239,5 @@ def test_algorithm(agent, actions, num_sims, horizon):
 #    for j in i:
 #        print(j)
 agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 15, len(refList))	#TODO fix repeati
+test_algorithm(agent, refList, 3, len(refList))
 print("done")
