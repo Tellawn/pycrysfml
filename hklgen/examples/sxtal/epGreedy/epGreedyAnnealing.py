@@ -236,8 +236,8 @@ def test_algorithm(agent, actions, num_sims, horizon):
             file.write("\t\t\t" + str(reward) + "\t\t\t" + str(total_reward) + "\t\t" + str(chiSq) + "\t\t" + str(model.atomListModel.atomModels[0].z.value) + "\t\t" + str(dx) + "\t\t" + str(error[chosen_action]))
 	x1 = sfs2
 	y = model.theory()
-	pft.scatter(x1,y)
-	plt.savefig('sfs2s.png') 
+	plt.scatter(x1,y)
+	plt.savefig('sfs2s' + str(simulation) + '.png') 
         file.close()
         
     return
