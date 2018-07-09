@@ -60,7 +60,7 @@ def setInitParams():
                 [atomList], exclusions,
                 scale=0.062978, error=[],  extinction=[0.000105])
     #Set a range on the x value of the first atom in the model
-    m.atomListModel.atomModels[0].z.value = 0.31 #zApprox
+    m.atomListModel.atomModels[0].z.value = 0.3
     m.atomListModel.atomModels[0].z.range(0,0.5)
     return m
 
@@ -163,13 +163,13 @@ class EpsilonGreedy():
         value = self.values[chosen_action]
         self.values[chosen_action] = value * (n-1.0)/n + float(reward)/n
 	
-	t = np.sum(self.counts)
+	t = np.sum(self.counts) + 1
 	self.epsilon = 1 / np.log(t + 0.0000001)
         return
 
 #agent is the EpsilonGreedy() object, actions is a list of HKLs 
 #(each element of the list is a length 3 list: [h, k, l]), num_sims is an int, horizon is an int
-def test_algorithm(agent, actions, num_sims, horizon, numParameters):
+def test_algorithm(agent, actions, num_sims, horizon):
     for simulation in range(num_sims):
 	print("simulation #" + str(simulation))
         agent.reset()
@@ -182,10 +182,11 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
         #|--------------------------------Bumps stuff----------------------------------------------|
         model = setInitParams()
         prevChiSq = 0
+        
 
         #agent.initialize(agent.getCounts(), agent.getRewards()) #this line is kinda pointless
-        file = open("epGreedyResults" + str(simulation) + ".txt", "w")
-        file.write("HKL Value\t\tReward\t\t\tTotalReward\tChi Squared Value\tZ Coordinate Approximation\t\tdx")
+        file = open("eegrehhhjyehjeyjpGreedyAnnealingScaledResults" + str(simulation) + ".txt", "w")
+        file.write("HKL Value\t\tReward\tTotalReward\tChi Squared Value\tZ Coordinate Approximation\t\tdx")
         for t in range(horizon):
             #print(agent.getValues())
             #print(agent.visited)
@@ -195,6 +196,7 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
             chosen_actionList.append(actions[chosen_action])
 
             #|-Bumps stuff-|
+            #TODO figure out how this actually works and how we should actually implement it
             #feed actions[chosen_action] into bumps to get "reward" to use in agent.update() which updates expected reward
             #Find the data for this hkl value and add it to the model
 
@@ -210,51 +212,32 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
             model.update()
 
             reward = 0
-	    chiSq = 0
+            chiSq = 0
 	    dx = 0
-	    x = 0
 
-            if t > numParameters - 1:
+            if t > 0:
                 x, dx, chiSq = fit(model)
-                if t > numParameters:
-		    reward = -1 * abs(chiSq - prevChiSq)
-		    if (prevChiSq != 0 and chiSq < prevChiSq):
-			reward += 1.5 * abs(chiSq - prevChiSq)
-		    rewards[t] = reward
-		    total_reward += reward
-		    agent.update(chosen_action, reward)
+                reward = -1 * abs(chiSq - prevChiSq)
+                if (prevChiSq != 0 and chiSq < prevChiSq):
+                    reward += 1.5 * abs(chiSq - prevChiSq)
+                    
+                rewards[t] = reward
+                total_reward += reward
+                agent.update(chosen_action, reward)
+                
                 prevChiSq = chiSq
-	     	
+            
             file.write("\n" + str(chosen_actionList[t].hkl).replace("[","").replace("]","").replace(",",""))
-            file.write("\t\t\t" + str(reward) + "\t\t\t" + str(total_reward) + "\t\t" + str(chiSq) + "\t\t" + str(model.atomListModel.atomModels[0].z.value) + "\t\t" + str(dx) + "\t\t" + str(error[chosen_action]))
-#	x1 = sfs2
-#	y = model.theory()
-#	plt.scatter(x1,y)
-#	plt.savefig('sfs2s' + str(simulation) + '.png') 
+            file.write("\t\t\t" + str(reward) + "\t" + str(total_reward) + "\t\t" + str(chiSq) + "\t\t" + str(model.atomListModel.atomModels[0].z.value) + "\t\t" + str(dx) + "\t\t" + str(error[chosen_action]))
         file.close()
         
     return
+
 
 #def __main__():
 #for i in refList:
 #    for j in i:
 #        print(j)
-
-
-#x2 = sfs2
-
-#model1 = setInitParams()
-#model1.refList = H.ReflectionList(refList)
-#model1._set_reflections()
-#model1.error = error
-#model1.tt  = tt
-#model1._set_observations(sfs2)
-
-#y1 = model1.theory()
-
-#plt.scatter(x2,y1)
-#plt.savefig('sfs2stest.png') 
-
 agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 20, len(refList), 1)
+test_algorithm(agent, refList, 3, len(refList))
 print("done")
