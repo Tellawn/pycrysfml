@@ -241,7 +241,7 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 #        print(j)
 
 
-#x2 = sfs2
+#x2 = sfs2#
 
 #model1 = setInitParams()
 #model1.refList = H.ReflectionList(refList)
