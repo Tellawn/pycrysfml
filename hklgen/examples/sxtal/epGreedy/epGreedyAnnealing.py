@@ -60,7 +60,7 @@ def setInitParams():
                 [atomList], exclusions,
                 scale=0.062978, error=[],  extinction=[0.000105])
     #Set a range on the x value of the first atom in the model
-    m.atomListModel.atomModels[0].z.value = 0.31 #zApprox
+    m.atomListModel.atomModels[0].z.value = 0.3 #zApprox
     m.atomListModel.atomModels[0].z.range(0,0.5)
     return m
 
@@ -227,10 +227,10 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 	     	
             file.write("\n" + str(chosen_actionList[t].hkl).replace("[","").replace("]","").replace(",",""))
             file.write("\t\t\t" + str(reward) + "\t\t\t" + str(total_reward) + "\t\t" + str(chiSq) + "\t\t" + str(model.atomListModel.atomModels[0].z.value) + "\t\t" + str(dx) + "\t\t" + str(error[chosen_action]))
-#	x1 = sfs2
-#	y = model.theory()
-#	plt.scatter(x1,y)
-#	plt.savefig('sfs2s' + str(simulation) + '.png') 
+	x1 = sfs2
+	y = model.theory()
+	plt.scatter(x1,y)
+	plt.savefig('sfs2s' + str(simulation) + '.png') 
         file.close()
         
     return
