@@ -62,6 +62,12 @@ def setInitParams():
     #Set a range on the x value of the first atom in the model
     m.atomListModel.atomModels[0].z.value = 0.3 #zApprox
     m.atomListModel.atomModels[0].z.range(0,0.5)
+#    m.atomListModel.atomModels[0].B.range(0,5)
+#    m.atomListModel.atomModels[1].B.range(0,5)
+#    m.atomListModel.atomModels[2].B.range(0,5)
+#    m.atomListModel.atomModels[3].B.range(0,5)
+#    m.atomListModel.atomModels[4].B.range(0,5)
+#    m.atomListModel.atomModels[5].B.range(0,5)
     return m
 
 def fit(model):
@@ -256,5 +262,5 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 #plt.savefig('sfs2stest.png') 
 
 agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 20, len(refList), 1)
+test_algorithm(agent, refList, 2, len(refList), 1)
 print("done")
