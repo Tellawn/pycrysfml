@@ -60,8 +60,14 @@ def setInitParams():
                 [atomList], exclusions,
                 scale=0.062978, error=[],  extinction=[0.000105])
     #Set a range on the x value of the first atom in the model
-    m.atomListModel.atomModels[0].z.value = 0.3
+    m.atomListModel.atomModels[0].z.value = 0.3 #zApprox
     m.atomListModel.atomModels[0].z.range(0,0.5)
+    m.atomListModel.atomModels[0].B.range(0,5)
+    m.atomListModel.atomModels[1].B.range(0,5)
+    m.atomListModel.atomModels[2].B.range(0,5)
+    m.atomListModel.atomModels[3].B.range(0,5)
+    m.atomListModel.atomModels[4].B.range(0,5)
+    m.atomListModel.atomModels[5].B.range(0,5)
     return m
 
 def fit(model):
@@ -163,7 +169,7 @@ class EpsilonGreedy():
         value = self.values[chosen_action]
         self.values[chosen_action] = value * (n-1.0)/n + float(reward)/n
 	
-	t = np.sum(self.counts) + 1
+	t = np.sum(self.counts)
 	self.epsilon = 1 / np.log(t + 0.0000001)
         return
 
@@ -196,7 +202,6 @@ def test_algorithm(agent, actions, num_sims, horizon):
             chosen_actionList.append(actions[chosen_action])
 
             #|-Bumps stuff-|
-            #TODO figure out how this actually works and how we should actually implement it
             #feed actions[chosen_action] into bumps to get "reward" to use in agent.update() which updates expected reward
             #Find the data for this hkl value and add it to the model
 
@@ -212,21 +217,20 @@ def test_algorithm(agent, actions, num_sims, horizon):
             model.update()
 
             reward = 0
-            chiSq = 0
+	    chiSq = 0
 	    dx = 0
+	    x = 0
 
-            if t > 0:
+            if t > 6:
                 x, dx, chiSq = fit(model)
                 reward = -1 * abs(chiSq - prevChiSq)
                 if (prevChiSq != 0 and chiSq < prevChiSq):
                     reward += 1.5 * abs(chiSq - prevChiSq)
-                    
                 rewards[t] = reward
                 total_reward += reward
                 agent.update(chosen_action, reward)
-                
                 prevChiSq = chiSq
-            
+
             file.write("\n" + str(chosen_actionList[t].hkl).replace("[","").replace("]","").replace(",",""))
             file.write("\t\t\t" + str(reward) + "\t" + str(total_reward) + "\t\t" + str(chiSq) + "\t\t" + str(model.atomListModel.atomModels[0].z.value) + "\t\t" + str(dx) + "\t\t" + str(error[chosen_action]))
         file.close()
