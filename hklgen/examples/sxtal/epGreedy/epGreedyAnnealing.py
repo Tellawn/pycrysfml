@@ -231,18 +231,36 @@ def test_algorithm(agent, actions, num_sims, horizon):
 		    total_reward += reward
 		    agent.update(chosen_action, reward)
                 prevChiSq = chiSq
-
+	     	
             file.write("\n" + str(chosen_actionList[t].hkl).replace("[","").replace("]","").replace(",",""))
             file.write("\t\t\t" + str(reward) + "\t\t\t" + str(total_reward) + "\t\t" + str(chiSq) + "\t\t" + str(model.atomListModel.atomModels[0].z.value) + "\t\t" + str(dx) + "\t\t" + str(error[chosen_action]))
+	x1 = sfs2
+	y = model.theory()
+	pft.scatter(x1,y)
+	plt.savefig('sfs2s.png') 
         file.close()
         
     return
-
 
 #def __main__():
 #for i in refList:
 #    for j in i:
 #        print(j)
+
+x2 = sfs2
+
+model1 = setInitParams()
+model1.refList = H.ReflectionList(refList)
+model1._set_reflections()
+model1.error = error
+model1.tt  = tt
+model1._set_observations(sfs2)
+
+y1 = model1.theory()
+
+plt.scatter(x2,y1)
+plt.savefig('sfs2stest.png') 
+
 agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 3000, len(refList))
+test_algorithm(agent, refList, 20, len(refList))
 print("done")
