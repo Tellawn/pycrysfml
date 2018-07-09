@@ -52,7 +52,7 @@ backg = None
 exclusions = []
 
 
-def setInitParams():
+def setInitParams(zInit):
     #Make a cell
     cell = Mod.makeCell(crystalCell, spaceGroup.xtalSystem)
     #Define a model
@@ -60,7 +60,7 @@ def setInitParams():
                 [atomList], exclusions,
                 scale=0.062978, error=[],  extinction=[0.000105])
     #Set a range on the x value of the first atom in the model
-    m.atomListModel.atomModels[0].z.value = 0.3 #zApprox
+    m.atomListModel.atomModels[0].z.value = zInit #zApprox
     m.atomListModel.atomModels[0].z.range(0,0.5)
 #    m.atomListModel.atomModels[0].B.range(0,5)
 #    m.atomListModel.atomModels[1].B.range(0,5)
@@ -176,7 +176,7 @@ class EpsilonGreedy():
 #agent is the EpsilonGreedy() object, actions is a list of HKLs 
 #(each element of the list is a length 3 list: [h, k, l]), num_sims is an int, horizon is an int
 def test_algorithm(agent, actions, num_sims, horizon, numParameters):
-#    zInit = 0.3
+    zInit = 0.3
     for simulation in range(num_sims):
 	print("simulation #" + str(simulation))
         agent.reset()
@@ -186,7 +186,8 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 	observed_intensities = []
         rewards = np.zeros(horizon)
 
-        model = setInitParams()
+        #|--------------------------------Bumps stuff----------------------------------------------|
+        model = setInitParams(zInit)
         prevChiSq = 0
 
         #agent.initialize(agent.getCounts(), agent.getRewards()) #this line is kinda pointless
@@ -240,7 +241,7 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 	plt.scatter(x1,y)
 	plt.savefig('sfs2s' + str(simulation) + '.png') 
 
-#	zInit = model.atomListModel.atomModels[0].z.value
+	zInit = model.atomListModel.atomModels[0].z.value
         file.close()
         
     return
