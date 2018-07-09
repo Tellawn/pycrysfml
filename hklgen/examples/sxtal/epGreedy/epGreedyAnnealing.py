@@ -62,12 +62,12 @@ def setInitParams():
     #Set a range on the x value of the first atom in the model
     m.atomListModel.atomModels[0].z.value = 0.3 #zApprox
     m.atomListModel.atomModels[0].z.range(0,0.5)
-    m.atomListModel.atomModels[0].B.range(0,5)
-    m.atomListModel.atomModels[1].B.range(0,5)
-    m.atomListModel.atomModels[2].B.range(0,5)
-    m.atomListModel.atomModels[3].B.range(0,5)
-    m.atomListModel.atomModels[4].B.range(0,5)
-    m.atomListModel.atomModels[5].B.range(0,5)
+#    m.atomListModel.atomModels[0].B.range(0,5)
+#    m.atomListModel.atomModels[1].B.range(0,5)
+#    m.atomListModel.atomModels[2].B.range(0,5)
+#    m.atomListModel.atomModels[3].B.range(0,5)
+#    m.atomListModel.atomModels[4].B.range(0,5)
+#    m.atomListModel.atomModels[5].B.range(0,5)
     return m
 
 def fit(model):
@@ -175,7 +175,7 @@ class EpsilonGreedy():
 
 #agent is the EpsilonGreedy() object, actions is a list of HKLs 
 #(each element of the list is a length 3 list: [h, k, l]), num_sims is an int, horizon is an int
-def test_algorithm(agent, actions, num_sims, horizon):
+def test_algorithm(agent, actions, num_sims, horizon, numParameters):
     for simulation in range(num_sims):
 	print("simulation #" + str(simulation))
         agent.reset()
@@ -183,7 +183,7 @@ def test_algorithm(agent, actions, num_sims, horizon):
 
         chosen_actionList = []
 	observed_intensities = []
-        rewards = np.zeros(horizon)
+#        rewards = np.zeros(h
 
         #|--------------------------------Bumps stuff----------------------------------------------|
         model = setInitParams()
@@ -221,13 +221,13 @@ def test_algorithm(agent, actions, num_sims, horizon):
 	    dx = 0
 	    x = 0
 
-            if t > 6:
+            if t > numParameters - 1:
                 x, dx, chiSq = fit(model)
-                if t > 7:
+                if t > numParameters:
 		    reward = -1 * abs(chiSq - prevChiSq)
 		    if (prevChiSq != 0 and chiSq < prevChiSq):
 			reward += 1.5 * abs(chiSq - prevChiSq)
-		    rewards[t] = reward
+#		    rewards[t] = reward
 		    total_reward += reward
 		    agent.update(chosen_action, reward)
                 prevChiSq = chiSq
@@ -262,5 +262,5 @@ plt.scatter(x2,y1)
 plt.savefig('sfs2stest.png') 
 
 agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 20, len(refList))
+test_algorithm(agent, refList, 20, len(refList), 1)
 print("done")
