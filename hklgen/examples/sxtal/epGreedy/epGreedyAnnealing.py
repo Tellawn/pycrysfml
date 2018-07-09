@@ -191,8 +191,8 @@ def test_algorithm(agent, actions, num_sims, horizon):
         
 
         #agent.initialize(agent.getCounts(), agent.getRewards()) #this line is kinda pointless
-        file = open("epGreedyAnnealingScaledResults" + str(simulation) + ".txt", "w")
-        file.write("HKL Value\t\tReward\tTotalReward\tChi Squared Value\tZ Coordinate Approximation\t\tdx")
+        file = open("epGreedyResults" + str(simulation) + ".txt", "w")
+        file.write("HKL Value\t\tReward\t\t\tTotalReward\tChi Squared Value\tZ Coordinate Approximation\t\tdx")
         for t in range(horizon):
             #print(agent.getValues())
             #print(agent.visited)
@@ -223,16 +223,17 @@ def test_algorithm(agent, actions, num_sims, horizon):
 
             if t > 6:
                 x, dx, chiSq = fit(model)
-                reward = -1 * abs(chiSq - prevChiSq)
-                if (prevChiSq != 0 and chiSq < prevChiSq):
-                    reward += 1.5 * abs(chiSq - prevChiSq)
-                rewards[t] = reward
-                total_reward += reward
-                agent.update(chosen_action, reward)
+                if t > 7:
+		    reward = -1 * abs(chiSq - prevChiSq)
+		    if (prevChiSq != 0 and chiSq < prevChiSq):
+			reward += 1.5 * abs(chiSq - prevChiSq)
+		    rewards[t] = reward
+		    total_reward += reward
+		    agent.update(chosen_action, reward)
                 prevChiSq = chiSq
 
             file.write("\n" + str(chosen_actionList[t].hkl).replace("[","").replace("]","").replace(",",""))
-            file.write("\t\t\t" + str(reward) + "\t" + str(total_reward) + "\t\t" + str(chiSq) + "\t\t" + str(model.atomListModel.atomModels[0].z.value) + "\t\t" + str(dx) + "\t\t" + str(error[chosen_action]))
+            file.write("\t\t\t" + str(reward) + "\t\t\t" + str(total_reward) + "\t\t" + str(chiSq) + "\t\t" + str(model.atomListModel.atomModels[0].z.value) + "\t\t" + str(dx) + "\t\t" + str(error[chosen_action]))
         file.close()
         
     return
