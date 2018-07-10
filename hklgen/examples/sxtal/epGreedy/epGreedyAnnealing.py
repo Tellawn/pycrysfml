@@ -235,6 +235,13 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 	     	
             file.write("\n" + str(chosen_actionList[t].hkl).replace("[","").replace("]","").replace(",",""))
             file.write("\t\t\t" + str(reward) + "\t\t\t" + str(total_reward) + "\t\t" + str(chiSq) + "\t\t" + str(model.atomListModel.atomModels[0].z.value) + "\t\t" + str(dx) + "\t\t" + str(error[chosen_action]))
+
+	if (simulation % 10 == 0):
+	    file2 = open("Rewards" + str(simulation) + ".txt", "w")
+	    file2.write("Number of epochs: " + str(simulation))
+	    numpy.savetxt("Rewards" + str(simulation) + ".txt", agent.values)
+	    file2.close()
+
 	x1 = sfs2
 	y = model.theory()
 	plt.scatter(x1,y)
