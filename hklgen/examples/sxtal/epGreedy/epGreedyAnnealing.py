@@ -173,6 +173,20 @@ class EpsilonGreedy():
 	self.epsilon = 1 / np.log(t + 0.0000001)
         return
 
+def sorter(model, actionIndexList):
+    numActions = len(actionIndexList)
+
+    refListSorted = np.zeros(numActions)
+    errorSorted = np.zeros(numActions)
+    ttSorted = np.zeros(numActions)
+    intensitiesSorted = np.zeros(numActions)
+
+    refListSort = refList
+    model.refList = refList
+#    for i in range(numActions):
+#	refListSorted[actionIndexList[i]] = 
+#	errorSorted[actionIndexList[i]] = 
+
 #agent is the EpsilonGreedy() object, actions is a list of HKLs 
 #(each element of the list is a length 3 list: [h, k, l]), num_sims is an int, horizon is an int
 def test_algorithm(agent, actions, num_sims, horizon, numParameters):
@@ -182,7 +196,11 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
         agent.reset()
         total_reward = 0
 
+	#Action list (actual ReflectionList Objects)
         chosen_actionList = []
+	#Action index list
+	actionIndexList = []
+
 	observed_intensities = []
         rewards = np.zeros(horizon)
 
@@ -202,6 +220,7 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
             #This is the index of the action/hkl to go to at this timestep
             chosen_action = agent.select_action()
 	    #print(chosen_action)
+	    actionIndexList.append(chosen_action)
             chosen_actionList.append(actions[chosen_action])
 
             #|-Bumps stuff-|
@@ -233,7 +252,7 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 		    total_reward += reward
 		    agent.update(chosen_action, reward)
                 prevChiSq = chiSq
-	    
+
 	    h = chosen_actionList[t].hkl[0]
 	    k = chosen_actionList[t].hkl[1]
 	    l = chosen_actionList[t].hkl[2]
@@ -247,6 +266,9 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
             file.write("\n" + str(chosen_actionList[t].hkl).replace("[","").replace("]","").replace(",",""))
             file.write("\t\t\t" + str(reward) + "\t\t\t" + str(total_reward) + "\t\t" + str(chiSq) + "\t\t" + str(model.atomListModel.atomModels[0].z.value))
 
+	    if (((t > 10) and chiSq < 1.5) or (t > 100)):
+		break
+
 	if (simulation % 10 == 0):
 	    file2 = open("Rewards" + str(simulation) + ".txt", "w")
 	    file2.write("Number of epochs: " + str(simulation))
@@ -255,7 +277,7 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 
 	#Observed sfs2 values (
 	x1 = sfs2
-	y = model.theory()
+	y = H.calcStructFact() #model.theory()
 	plt.scatter(qSquared,y)
 	plt.savefig("Calc sfs2 vs Qsq " + str(simulation) + ".png") 
 	plt.scatter(qSquared,x1)
