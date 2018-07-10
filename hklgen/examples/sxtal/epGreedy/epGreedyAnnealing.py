@@ -194,6 +194,7 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
         file.write("HKL Value\t\tReward\t\t\tTotalReward\tChi Squared Value\tZ Coordinate Approximation\t\tdx")
 
         reward = 0
+	qSquared = []
 
         for t in range(horizon):
             #print(agent.getValues())
@@ -232,20 +233,35 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 		    total_reward += reward
 		    agent.update(chosen_action, reward)
                 prevChiSq = chiSq
-	     	
+	    
+	    h = chosen_actionList[t].hkl[0]
+	    k = chosen_actionList[t].hkl[1]
+	    l = chosen_actionList[t].hkl[2]
+	    A = 5.417799
+	    B = 5.414600
+	    C = 12.483399
+
+	    qsq = (h/A)**2 + (k/B)**2 + (l/C)**2
+	    qSquared.append(qsq)
+
             file.write("\n" + str(chosen_actionList[t].hkl).replace("[","").replace("]","").replace(",",""))
-            file.write("\t\t\t" + str(reward) + "\t\t\t" + str(total_reward) + "\t\t" + str(chiSq) + "\t\t" + str(model.atomListModel.atomModels[0].z.value) + "\t\t" + str(dx) + "\t\t" + str(error[chosen_action]))
+            file.write("\t\t\t" + str(reward) + "\t\t\t" + str(total_reward) + "\t\t" + str(chiSq) + "\t\t" + str(model.atomListModel.atomModels[0].z.value))
 
 	if (simulation % 10 == 0):
 	    file2 = open("Rewards" + str(simulation) + ".txt", "w")
 	    file2.write("Number of epochs: " + str(simulation))
-	    numpy.savetxt("Rewards" + str(simulation) + ".txt", agent.values)
+	    np.savetxt("Rewards" + str(simulation) + ".txt", agent.values)
 	    file2.close()
 
+	#Observed sfs2 values (
 	x1 = sfs2
 	y = model.theory()
-	plt.scatter(x1,y)
-	plt.savefig('sfs2s' + str(simulation) + '.png') 
+	plt.scatter(qSquared,y)
+	plt.savefig("Calc sfs2 vs Qsq " + str(simulation) + ".png") 
+	plt.scatter(qSquared,x1)
+	plt.savefig("Obs sfs2 vs Qsq " + str(simulation) + ".png")
+
+	
 
 #	zInit = model.atomListModel.atomModels[0].z.value
         file.close()
@@ -273,5 +289,5 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 #plt.savefig('sfs2stest.png') 
 
 agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 500, len(refList), 1)
+test_algorithm(agent, refList, 1, len(refList), 1)
 print("done")
