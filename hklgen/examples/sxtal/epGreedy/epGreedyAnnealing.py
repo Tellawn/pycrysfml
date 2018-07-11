@@ -62,12 +62,12 @@ def setInitParams():
     #Set a range on the x value of the first atom in the model
     m.atomListModel.atomModels[0].z.value = 0.3 #zApprox
     m.atomListModel.atomModels[0].z.range(0,0.5)
-#    m.atomListModel.atomModels[0].B.range(0,5)
-#    m.atomListModel.atomModels[1].B.range(0,5)
-#    m.atomListModel.atomModels[2].B.range(0,5)
-#    m.atomListModel.atomModels[3].B.range(0,5)
-#    m.atomListModel.atomModels[4].B.range(0,5)
-#    m.atomListModel.atomModels[5].B.range(0,5)
+    m.atomListModel.atomModels[0].B.range(0,5)
+    m.atomListModel.atomModels[1].B.range(0,5)
+    m.atomListModel.atomModels[2].B.range(0,5)
+    m.atomListModel.atomModels[3].B.range(0,5)
+    m.atomListModel.atomModels[4].B.range(0,5)
+    m.atomListModel.atomModels[5].B.range(0,5)
     return m
 
 def fit(model):
@@ -213,7 +213,7 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 
         reward = 0
 	qSquared = []
-
+	t = 0
         for t in range(horizon):
             #print(agent.getValues())
             #print(agent.visited)
@@ -264,8 +264,13 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 	    qSquared.append(qsq)
 
             file.write("\n" + str(chosen_actionList[t].hkl).replace("[","").replace("]","").replace(",",""))
-            file.write("\t\t\t" + str(reward) + "\t\t\t" + str(total_reward) + "\t\t" + str(chiSq) + "\t\t" + str(model.atomListModel.atomModels[0].z.value))
-
+            file.write("\t\t\t" + str(round(reward,2)) + "\t\t\t" + str(round(total_reward,2)) + "\t\t" + str(round(chiSq,2)) + "\t\t" + str(round(model.atomListModel.atomModels[0].z.value,2)))
+	    file.write("\t" + str(round(model.atomListModel.atomModels[0].B.value,2)))
+	    file.write("\t" + str(round(model.atomListModel.atomModels[1].B.value,2)))
+	    file.write("\t" + str(round(model.atomListModel.atomModels[2].B.value,2)))
+	    file.write("\t" + str(round(model.atomListModel.atomModels[3].B.value,2)))
+	    file.write("\t" + str(round(model.atomListModel.atomModels[4].B.value,2)))
+	    file.write("\t" + str(round(model.atomListModel.atomModels[5].B.value,2)))
 	    if (((t > 10) and chiSq < 1.5) or (t > 100)):
 		break
 
@@ -276,14 +281,18 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 	    file2.close()
 
 	#Observed sfs2 values (
-	x1 = sfs2
-	y = H.calcStructFact() #model.theory()
+	x1 = sfs2[0:t+1]
+	y = model.theory()
+	print(qSquared)
+	print(x1)
+	print(y)
 	plt.scatter(qSquared,y)
-	plt.savefig("Calc sfs2 vs Qsq " + str(simulation) + ".png") 
+#	plt.savefig("Calc sfs2 vs Qsq " + str(simulation) + ".png") 
 	plt.scatter(qSquared,x1)
-	plt.savefig("Obs sfs2 vs Qsq " + str(simulation) + ".png")
-
-	
+	plt.savefig("sfs2s vs Qsq " + str(simulation) + ".png")
+	plt.figure()
+	plt.scatter(x1,y)
+	plt.savefig("Calc vs Obs " + str(simulation) + ".png")
 
 #	zInit = model.atomListModel.atomModels[0].z.value
         file.close()
@@ -311,5 +320,5 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 #plt.savefig('sfs2stest.png') 
 
 agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 1, len(refList), 1)
+test_algorithm(agent, refList, 30, len(refList), 7)
 print("done")
