@@ -287,17 +287,23 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 	    file2.close()
 
 	#Observed sfs2 values (
-	x1 = sfs2[0:t+1]
+#	x1 = sfs2[0:t+1]
 	y = model.theory()
+	x = np.zeros(len(y))
+	for j in range(len(y)):
+	    x[j] = sfs2[d[str(chosen_actionList[j].hkl).replace("[","").replace("]","").replace(",","")]]
+#	y1 = np.zeros(len(y))
+#	for j in range(len(y)):
+#	    y1[actionIndexList[j]] = y[j]
 	print(qSquared)
-	print(x1)
+#	print(x1)
 	print(y)
 	plt.scatter(qSquared,y)
 #	plt.savefig("Calc sfs2 vs Qsq " + str(simulation) + ".png") 
-	plt.scatter(qSquared,x1)
+	plt.scatter(qSquared,x)
 	plt.savefig("sfs2s vs Qsq " + str(simulation) + ".png")
 	plt.figure()
-	plt.scatter(x1,y)
+	plt.scatter(x,y)
 	plt.savefig("Calc vs Obs " + str(simulation) + ".png")
 	plt.figure()
 #	zInit = model.atomListModel.atomModels[0].z.value
