@@ -221,17 +221,23 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 #	data = np.random.random((N, 4))
 	labels = [str("HKL #" + str(i) + ", chiSq = " + str(round(chiSqs[i],1))) for i in range(len(chiSqs))]
 
-	plt.subplots_adjust(bottom = 0.1)
-	plt.scatter(
-	    qSquared, y, marker='o', cmap=plt.get_cmap('Spectral'))
+#	plt.subplots_adjust(bottom = 0.1)
+#	plt.scatter(
+#	    qSquared, y, marker='o', cmap=plt.get_cmap('Spectral'))
 
-	for label, q, sfs in zip(labels, qSquared, y):
-	    plt.annotate(
-        	label,
-	        xy=(q, sfs), xytext=(0, 20),
-	        textcoords='offset points', ha='right', va='bottom',
-	        bbox=dict(boxstyle='round,pad=0.5', fc='yellow', alpha=0.5),
-	        arrowprops=dict(arrowstyle = '->', connectionstyle='arc3,rad=0'))
+#	for label, q, sfs in zip(labels, qSquared, y):#
+#	    plt.annotate(
+#        	label,
+#	        xy=(q, sfs), xytext=(0, 20),
+#	        textcoords='offset points', ha='right', va='bottom',
+#	        bbox=dict(boxstyle='round,pad=0.5', fc='yellow', alpha=0.5),
+#	        arrowprops=dict(arrowstyle = '->', connectionstyle='arc3,rad=0'))
+
+	fig,ax = plt.subplots()
+	ax.scatter(x1, y)
+	
+	for i, txt in enumerate(labels):
+		ax.annotate(txt, (x1[i], y[i]))
 
 
 #	plt.scatter(qSquared,y)
