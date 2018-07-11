@@ -237,7 +237,7 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 	ax.scatter(qSquared, y)
 	
 	for i, txt in enumerate(labels):
-		ax.annotate(txt, (qSquared[i], y[i]), xytext = (qSquared[i]+20*np.floor(i/4), y[i]))
+		ax.annotate(txt, (qSquared[i], y[i]), xytext = (qSquared[i]+20*np.floor((i+1)/4), y[i]))
 
 
 #	plt.scatter(qSquared,y)
