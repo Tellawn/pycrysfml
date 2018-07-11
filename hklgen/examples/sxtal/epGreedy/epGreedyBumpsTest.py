@@ -219,7 +219,7 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 	print(x1)
 	N = 10
 #	data = np.random.random((N, 4))
-	labels = [str("HKL #" + str(i) + ", chiSq = " + str(round(chiSqs[i],1))) for i in range(len(chiSqs))]
+	labels = [str(round(chiSqs[i],1)) for i in range(len(chiSqs))]
 
 #	plt.subplots_adjust(bottom = 0.1)
 #	plt.scatter(
