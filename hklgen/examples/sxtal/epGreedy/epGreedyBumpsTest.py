@@ -217,7 +217,6 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 	print(x1)
 	plt.scatter(qSquared,y)
 	plt.savefig("Calc sfs2 vs Qsq " + str(simulation) + ".png") 
-	plt.figure()
 	plt.scatter(qSquared,x1)
 	plt.savefig("Obs sfs2 vs Qsq " + str(simulation) + ".png")
 
