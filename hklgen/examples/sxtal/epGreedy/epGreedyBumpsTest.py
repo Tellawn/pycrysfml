@@ -234,10 +234,10 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 #	        arrowprops=dict(arrowstyle = '->', connectionstyle='arc3,rad=0'))
 
 	fig,ax = plt.subplots()
-	ax.scatter(x1, y)
+	ax.scatter(qSquared, y)
 	
 	for i, txt in enumerate(labels):
-		ax.annotate(txt, (x1[i], y[i]))
+		ax.annotate(txt, (qSquared[i], y[i]))
 
 
 #	plt.scatter(qSquared,y)
