@@ -219,7 +219,7 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 	print(x1)
 	N = 10
 #	data = np.random.random((N, 4))
-	labels = [str("HKL #" + str(i) + ", chiSq = " + str(chiSqs[i])) for i in range(len(chiSqs))]
+	labels = [str("HKL #" + str(i) + ", chiSq = " + str(round(chiSqs[i],1))) for i in range(len(chiSqs))]
 
 	plt.subplots_adjust(bottom = 0.1)
 	plt.scatter(
@@ -228,7 +228,7 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 	for label, q, sfs in zip(labels, qSquared, y):
 	    plt.annotate(
         	label,
-	        xy=(q, sfs), xytext=(-20, 20),
+	        xy=(q, sfs), xytext=(0, 20),
 	        textcoords='offset points', ha='right', va='bottom',
 	        bbox=dict(boxstyle='round,pad=0.5', fc='yellow', alpha=0.5),
 	        arrowprops=dict(arrowstyle = '->', connectionstyle='arc3,rad=0'))
