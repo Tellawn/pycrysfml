@@ -293,7 +293,7 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 	plt.figure()
 	plt.scatter(x1,y)
 	plt.savefig("Calc vs Obs " + str(simulation) + ".png")
-
+	plt.figure()
 #	zInit = model.atomListModel.atomModels[0].z.value
         file.close()
 
