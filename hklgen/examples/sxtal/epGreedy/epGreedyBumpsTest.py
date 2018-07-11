@@ -135,9 +135,9 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
         chosen_actionList = []
 	#Action index list
 	actionIndexList = []
-
 	observed_intensities = []
         rewards = np.zeros(horizon)
+	chiSqs = []
 
         model = setInitParams()
         prevChiSq = 0
@@ -188,6 +188,8 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 		    agent.update(chosen_action, reward)
                 prevChiSq = chiSq
 
+	    chiSqs.append(chiSq)
+
 	    h = chosen_actionList[t].hkl[0]
 	    k = chosen_actionList[t].hkl[1]
 	    l = chosen_actionList[t].hkl[2]
@@ -215,7 +217,24 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 	y = model.theory() #H.calcstructfact()
 	print(y)
 	print(x1)
-	plt.scatter(qSquared,y)
+	N = 10
+#	data = np.random.random((N, 4))
+	labels = [str("HKL #" + str(i) + ", chiSq = " + str(chiSqs[i])) for i in range(len(chiSqs))]
+
+	plt.subplots_adjust(bottom = 0.1)
+	plt.scatter(
+	    qSquared, y, marker='o', cmap=plt.get_cmap('Spectral'))
+
+	for label, q, sfs in zip(labels, qSquared, y):
+	    plt.annotate(
+        	label,
+	        xy=(q, sfs), xytext=(-20, 20),
+	        textcoords='offset points', ha='right', va='bottom',
+	        bbox=dict(boxstyle='round,pad=0.5', fc='yellow', alpha=0.5),
+	        arrowprops=dict(arrowstyle = '->', connectionstyle='arc3,rad=0'))
+
+
+#	plt.scatter(qSquared,y)
 	plt.savefig("Calc sfs2 vs Qsq " + str(simulation) + ".png") 
 	plt.scatter(qSquared,x1)
 	plt.savefig("Obs sfs2 vs Qsq " + str(simulation) + ".png")
