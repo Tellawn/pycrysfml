@@ -51,6 +51,10 @@ tt = [H.twoTheta(H.calcS(crystalCell, ref.hkl), wavelength) for ref in refList]
 backg = None
 exclusions = []
 
+#Make a dictionary of the indices of each HKL value for the given crystal
+d = {}
+for i in range(len(refList)):
+    d[str(refList[i].hkl).replace("[","").replace("]","").replace(",","")] = i
 
 def setInitParams():
     #Make a cell
@@ -62,12 +66,12 @@ def setInitParams():
     #Set a range on the x value of the first atom in the model
     m.atomListModel.atomModels[0].z.value = 0.3 #zApprox
     m.atomListModel.atomModels[0].z.range(0,0.5)
-    m.atomListModel.atomModels[0].B.range(0,5)
-    m.atomListModel.atomModels[1].B.range(0,5)
-    m.atomListModel.atomModels[2].B.range(0,5)
-    m.atomListModel.atomModels[3].B.range(0,5)
-    m.atomListModel.atomModels[4].B.range(0,5)
-    m.atomListModel.atomModels[5].B.range(0,5)
+#    m.atomListModel.atomModels[0].B.range(0,5)
+#    m.atomListModel.atomModels[1].B.range(0,5)
+#    m.atomListModel.atomModels[2].B.range(0,5)
+#    m.atomListModel.atomModels[3].B.range(0,5)
+#    m.atomListModel.atomModels[4].B.range(0,5)
+#    m.atomListModel.atomModels[5].B.range(0,5)
     return m
 
 def fit(model):
@@ -89,14 +93,14 @@ def fakeFit(model):
 
 
 class EpsilonGreedy():
-    
+
     def __init__(self, epsilon, counts, values):
         self.epsilon = epsilon
         self.counts = counts
         self.values = values
         self.visited = []
         return
-    
+
     def reset(self):
         #self.counts = counts
         #self.values = values
@@ -209,9 +213,10 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 
         #agent.initialize(agent.getCounts(), agent.getRewards()) #this line is kinda pointless
         file = open("epGreedyResults" + str(simulation) + ".txt", "w")
-        file.write("HKL Value\t\tReward\t\t\tTotalReward\tChi Squared Value\tZ Coordinate Approximation\t\tdx")
+        file.write("HKL Value\t\tReward\t\tTotalReward\tChi Squared\tZ Approx\tError\tTwo-Thetas\tSfs2")
 
         reward = 0
+#	qSquared = np.zeros(len(d))
 	qSquared = []
 	t = 0
         for t in range(horizon):
@@ -264,13 +269,14 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 	    qSquared.append(qsq)
 
             file.write("\n" + str(chosen_actionList[t].hkl).replace("[","").replace("]","").replace(",",""))
-            file.write("\t\t\t" + str(round(reward,2)) + "\t\t\t" + str(round(total_reward,2)) + "\t\t" + str(round(chiSq,2)) + "\t\t" + str(round(model.atomListModel.atomModels[0].z.value,2)))
-	    file.write("\t" + str(round(model.atomListModel.atomModels[0].B.value,2)))
-	    file.write("\t" + str(round(model.atomListModel.atomModels[1].B.value,2)))
-	    file.write("\t" + str(round(model.atomListModel.atomModels[2].B.value,2)))
-	    file.write("\t" + str(round(model.atomListModel.atomModels[3].B.value,2)))
-	    file.write("\t" + str(round(model.atomListModel.atomModels[4].B.value,2)))
-	    file.write("\t" + str(round(model.atomListModel.atomModels[5].B.value,2)))
+            file.write("\t\t\t" + str(round(reward,2)) + "\t\t" + str(round(total_reward,2)) + "\t\t" + str(round(chiSq,2)) + "\t\t" + str(round(model.atomListModel.atomModels[0].z.value,2)))
+	    file.write("\t" + str(error[chosen_action]) + "\t" + str(tt[chosen_action]) + "\t" + str(sfs2[chosen_action]))
+#	    file.write("\t" + str(round(model.atomListModel.atomModels[0].B.value,2)))
+#	    file.write("\t" + str(round(model.atomListModel.atomModels[1].B.value,2)))
+#	    file.write("\t" + str(round(model.atomListModel.atomModels[2].B.value,2)))
+#	    file.write("\t" + str(round(model.atomListModel.atomModels[3].B.value,2)))
+#	    file.write("\t" + str(round(model.atomListModel.atomModels[4].B.value,2)))
+#	    file.write("\t" + str(round(model.atomListModel.atomModels[5].B.value,2)))
 	    if (((t > 10) and chiSq < 1.5) or (t > 100)):
 		break
 
@@ -320,5 +326,5 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 #plt.savefig('sfs2stest.png') 
 
 agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 30, len(refList), 7)
+test_algorithm(agent, refList, 5, len(refList), 1)
 print("done")

@@ -46,9 +46,9 @@ def setInitParams():
 x = sfs2
 
 model = setInitParams()
-model.refList = H.ReflectionList(refList)
+model.refList = H.ReflectionList([refList[54], refList[0], refList[61], refList[35]])
 model._set_reflections()
-model.error = error
+model.error = [error[
 model.tt  = tt
 model._set_observations(sfs2)
 
