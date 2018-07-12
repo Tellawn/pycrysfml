@@ -298,14 +298,19 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 	print(qSquared)
 #	print(x1)
 	print(y)
+
+	plt.figure()
 	plt.scatter(qSquared,y)
 #	plt.savefig("Calc sfs2 vs Qsq " + str(simulation) + ".png") 
 	plt.scatter(qSquared,x)
 	plt.savefig("sfs2s vs Qsq " + str(simulation) + ".png")
+	plt.close()
+
 	plt.figure()
 	plt.scatter(x,y)
 	plt.savefig("Calc vs Obs " + str(simulation) + ".png")
-	plt.figure()
+	plt.close()
+
 #	zInit = model.atomListModel.atomModels[0].z.value
         file.close()
 
@@ -332,5 +337,5 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 #plt.savefig('sfs2stest.png') 
 
 agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 5, len(refList), 1)
+test_algorithm(agent, refList, 500, len(refList), 1)
 print("done")
