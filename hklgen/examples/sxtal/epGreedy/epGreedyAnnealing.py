@@ -64,14 +64,13 @@ def setInitParams():
                 [atomList], exclusions,
                 scale=0.062978, error=[],  extinction=[0.000105])
     #Set a range on the x value of the first atom in the model
-    m.atomListModel.atomModels[0].z.value = 0.3 #zApprox
-    m.atomListModel.atomModels[0].z.range(0,0.5)
-#    m.atomListModel.atomModels[0].B.range(0,5)
-#    m.atomListModel.atomModels[1].B.range(0,5)
-#    m.atomListModel.atomModels[2].B.range(0,5)
-#    m.atomListModel.atomModels[3].B.range(0,5)
-#    m.atomListModel.atomModels[4].B.range(0,5)
-#    m.atomListModel.atomModels[5].B.range(0,5)
+
+    #Praesydmium z coordinate
+#    m.atomListModel.atomModels[0].z.value = 0.3 #zApprox
+#    m.atomListModel.atomModels[0].z.range(0,0.5)
+    #Oxygen d z coordinate
+    m.atomListModel.atomModels[5].z.value = 0.1
+    m.atomListModel.atomModels[5].z.range(0,0.5)
     return m
 
 def fit(model):
@@ -213,7 +212,7 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 
         #agent.initialize(agent.getCounts(), agent.getRewards()) #this line is kinda pointless
         file = open("epGreedyResults" + str(simulation) + ".txt", "w")
-        file.write("HKL Value\t\tReward\t\tTotalReward\tChi Squared\tZ Approx\tError\tTwo-Thetas\tSfs2")
+        file.write("HKL Value\t\tReward\t\tTotalReward\tChi Squared\tZ Appr. \tError\tTwo-Thetas\tSfs2")
 
         reward = 0
 #	qSquared = np.zeros(len(d))
@@ -269,7 +268,7 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 	    qSquared.append(qsq)
 
             file.write("\n" + str(chosen_actionList[t].hkl).replace("[","").replace("]","").replace(",",""))
-            file.write("\t\t\t" + str(round(reward,2)) + "\t\t" + str(round(total_reward,2)) + "\t\t" + str(round(chiSq,2)) + "\t\t" + str(round(model.atomListModel.atomModels[0].z.value,2)))
+            file.write("\t\t\t" + str(round(reward,2)) + "\t\t" + str(round(total_reward,2)) + "\t\t" + str(round(chiSq,2)) + "\t\t" + str(round(model.atomListModel.atomModels[0].z.value,5)))
 	    file.write("\t" + str(error[chosen_action]) + "\t" + str(tt[chosen_action]) + "\t" + str(sfs2[chosen_action]))
 #	    file.write("\t" + str(round(model.atomListModel.atomModels[0].B.value,2)))
 #	    file.write("\t" + str(round(model.atomListModel.atomModels[1].B.value,2)))
@@ -277,6 +276,7 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 #	    file.write("\t" + str(round(model.atomListModel.atomModels[3].B.value,2)))
 #	    file.write("\t" + str(round(model.atomListModel.atomModels[4].B.value,2)))
 #	    file.write("\t" + str(round(model.atomListModel.atomModels[5].B.value,2)))
+	    #TODO Maybe change this cutoff thing
 	    if (((t > 10) and chiSq < 1.5) or (t > 100)):
 		break
 
