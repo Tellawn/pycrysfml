@@ -5,6 +5,7 @@ import numpy as np
 import random
 import os,sys;sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))))
 import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 
 import fswig_hklgen as H
@@ -43,17 +44,17 @@ def setInitParams():
     m.atomListModel.atomModels[0].z.range(0,0.5)
     return m
 
-x = sfs2
+x = [sfs2[54], sfs2[0], sfs2[61], sfs2[35]]
 
 model = setInitParams()
-model.refList = H.ReflectionList(refList)
+model.refList = H.ReflectionList([refList[54], refList[0], refList[61], refList[35]])
 model._set_reflections()
-model.error = error
-model.tt  = tt
-model._set_observations(sfs2)
+model.error = [0.9932, 2.02, 0.7551, 3.3001]
+model.tt  = [66.896, 17.628, 29.467, 58.568]
+model._set_observations([sfs2[54], sfs2[0], sfs2[61], sfs2[35]])
+model.update()
 
 y = model.theory()
 
-#plt.scatter(x,y)
-#plt.savefig('sfs2s.png') 
-
+plt.scatter(x,y)
+plt.savefig('sfs2s.png')
