@@ -343,5 +343,5 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 #plt.savefig('sfs2stest.png') 
 
 agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 20000, len(refList), 1)
+test_algorithm(agent, refList, 100000, len(refList), 1)
 print("done")
