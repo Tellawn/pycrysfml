@@ -23,6 +23,7 @@ import os
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
+import scipy
 
 #So apparently you just can't run pycrysfml on Windows because you'd have to build all of its dependencies first
 import fswig_hklgen as H
@@ -56,6 +57,8 @@ d = {}
 for i in range(len(refList)):
     d[str(refList[i].hkl).replace("[","").replace("]","").replace(",","")] = i
 
+
+#TODO This method is hard coded, but it would be better if it were not
 def setInitParams():
     #Make a cell
     cell = Mod.makeCell(crystalCell, spaceGroup.xtalSystem)
@@ -66,11 +69,11 @@ def setInitParams():
     #Set a range on the x value of the first atom in the model
 
     #Praesydmium z coordinate
-#    m.atomListModel.atomModels[0].z.value = 0.3 #zApprox
-#    m.atomListModel.atomModels[0].z.range(0,0.5)
+    m.atomListModel.atomModels[0].z.value = 0.3 #zApprox
+    m.atomListModel.atomModels[0].z.range(0,0.5)
     #Oxygen d z coordinate
-    m.atomListModel.atomModels[5].z.value = 0.1
-    m.atomListModel.atomModels[5].z.range(0,0.5)
+#    m.atomListModel.atomModels[5].z.value = 0.2
+#    m.atomListModel.atomModels[5].z.range(0,0.5)
     return m
 
 def fit(model):
@@ -209,6 +212,7 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 
         model = setInitParams()
         prevChiSq = 0
+	chiSqs = []
 
         #agent.initialize(agent.getCounts(), agent.getRewards()) #this line is kinda pointless
         file = open("epGreedyResults" + str(simulation) + ".txt", "w")
@@ -256,6 +260,7 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 		    total_reward += reward
 		    agent.update(chosen_action, reward)
                 prevChiSq = chiSq
+	    chiSqs.append(chiSq)
 
 	    h = chosen_actionList[t].hkl[0]
 	    k = chosen_actionList[t].hkl[1]
@@ -268,6 +273,7 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 	    qSquared.append(qsq)
 
             file.write("\n" + str(chosen_actionList[t].hkl).replace("[","").replace("]","").replace(",",""))
+	    #The output is hardcoeded
             file.write("\t\t\t" + str(round(reward,2)) + "\t\t" + str(round(total_reward,2)) + "\t\t" + str(round(chiSq,2)) + "\t\t" + str(round(model.atomListModel.atomModels[0].z.value,5)))
 	    file.write("\t" + str(error[chosen_action]) + "\t" + str(tt[chosen_action]) + "\t" + str(sfs2[chosen_action]))
 #	    file.write("\t" + str(round(model.atomListModel.atomModels[0].B.value,2)))
@@ -277,7 +283,7 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 #	    file.write("\t" + str(round(model.atomListModel.atomModels[4].B.value,2)))
 #	    file.write("\t" + str(round(model.atomListModel.atomModels[5].B.value,2)))
 	    #TODO Maybe change this cutoff thing
-	    if (((t > 10) and chiSq < 1.5) or (t > 100)):
+	    if (((t > 10) and (chiSqs[t] > chiSqs[t-1]) and (chiSqs[t-1] > chiSqs[t-2]) and (chiSqs[t-2] > chiSqs[t-3])) or (t > 100)):
 		break
 
 	if (simulation % 10 == 0):
@@ -295,9 +301,9 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 #	y1 = np.zeros(len(y))
 #	for j in range(len(y)):
 #	    y1[actionIndexList[j]] = y[j]
-	print(qSquared)
+#	print(qSquared)
 #	print(x1)
-	print(y)
+#	print(y)
 
 	plt.figure()
 	plt.scatter(qSquared,y)
@@ -337,5 +343,5 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 #plt.savefig('sfs2stest.png') 
 
 agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 500, len(refList), 1)
+test_algorithm(agent, refList, 20000, len(refList), 1)
 print("done")
