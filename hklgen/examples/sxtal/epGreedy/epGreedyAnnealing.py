@@ -311,22 +311,22 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 	z_resids[i] = final_zs[i] - 0.35973
 
     plt.figure()
-    plt.scatter(list(range(num_sims)), final_zs)
+    plt.plot(list(range(num_sims)), final_zs)
     plt.savefig("Z Approximations per Simulation")
     plt.close()
 
     plt.figure()
-    plt.scatter(list(range(num_sims)), z_resids)
+    plt.plot(list(range(num_sims)), z_resids)
     plt.savefig("Z Approximation Residuals per Simulation")
     plt.close()
 
     plt.figure()
-    plt.scatter(list(range(num_sims)), speeds)
+    plt.plot(list(range(num_sims)), speeds)
     plt.savefig("Speed of Simulations")
     plt.close()
 
     plt.figure()
-    plt.scatter(list(range(num_sims)), total_rewards)
+    plt.plot(list(range(num_sims)), total_rewards)
     plt.savefig("Total Reward per Simulation")
     plt.close()
 
@@ -353,5 +353,5 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 
 
 agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 2, len(refList), 1)
+test_algorithm(agent, refList, 10, len(refList), 1)
 print("done")
