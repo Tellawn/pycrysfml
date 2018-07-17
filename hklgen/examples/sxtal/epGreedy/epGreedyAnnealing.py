@@ -84,15 +84,6 @@ def fit(model):
     x, dx = fitted.solve(monitors=[monitor])
     return x, dx, problem.chisq()
 
-#Beacuse I don't actually know how to use pycrysfml and bumps yet and just want something working, here's a fakeFit method that fakes the fit() method
-def fakeFit(model):
-    #x should be the predicted hkl positon, dx is the error, and chisq is the chi squared value
-    #model should be of class "Model" in the sxtal_model program, but for now it doesn't matter
-    x = random.random()
-    dx = random.random()
-    chisq = random.random()*150
-    return x, dx, chisq
-
 
 class EpsilonGreedy():
 
@@ -147,14 +138,12 @@ class EpsilonGreedy():
         
         #Exploit - Pick among the options (tied) with the best expected reward
         if coin > self.epsilon:
-#            prin)
             choice = random.choice(self.bestReward())
             self.visited.append(choice)
             self.visited.sort()
             
         #Explore - Pick a choice at random
         else:
-#            print
             choices = list(self.values)
             choices_indices = []
             for i in range(len(self.values)):
@@ -179,37 +168,31 @@ class EpsilonGreedy():
 	self.epsilon = 1 / np.log(t + 0.0000001)
         return
 
-def sorter(model, actionIndexList):
-    numActions = len(actionIndexList)
-
-    refListSorted = np.zeros(numActions)
-    errorSorted = np.zeros(numActions)
-    ttSorted = np.zeros(numActions)
-    intensitiesSorted = np.zeros(numActions)
-
-    refListSort = refList
-    model.refList = refList
-#    for i in range(numActions):
-#	refListSorted[actionIndexList[i]] = 
-#	errorSorted[actionIndexList[i]] = 
 
 #agent is the EpsilonGreedy() object, actions is a list of HKLs 
 #(each element of the list is a length 3 list: [h, k, l]), num_sims is an int, horizon is an int
 def test_algorithm(agent, actions, num_sims, horizon, numParameters):
-#    zInit = 0.3
+
+    #These are for graphing trends in the agent over time
+    final_zs = np.zeros(num_sims)
+    speeds = np.zeros(num_sims)                   #This is just how many hkls are visited per epoch
+    total_rewards = np.zeros(num_sims)
+
     for simulation in range(num_sims):
 	print("simulation #" + str(simulation))
-        agent.reset()
-        total_reward = 0
 
+	#Initialization
+        agent.reset()
+        total_reward = 0                           #This is replaced by total_rewards
+        reward = 0
+	t = 0
+	qSquared = []
 	#Action list (actual ReflectionList Objects)
         chosen_actionList = []
 	#Action index list
 	actionIndexList = []
-
 	observed_intensities = []
         rewards = np.zeros(horizon)
-
         model = setInitParams()
         prevChiSq = 0
 	chiSqs = []
@@ -218,20 +201,19 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
         file = open("epGreedyResults" + str(simulation) + ".txt", "w")
         file.write("HKL Value\t\tReward\t\tTotalReward\tChi Squared\tZ Appr. \tError\tTwo-Thetas\tSfs2")
 
-        reward = 0
 #	qSquared = np.zeros(len(d))
-	qSquared = []
-	t = 0
+
         for t in range(horizon):
             #print(agent.getValues())
             #print(agent.visited)
+
             #This is the index of the action/hkl to go to at this timestep
             chosen_action = agent.select_action()
 	    #print(chosen_action)
 	    actionIndexList.append(chosen_action)
             chosen_actionList.append(actions[chosen_action])
 
-            #|-Bumps stuff-|
+
             #feed actions[chosen_action] into bumps to get "reward" to use in agent.update() which updates expected reward
             #Find the data for this hkl value and add it to the model
 
@@ -257,7 +239,6 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 		    if (prevChiSq != 0 and chiSq < prevChiSq):
 			reward += 1.5 * abs(chiSq - prevChiSq)
 		    rewards[t] = reward
-		    total_reward += reward
 		    agent.update(chosen_action, reward)
                 prevChiSq = chiSq
 	    chiSqs.append(chiSq)
@@ -272,9 +253,14 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 	    qsq = (h/A)**2 + (k/B)**2 + (l/C)**2
 	    qSquared.append(qsq)
 
+	    #Update things
+	    final_zs[simulation] = model.atomListModel.atomModels[0].z.value
+	    total_rewards[simulation] += reward
+
+	    #output to files - hardcoded
+
             file.write("\n" + str(chosen_actionList[t].hkl).replace("[","").replace("]","").replace(",",""))
-	    #The output is hardcoeded
-            file.write("\t\t\t" + str(round(reward,2)) + "\t\t" + str(round(total_reward,2)) + "\t\t" + str(round(chiSq,2)) + "\t\t" + str(round(model.atomListModel.atomModels[0].z.value,5)))
+            file.write("\t\t\t" + str(round(reward,2)) + "\t\t" + str(round(total_rewards[simulation],2)) + "\t\t" + str(round(chiSq,2)) + "\t\t" + str(round(model.atomListModel.atomModels[0].z.value,5)))
 	    file.write("\t" + str(error[chosen_action]) + "\t" + str(tt[chosen_action]) + "\t" + str(sfs2[chosen_action]))
 #	    file.write("\t" + str(round(model.atomListModel.atomModels[0].B.value,2)))
 #	    file.write("\t" + str(round(model.atomListModel.atomModels[1].B.value,2)))
@@ -282,52 +268,74 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 #	    file.write("\t" + str(round(model.atomListModel.atomModels[3].B.value,2)))
 #	    file.write("\t" + str(round(model.atomListModel.atomModels[4].B.value,2)))
 #	    file.write("\t" + str(round(model.atomListModel.atomModels[5].B.value,2)))
+
 	    #TODO Maybe change this cutoff thing
 	    if (((t > 10) and (chiSqs[t] > chiSqs[t-1]) and (chiSqs[t-1] > chiSqs[t-2]) and (chiSqs[t-2] > chiSqs[t-3])) or (t > 100)):
 		break
 
+	speeds[simulation] = t
+
+	#Save what the agent has learned every 10 simulations
 	if (simulation % 10 == 0):
 	    file2 = open("Rewards" + str(simulation) + ".txt", "w")
 	    file2.write("Number of epochs: " + str(simulation))
 	    np.savetxt("Rewards" + str(simulation) + ".txt", agent.values)
 	    file2.close()
 
-	#Observed sfs2 values (
+	#Pretty graphs per simulation
 #	x1 = sfs2[0:t+1]
-	y = model.theory()
-	x = np.zeros(len(y))
-	for j in range(len(y)):
-	    x[j] = sfs2[d[str(chosen_actionList[j].hkl).replace("[","").replace("]","").replace(",","")]]
-#	y1 = np.zeros(len(y))
-#	for j in range(len(y)):
-#	    y1[actionIndexList[j]] = y[j]
-#	print(qSquared)
-#	print(x1)
-#	print(y)
+	sfs2_calc = model.theory()
+	sfs2_obs = np.zeros(len(sfs2_calc))
+	for j in range(len(sfs2_calc)):
+	    sfs2_obs[j] = sfs2[d[str(chosen_actionList[j].hkl).replace("[","").replace("]","").replace(",","")]]
 
 	plt.figure()
-	plt.scatter(qSquared,y)
-#	plt.savefig("Calc sfs2 vs Qsq " + str(simulation) + ".png") 
-	plt.scatter(qSquared,x)
+	plt.scatter(qSquared,sfs2_calc)
+	plt.scatter(qSquared,sfs2_obs)
 	plt.savefig("sfs2s vs Qsq " + str(simulation) + ".png")
 	plt.close()
 
 	plt.figure()
-	plt.scatter(x,y)
+	plt.scatter(sfs2_obs,sfs2_calc)
 	plt.savefig("Calc vs Obs " + str(simulation) + ".png")
 	plt.close()
+
 
 #	zInit = model.atomListModel.atomModels[0].z.value
         file.close()
 
+
+    #graphs over all simulations
+    z_resids = np.zeros(len(final_zs))
+    for i in range(len(z_resids)):
+	z_resids[i] = final_zs[i] - 0.35973
+
+    plt.figure()
+    plt.scatter(list(range(num_sims)), final_zs)
+    plt.savefig("Z Approximations per Simulation")
+    plt.close()
+
+    plt.figure()
+    plt.scatter(list(range(num_sims)), z_resids)
+    plt.savefig("Z Approximation Residuals per Simulation")
+    plt.close()
+
+    plt.figure()
+    plt.scatter(list(range(num_sims)), speeds)
+    plt.savefig("Speed of Simulations")
+    plt.close()
+
+    plt.figure()
+    plt.scatter(list(range(num_sims)), total_rewards)
+    plt.savefig("Total Reward per Simulation")
+    plt.close()
+
     return
 
-#def __main__():
-#for i in refList:
-#    for j in i:
-#        print(j)
 
 
+########################################################
+##This stuff was to make an ideal calc sfs2 vs obs sfs2 graph and basically not needed anymore
 #x2 = sfs2#
 
 #model1 = setInitParams()
@@ -341,7 +349,9 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 
 #plt.scatter(x2,y1)
 #plt.savefig('sfs2stest.png') 
+#########################################################
+
 
 agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 100000, len(refList), 1)
+test_algorithm(agent, refList, 2, len(refList), 1)
 print("done")
