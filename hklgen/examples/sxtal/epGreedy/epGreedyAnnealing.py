@@ -278,7 +278,7 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 
 	    #TODO Maybe change this cutoff thing
 #	    if (((t > 10) and (chiSqs[t] > chiSqs[t-1]) and (chiSqs[t-1] > chiSqs[t-2]) and (chiSqs[t-2] > chiSqs[t-3])) or (t > 100)):
-	    if ((t > 20) and (chiSq < 9)) or t > 100:
+	    if ((t > 10) and (chiSq < 2)) or t > 100:
 		break
 
 	speeds[simulation] = t
@@ -368,5 +368,5 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 
 
 agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 300, len(refList), 1)
+test_algorithm(agent, refList, 50, len(refList), 1)
 print("done")
