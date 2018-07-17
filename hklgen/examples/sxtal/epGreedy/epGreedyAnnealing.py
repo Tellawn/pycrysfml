@@ -368,5 +368,5 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 
 
 agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 41, len(refList), 1)
+test_algorithm(agent, refList, 300, len(refList), 1)
 print("done")
