@@ -177,6 +177,8 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
     final_zs = np.zeros(num_sims)
     speeds = np.zeros(num_sims)                   #This is just how many hkls are visited per epoch
     total_rewards = np.zeros(num_sims)
+    z_progression = []
+
 
     for simulation in range(num_sims):
 	print("simulation #" + str(simulation))
@@ -196,6 +198,7 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
         model = setInitParams()
         prevChiSq = 0
 	chiSqs = []
+	zs = []
 
         #agent.initialize(agent.getCounts(), agent.getRewards()) #this line is kinda pointless
         file = open("epGreedyResults" + str(simulation) + ".txt", "w")
@@ -257,6 +260,10 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 	    final_zs[simulation] = model.atomListModel.atomModels[0].z.value
 	    total_rewards[simulation] += reward
 
+	    if (simulation % 20 == 0):
+		zs.append(model.atomListModel.atomModels[0].z.value)
+
+
 	    #output to files - hardcoded
 
             file.write("\n" + str(chosen_actionList[t].hkl).replace("[","").replace("]","").replace(",",""))
@@ -270,10 +277,13 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 #	    file.write("\t" + str(round(model.atomListModel.atomModels[5].B.value,2)))
 
 	    #TODO Maybe change this cutoff thing
-	    if (((t > 10) and (chiSqs[t] > chiSqs[t-1]) and (chiSqs[t-1] > chiSqs[t-2]) and (chiSqs[t-2] > chiSqs[t-3])) or (t > 100)):
+#	    if (((t > 10) and (chiSqs[t] > chiSqs[t-1]) and (chiSqs[t-1] > chiSqs[t-2]) and (chiSqs[t-2] > chiSqs[t-3])) or (t > 100)):
+	    if ((t > 20) and (chiSq < 9)) or t > 100:
 		break
 
 	speeds[simulation] = t
+	if (simulation % 20 == 0):
+	    z_progression.append(zs)
 
 	#Save what the agent has learned every 10 simulations
 	if (simulation % 10 == 0):
@@ -321,13 +331,18 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
     plt.close()
 
     plt.figure()
-    plt.plot(list(range(num_sims)), speeds)
+    plt.scatter(list(range(num_sims)), speeds)
     plt.savefig("Speed of Simulations")
     plt.close()
 
+#    plt.figure()
+#    plt.plot(list(range(num_sims)), total_rewards)
+#    plt.savefig("Total Reward per Simulation")
+#    plt.close()
     plt.figure()
-    plt.plot(list(range(num_sims)), total_rewards)
-    plt.savefig("Total Reward per Simulation")
+    for i in z_progression:
+	plt.plot(list(range(len(i))), i)
+    plt.savefig("Z Approximation Comparison")
     plt.close()
 
     return
@@ -353,5 +368,5 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 
 
 agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 500, len(refList), 1)
+test_algorithm(agent, refList, 41, len(refList), 1)
 print("done")
