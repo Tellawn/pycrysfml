@@ -260,7 +260,7 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 	    final_zs[simulation] = model.atomListModel.atomModels[0].z.value
 	    total_rewards[simulation] += reward
 
-	    if (simulation % 20 == 0):
+	    if (simulation % 25 == 0):
 		zs.append(model.atomListModel.atomModels[0].z.value)
 
 
@@ -277,16 +277,16 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 #	    file.write("\t" + str(round(model.atomListModel.atomModels[5].B.value,2)))
 
 	    #TODO Maybe change this cutoff thing
-#	    if (((t > 10) and (chiSqs[t] > chiSqs[t-1]) and (chiSqs[t-1] > chiSqs[t-2]) and (chiSqs[t-2] > chiSqs[t-3])) or (t > 100)):
-	    if ((t > 10) and (chiSq < 2)) or t > 100:
+	    if (((t > 13) and (chiSqs[t] > chiSqs[t-1]) and (chiSqs[t-1] > chiSqs[t-2]) and (chiSqs[t-2] > chiSqs[t-3])) or (t > 100)):
+#	    if ((t > 10) and (chiSq < 2)) or t > 100:
 		break
 
 	speeds[simulation] = t
-	if (simulation % 20 == 0):
-	    z_progression.append(zs)
 
-	#Save what the agent has learned every 10 simulations
-	if (simulation % 10 == 0):
+	if (simulation % 25 == 0):
+	    #Save how the agent updates z every 25 simulations
+	    z_progression.append(zs)
+   	    #Save what the agent has learned every 25 simulations
 	    file2 = open("Rewards" + str(simulation) + ".txt", "w")
 	    file2.write("Number of epochs: " + str(simulation))
 	    np.savetxt("Rewards" + str(simulation) + ".txt", agent.values)
