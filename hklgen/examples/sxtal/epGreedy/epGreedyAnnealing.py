@@ -218,8 +218,7 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
                 chosen_action = agent.select_action()
                 #print(chosen_action)
                 actionIndexList.append(chosen_action)
-                chosen_actionList.append(actions[chosen_action])1
-
+                chosen_actionList.append(actions[chosen_action])
 
                 #feed actions[chosen_action] into bumps to get "reward" to use in agent.update() which updates expected reward
                 #Find the data for this hkl value and add it to the model
@@ -306,12 +305,12 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
             plt.figure()
             plt.scatter(qSquared,sfs2_calc)
             plt.scatter(qSquared,sfs2_obs)
-            plt.savefig("sfs2s vs Qsq " + str(simulation) + ".png")
+            plt.savefig("set" + str(i) + "/sfs2s vs Qsq " + str(simulation) + ".png")
             plt.close()
 
             plt.figure()
             plt.scatter(sfs2_obs,sfs2_calc)
-            plt.savefig("Calc vs Obs " + str(simulation) + ".png")
+            plt.savefig("set" + str(i) + "/Calc vs Obs " + str(simulation) + ".png")
             plt.close()
 
 
@@ -321,8 +320,8 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
 
         #graphs over all simulations
         z_resids = np.zeros(len(final_zs))
-        for i in range(len(z_resids)):
-            z_resids[i] = final_zs[i] - 0.35973
+        for j in range(len(z_resids)):
+            z_resids[j] = final_zs[j] - 0.35973
 
         plt.figure()
         plt.plot(list(range(num_sims)), final_zs)
@@ -344,8 +343,8 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
     #    plt.savefig("Total Reward per Simulation")
     #    plt.close()
         plt.figure()
-        for i in z_progression:
-            plt.plot(list(range(len(i))), i)
+        for j in z_progression:
+            plt.plot(list(range(len(j))), j)
         plt.savefig("set" + str(i) + "/Z Approximation Comparison")
         plt.close()
 
