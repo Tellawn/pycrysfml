@@ -171,179 +171,183 @@ class EpsilonGreedy():
 
 #agent is the EpsilonGreedy() object, actions is a list of HKLs 
 #(each element of the list is a length 3 list: [h, k, l]), num_sims is an int, horizon is an int
-def test_algorithm(agent, actions, num_sims, horizon, numParameters):
+def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
 
-    #These are for graphing trends in the agent over time
-    final_zs = np.zeros(num_sims)
-    speeds = np.zeros(num_sims)                   #This is just how many hkls are visited per epoch
-    total_rewards = np.zeros(num_sims)
-    z_progression = []
-
-
-    for simulation in range(num_sims):
-	print("simulation #" + str(simulation))
-
-	#Initialization
-        agent.reset()
-        total_reward = 0                           #This is replaced by total_rewards
-        reward = 0
-	t = 0
-	qSquared = []
-	#Action list (actual ReflectionList Objects)
-        chosen_actionList = []
-	#Action index list
-	actionIndexList = []
-	observed_intensities = []
-        rewards = np.zeros(horizon)
-        model = setInitParams()
-        prevChiSq = 0
-	chiSqs = []
-	zs = []
-
-        #agent.initialize(agent.getCounts(), agent.getRewards()) #this line is kinda pointless
-        file = open("epGreedyResults" + str(simulation) + ".txt", "w")
-        file.write("HKL Value\t\tReward\t\tTotalReward\tChi Squared\tZ Appr. \tError\tTwo-Thetas\tSfs2")
-
-#	qSquared = np.zeros(len(d))
-
-        for t in range(horizon):
-            #print(agent.getValues())
-            #print(agent.visited)
-
-            #This is the index of the action/hkl to go to at this timestep
-            chosen_action = agent.select_action()
-	    #print(chosen_action)
-	    actionIndexList.append(chosen_action)
-            chosen_actionList.append(actions[chosen_action])
+    for i in range(num_sets):
+        print("Training set #" + str(i))
+        os.system("mkdir set" + str(i))
+        
+        #These are for graphing trends in the agent over time
+        final_zs = np.zeros(num_sims)
+        speeds = np.zeros(num_sims)                   #This is just how many hkls are visited per epoch
+        total_rewards = np.zeros(num_sims)
+        z_progression = []
 
 
-            #feed actions[chosen_action] into bumps to get "reward" to use in agent.update() which updates expected reward
-            #Find the data for this hkl value and add it to the model
+        for simulation in range(num_sims):
+            print("simulation #" + str(simulation))
 
-	    #because refList Objects are hard to change, make a new reflist each time with the new data
-            model.refList = H.ReflectionList(chosen_actionList)
-            model._set_reflections()
+            #Initialization
+            agent.reset()
+            total_reward = 0                           #This is replaced by total_rewards
+            reward = 0
+            t = 0
+            qSquared = []
+            #Action list (actual ReflectionList Objects)
+            chosen_actionList = []
+            #Action index list
+            actionIndexList = []
+            observed_intensities = []
+            rewards = np.zeros(horizon)
+            model = setInitParams()
+            prevChiSq = 0
+            chiSqs = []
+            zs = []
 
-            model.error.append(error[chosen_action])
-            model.tt = np.append(model.tt, [tt[chosen_action]])
+            #agent.initialize(agent.getCounts(), agent.getRewards()) #this line is kinda pointless
+            file = open("set" + str(i) + "/epGreedyResults" + str(simulation) + ".txt", "w")
+            file.write("HKL Value\t\tReward\t\tTotalReward\tChi Squared\tZ Appr. \tError\tTwo-Thetas\tSfs2")
 
-            observed_intensities.append(sfs2[chosen_action])
-            model._set_observations(observed_intensities)
-            model.update()
+    #	qSquared = np.zeros(len(d))
 
-	    chiSq = 0
-	    dx = 0
-	    x = 0
+            for t in range(horizon):
+                #print(agent.getValues())
+                #print(agent.visited)
 
-            if t > numParameters - 1:
-                x, dx, chiSq = fit(model)
-                if t > numParameters:
-		    reward = -1 * abs(chiSq - prevChiSq)
-		    if (prevChiSq != 0 and chiSq < prevChiSq):
-			reward += 1.5 * abs(chiSq - prevChiSq)
-		    rewards[t] = reward
-		    agent.update(chosen_action, reward)
-                prevChiSq = chiSq
-	    chiSqs.append(chiSq)
-
-	    h = chosen_actionList[t].hkl[0]
-	    k = chosen_actionList[t].hkl[1]
-	    l = chosen_actionList[t].hkl[2]
-	    A = 5.417799
-	    B = 5.414600
-	    C = 12.483399
-
-	    qsq = (h/A)**2 + (k/B)**2 + (l/C)**2
-	    qSquared.append(qsq)
-
-	    #Update things
-	    final_zs[simulation] = model.atomListModel.atomModels[0].z.value
-	    total_rewards[simulation] += reward
-
-	    if (simulation % 25 == 0):
-		zs.append(model.atomListModel.atomModels[0].z.value)
+                #This is the index of the action/hkl to go to at this timestep
+                chosen_action = agent.select_action()
+                #print(chosen_action)
+                actionIndexList.append(chosen_action)
+                chosen_actionList.append(actions[chosen_action])1
 
 
-	    #output to files - hardcoded
+                #feed actions[chosen_action] into bumps to get "reward" to use in agent.update() which updates expected reward
+                #Find the data for this hkl value and add it to the model
 
-            file.write("\n" + str(chosen_actionList[t].hkl).replace("[","").replace("]","").replace(",",""))
-            file.write("\t\t\t" + str(round(reward,2)) + "\t\t" + str(round(total_rewards[simulation],2)) + "\t\t" + str(round(chiSq,2)) + "\t\t" + str(round(model.atomListModel.atomModels[0].z.value,5)))
-	    file.write("\t" + str(error[chosen_action]) + "\t" + str(tt[chosen_action]) + "\t" + str(sfs2[chosen_action]))
-#	    file.write("\t" + str(round(model.atomListModel.atomModels[0].B.value,2)))
-#	    file.write("\t" + str(round(model.atomListModel.atomModels[1].B.value,2)))
-#	    file.write("\t" + str(round(model.atomListModel.atomModels[2].B.value,2)))
-#	    file.write("\t" + str(round(model.atomListModel.atomModels[3].B.value,2)))
-#	    file.write("\t" + str(round(model.atomListModel.atomModels[4].B.value,2)))
-#	    file.write("\t" + str(round(model.atomListModel.atomModels[5].B.value,2)))
+                #because refList Objects are hard to change, make a new reflist each time with the new data
+                model.refList = H.ReflectionList(chosen_actionList)
+                model._set_reflections()
 
-	    #TODO Maybe change this cutoff thing
-	    if (((t > 13) and (chiSqs[t] > chiSqs[t-1]) and (chiSqs[t-1] > chiSqs[t-2]) and (chiSqs[t-2] > chiSqs[t-3])) or (t > 100)):
-#	    if ((t > 10) and (chiSq < 2)) or t > 100:
-		break
+                model.error.append(error[chosen_action])
+                model.tt = np.append(model.tt, [tt[chosen_action]])
 
-	speeds[simulation] = t
+                observed_intensities.append(sfs2[chosen_action])
+                model._set_observations(observed_intensities)
+                model.update()
 
-	if (simulation % 25 == 0):
-	    #Save how the agent updates z every 25 simulations
-	    z_progression.append(zs)
-   	    #Save what the agent has learned every 25 simulations
-	    file2 = open("Rewards" + str(simulation) + ".txt", "w")
-	    file2.write("Number of epochs: " + str(simulation))
-	    np.savetxt("Rewards" + str(simulation) + ".txt", agent.values)
-	    file2.close()
+                chiSq = 0
+                dx = 0
+                x = 0
 
-	#Pretty graphs per simulation
-#	x1 = sfs2[0:t+1]
-	sfs2_calc = model.theory()
-	sfs2_obs = np.zeros(len(sfs2_calc))
-	for j in range(len(sfs2_calc)):
-	    sfs2_obs[j] = sfs2[d[str(chosen_actionList[j].hkl).replace("[","").replace("]","").replace(",","")]]
+                if t > numParameters - 1:
+                    x, dx, chiSq = fit(model)
+                    if t > numParameters:
+                        reward = -1 * abs(chiSq - prevChiSq)
+                        if (prevChiSq != 0 and chiSq < prevChiSq):
+                            reward += 1.5 * abs(chiSq - prevChiSq)
+                        rewards[t] = reward
+                        agent.update(chosen_action, reward)
+                    prevChiSq = chiSq
+                chiSqs.append(chiSq)
 
-	plt.figure()
-	plt.scatter(qSquared,sfs2_calc)
-	plt.scatter(qSquared,sfs2_obs)
-	plt.savefig("sfs2s vs Qsq " + str(simulation) + ".png")
-	plt.close()
+                h = chosen_actionList[t].hkl[0]
+                k = chosen_actionList[t].hkl[1]
+                l = chosen_actionList[t].hkl[2]
+                A = 5.417799
+                B = 5.414600
+                C = 12.483399
 
-	plt.figure()
-	plt.scatter(sfs2_obs,sfs2_calc)
-	plt.savefig("Calc vs Obs " + str(simulation) + ".png")
-	plt.close()
+                qsq = (h/A)**2 + (k/B)**2 + (l/C)**2
+                qSquared.append(qsq)
 
+                #Update things
+                final_zs[simulation] = model.atomListModel.atomModels[0].z.value
+                total_rewards[simulation] += reward
 
-#	zInit = model.atomListModel.atomModels[0].z.value
-        file.close()
+                if (simulation % 25 == 0):
+                    zs.append(model.atomListModel.atomModels[0].z.value)
 
 
-    #graphs over all simulations
-    z_resids = np.zeros(len(final_zs))
-    for i in range(len(z_resids)):
-	z_resids[i] = final_zs[i] - 0.35973
+                #output to files - hardcoded
 
-    plt.figure()
-    plt.plot(list(range(num_sims)), final_zs)
-    plt.savefig("Z Approximations per Simulation")
-    plt.close()
+                file.write("\n" + str(chosen_actionList[t].hkl).replace("[","").replace("]","").replace(",",""))
+                file.write("\t\t\t" + str(round(reward,2)) + "\t\t" + str(round(total_rewards[simulation],2)) + "\t\t" + str(round(chiSq,2)) + "\t\t" + str(round(model.atomListModel.atomModels[0].z.value,5)))
+                file.write("\t" + str(error[chosen_action]) + "\t" + str(tt[chosen_action]) + "\t" + str(sfs2[chosen_action]))
+    #	    file.write("\t" + str(round(model.atomListModel.atomModels[0].B.value,2)))
+    #	    file.write("\t" + str(round(model.atomListModel.atomModels[1].B.value,2)))
+    #	    file.write("\t" + str(round(model.atomListModel.atomModels[2].B.value,2)))
+    #	    file.write("\t" + str(round(model.atomListModel.atomModels[3].B.value,2)))
+    #	    file.write("\t" + str(round(model.atomListModel.atomModels[4].B.value,2)))
+    #	    file.write("\t" + str(round(model.atomListModel.atomModels[5].B.value,2)))
 
-    plt.figure()
-    plt.plot(list(range(num_sims)), z_resids)
-    plt.savefig("Z Approximation Residuals per Simulation")
-    plt.close()
+                #TODO Maybe change this cutoff thing
+                if (((t > 13) and (chiSqs[t] > chiSqs[t-1]) and (chiSqs[t-1] > chiSqs[t-2]) and (chiSqs[t-2] > chiSqs[t-3])) or (t > 100)):
+    #	    if ((t > 10) and (chiSq < 2)) or t > 100:
+                    break
 
-    plt.figure()
-    plt.scatter(list(range(num_sims)), speeds)
-    plt.savefig("Speed of Simulations")
-    plt.close()
+            speeds[simulation] = t
 
-#    plt.figure()
-#    plt.plot(list(range(num_sims)), total_rewards)
-#    plt.savefig("Total Reward per Simulation")
-#    plt.close()
-    plt.figure()
-    for i in z_progression:
-	plt.plot(list(range(len(i))), i)
-    plt.savefig("Z Approximation Comparison")
-    plt.close()
+            if (simulation % 25 == 0):
+                #Save how the agent updates z every 25 simulations
+                z_progression.append(zs)
+                #Save what the agent has learned every 25 simulations
+                file2 = open("set" + str(i) + "/Rewards" + str(simulation) + ".txt", "w")
+                file2.write("Number of epochs: " + str(simulation))
+                np.savetxt("Rewards" + str(simulation) + ".txt", agent.values)
+                file2.close()
+
+            #Pretty graphs per simulation
+    #	x1 = sfs2[0:t+1]
+            sfs2_calc = model.theory()
+            sfs2_obs = np.zeros(len(sfs2_calc))
+            for j in range(len(sfs2_calc)):
+                sfs2_obs[j] = sfs2[d[str(chosen_actionList[j].hkl).replace("[","").replace("]","").replace(",","")]]
+
+            plt.figure()
+            plt.scatter(qSquared,sfs2_calc)
+            plt.scatter(qSquared,sfs2_obs)
+            plt.savefig("sfs2s vs Qsq " + str(simulation) + ".png")
+            plt.close()
+
+            plt.figure()
+            plt.scatter(sfs2_obs,sfs2_calc)
+            plt.savefig("Calc vs Obs " + str(simulation) + ".png")
+            plt.close()
+
+
+    #	zInit = model.atomListModel.atomModels[0].z.value
+            file.close()
+
+
+        #graphs over all simulations
+        z_resids = np.zeros(len(final_zs))
+        for i in range(len(z_resids)):
+            z_resids[i] = final_zs[i] - 0.35973
+
+        plt.figure()
+        plt.plot(list(range(num_sims)), final_zs)
+        plt.savefig("set" + str(i) + "/Z Approximations per Simulation")
+        plt.close()
+
+        plt.figure()
+        plt.plot(list(range(num_sims)), z_resids)
+        plt.savefig("set" + str(i) + "/Z Approximation Residuals per Simulation")
+        plt.close()
+
+        plt.figure()
+        plt.scatter(list(range(num_sims)), speeds)
+        plt.savefig("set" + str(i) + "/Speed of Simulations")
+        plt.close()
+
+    #    plt.figure()
+    #    plt.plot(list(range(num_sims)), total_rewards)
+    #    plt.savefig("Total Reward per Simulation")
+    #    plt.close()
+        plt.figure()
+        for i in z_progression:
+            plt.plot(list(range(len(i))), i)
+        plt.savefig("set" + str(i) + "/Z Approximation Comparison")
+        plt.close()
 
     return
 
@@ -368,5 +372,5 @@ def test_algorithm(agent, actions, num_sims, horizon, numParameters):
 
 
 agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 50, len(refList), 1)
+test_algorithm(agent, refList, 2, 2, len(refList), 1)
 print("done")
