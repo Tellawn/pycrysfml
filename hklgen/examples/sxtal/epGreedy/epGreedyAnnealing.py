@@ -94,11 +94,18 @@ class EpsilonGreedy():
         self.visited = []
         return
 
+    #do this after each simulation
     def reset(self):
         #self.counts = counts
         #self.values = values
         self.visited = []
         return
+
+    #do this after each set/model
+    def bigreset(self, counts, values):
+	self.visited = []
+	self.counts = counts
+	self.values = values
 
     def getCounts(self):
         return self.counts
@@ -165,7 +172,7 @@ class EpsilonGreedy():
         self.values[chosen_action] = value * (n-1.0)/n + float(reward)/n
 	
 	t = np.sum(self.counts)
-	self.epsilon = 1 / np.log(t + 0.0000001)
+#	self.epsilon = 1 / np.log(t + 0.0000001)
         return
 
 
@@ -175,14 +182,15 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
 
     for i in range(num_sets):
         print("Training set #" + str(i))
-        os.system("mkdir set" + str(i))
-        
+	foldername = "set" + str(agent.epsilon)
+        os.system("mkdir set" + str(agent.epsilon))
         #These are for graphing trends in the agent over time
         final_zs = np.zeros(num_sims)
         speeds = np.zeros(num_sims)                   #This is just how many hkls are visited per epoch
         total_rewards = np.zeros(num_sims)
         z_progression = []
 
+	agent.bigreset(np.zeros(len(refList)), np.ones(len(refList)))
 
         for simulation in range(num_sims):
             print("simulation #" + str(simulation))
@@ -205,7 +213,7 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
             zs = []
 
             #agent.initialize(agent.getCounts(), agent.getRewards()) #this line is kinda pointless
-            file = open("set" + str(i) + "/epGreedyResults" + str(simulation) + ".txt", "w")
+            file = open(foldername +  "/epGreedyResults" + str(simulation) + ".txt", "w")
             file.write("HKL Value\t\tReward\t\tTotalReward\tChi Squared\tZ Appr. \tError\tTwo-Thetas\tSfs2")
 
     #	qSquared = np.zeros(len(d))
@@ -290,7 +298,7 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
                 #Save how the agent updates z every 25 simulations
                 z_progression.append(zs)
                 #Save what the agent has learned every 25 simulations
-                file2 = open("set" + str(i) + "/Rewards" + str(simulation) + ".txt", "w")
+                file2 = open(foldername + "/Rewards" + str(simulation) + ".txt", "w")
                 file2.write("Number of epochs: " + str(simulation))
                 np.savetxt("Rewards" + str(simulation) + ".txt", agent.values)
                 file2.close()
@@ -305,12 +313,12 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
             plt.figure()
             plt.scatter(qSquared,sfs2_calc)
             plt.scatter(qSquared,sfs2_obs)
-            plt.savefig("set" + str(i) + "/sfs2s vs Qsq " + str(simulation) + ".png")
+            plt.savefig(foldername + "/sfs2s vs Qsq " + str(simulation) + ".png")
             plt.close()
 
             plt.figure()
             plt.scatter(sfs2_obs,sfs2_calc)
-            plt.savefig("set" + str(i) + "/Calc vs Obs " + str(simulation) + ".png")
+            plt.savefig(foldername + "/Calc vs Obs " + str(simulation) + ".png")
             plt.close()
 
 
@@ -325,17 +333,17 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
 
         plt.figure()
         plt.plot(list(range(num_sims)), final_zs)
-        plt.savefig("set" + str(i) + "/Z Approximations per Simulation")
+        plt.savefig(foldername + "/Z Approximations per Simulation")
         plt.close()
 
         plt.figure()
         plt.plot(list(range(num_sims)), z_resids)
-        plt.savefig("set" + str(i) + "/Z Approximation Residuals per Simulation")
+        plt.savefig(foldername + "/Z Approximation Residuals per Simulation")
         plt.close()
 
         plt.figure()
         plt.scatter(list(range(num_sims)), speeds)
-        plt.savefig("set" + str(i) + "/Speed of Simulations")
+        plt.savefig(foldername + "/Speed of Simulations")
         plt.close()
 
     #    plt.figure()
@@ -345,9 +353,10 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
         plt.figure()
         for j in z_progression:
             plt.plot(list(range(len(j))), j)
-        plt.savefig("set" + str(i) + "/Z Approximation Comparison")
+        plt.savefig(foldername + "/Z Approximation Comparison")
         plt.close()
-
+	
+        agent.epsilon = agent.epsilon + 0.1
     return
 
 
@@ -370,6 +379,7 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
 #########################################################
 
 
-agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 50, 200, len(refList), 1)
+#agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
+agent = EpsilonGreedy(0.1, np.zeros(len(refList)), np.ones(len(refList)))
+test_algorithm(agent, refList, 4, 10, len(refList), 1)
 print("done")
