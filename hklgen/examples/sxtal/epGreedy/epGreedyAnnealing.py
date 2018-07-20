@@ -172,7 +172,7 @@ class EpsilonGreedy():
         self.values[chosen_action] = value * (n-1.0)/n + float(reward)/n
 	
 	t = np.sum(self.counts)
-#	self.epsilon = 1 / np.log(t + 0.0000001)
+	self.epsilon = 1 / np.log(t + 0.0000001)
         return
 
 
@@ -180,14 +180,15 @@ class EpsilonGreedy():
 #(each element of the list is a length 3 list: [h, k, l]), num_sims is an int, horizon is an int
 def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
 
-    epsilons = [0.1, 0.15, 0.2, 0.25, 0.3]
+#    epsilons = [0.1, 0.15, 0.2, 0.25, 0.3]
 
     #for each model
     for i in range(num_sets):
-	agent.epsilon = epsilons[i % 5]
+#	agent.epsilon = epsilons[i % 5]
 
         print("Training set #" + str(i))
-	foldername = "set" + str(i) + "_" + str(agent.epsilon)
+#	foldername = "set" + str(i) + "_" + str(agent.epsilon)
+	foldername = "set" + str(i) + "_anneal1"
         os.system("mkdir " + foldername)
         #These are for graphing trends in the agent over time
         final_zs = np.zeros(num_sims)
@@ -254,9 +255,11 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
                 if t > numParameters - 1:
                     x, dx, chiSq = fit(model)
                     if t > numParameters:
-                        reward = -1 * abs(chiSq - prevChiSq)
+#                        reward = -1 * abs(chiSq - prevChiSq)
+                        reward = -1 / chiSq
                         if (prevChiSq != 0 and chiSq < prevChiSq):
-                            reward += 1.5 * abs(chiSq - prevChiSq)
+#                            reward += 1.5 * abs(chiSq - prevChiSq)
+                            reward += 1.5 / chiSq
                         rewards[t] = reward
                         agent.update(chosen_action, reward)
                     prevChiSq = chiSq
@@ -386,5 +389,5 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
 
 #agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
 agent = EpsilonGreedy(0.1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 20, 500, len(refList), 1)
+test_algorithm(agent, refList, 4, 10, len(refList), 1)
 print("done")
