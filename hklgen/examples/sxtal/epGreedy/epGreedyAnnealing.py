@@ -188,7 +188,7 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
 
         print("Training set #" + str(i))
 #	foldername = "set" + str(i) + "_" + str(agent.epsilon)
-	foldername = "set" + str(i) + "_anneal1"
+	foldername = "set" + str(i) + "_anneal1_rwd1"
         os.system("mkdir " + foldername)
         #These are for graphing trends in the agent over time
         final_zs = np.zeros(num_sims)
@@ -256,10 +256,11 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
                     x, dx, chiSq = fit(model)
                     if t > numParameters:
 #                        reward = -1 * abs(chiSq - prevChiSq)
-                        reward = -1 / chiSq
-                        if (prevChiSq != 0 and chiSq < prevChiSq):
+#                        reward = -1 / chiSq
+#                        if (prevChiSq != 0 and chiSq < prevChiSq):
 #                            reward += 1.5 * abs(chiSq - prevChiSq)
-                            reward += 1.5 / chiSq
+#                            reward += 1.5 / chiSq
+			reward = (1/(1+1.2**(-(prevChiSq - chiSq))))*10/(np.sqrt(chiSq))
                         rewards[t] = reward
                         agent.update(chosen_action, reward)
                     prevChiSq = chiSq
@@ -388,6 +389,6 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
 
 
 #agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
-agent = EpsilonGreedy(0.1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 4, 10, len(refList), 1)
+agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
+test_algorithm(agent, refList, 30, 500, len(refList), 1)
 print("done")
