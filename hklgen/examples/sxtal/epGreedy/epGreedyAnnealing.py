@@ -69,7 +69,8 @@ def setInitParams():
     #Set a range on the x value of the first atom in the model
 
     #Praesydmium z coordinate
-    m.atomListModel.atomModels[0].z.value = 0.3 #zApprox
+#    m.atomListModel.atomModels[0].z.value = 0.3 #zApprox
+    m.atomListModel.atomModels[0].z.value = random.random()/2
     m.atomListModel.atomModels[0].z.range(0,0.5)
     #Oxygen d z coordinate
 #    m.atomListModel.atomModels[5].z.value = 0.2
@@ -188,7 +189,7 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
 
         print("Training set #" + str(i))
 #	foldername = "set" + str(i) + "_" + str(agent.epsilon)
-	foldername = "set" + str(i) + "_anneal1_rwd1"
+	foldername = "set" + str(i) + "_anneal1_randZ"
         os.system("mkdir " + foldername)
         #These are for graphing trends in the agent over time
         final_zs = np.zeros(num_sims)
@@ -217,6 +218,9 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
             prevChiSq = 0
             chiSqs = []
             zs = []
+
+	    #TODO testing to see if randomly changing the initial z value for each simulation does anything
+	    model.atomListModel.atomModels[0].z.value = random.random()/2
 
             #agent.initialize(agent.getCounts(), agent.getRewards()) #this line is kinda pointless
             file = open(foldername +  "/epGreedyResults" + str(simulation) + ".txt", "w")
@@ -390,5 +394,5 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
 
 #agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
 agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 30, 500, len(refList), 1)
+test_algorithm(agent, refList, 3, 750, len(refList), 1)
 print("done")
