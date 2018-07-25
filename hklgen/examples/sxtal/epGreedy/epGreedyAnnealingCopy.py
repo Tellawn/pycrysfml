@@ -189,7 +189,7 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
 
         print("Training set #" + str(i))
 #	foldername = "set" + str(i) + "_" + str(agent.epsilon)
-	foldername = "mark15/set" + str(i) + "_anneal2"
+	foldername = "TEST" + str(i) + "_anneal2"
         os.system("mkdir -p " + foldername)
         #These are for graphing trends in the agent over time
         final_zs = np.zeros(num_sims)
@@ -319,26 +319,24 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
                 np.savetxt(foldername + "/Rewards" + str(simulation) + ".txt", agent.values)
                 file2.close()
 
-            #Pretty graphs per simulation
-    #	x1 = sfs2[0:t+1]
-            sfs2_calc = model.theory()
-            sfs2_obs = np.zeros(len(sfs2_calc))
-            for j in range(len(sfs2_calc)):
-                sfs2_obs[j] = sfs2[d[str(chosen_actionList[j].hkl).replace("[","").replace("]","").replace(",","")]]
+		#	x1 = sfs2[0:t+1]
+		sfs2_calc = model.theory()
+                sfs2_obs = np.zeros(len(sfs2_calc))
+                for j in range(len(sfs2_calc)):
+                    sfs2_obs[j] = sfs2[d[str(chosen_actionList[j].hkl).replace("[","").replace("]","").replace(",","")]]
 
-            plt.figure()
-            plt.scatter(qSquared,sfs2_calc)
-            plt.scatter(qSquared,sfs2_obs)
-            plt.savefig(foldername + "/sfs2s vs Qsq " + str(simulation) + ".png")
-            plt.close()
+                plt.figure()
+                plt.scatter(qSquared,sfs2_calc)
+                plt.scatter(qSquared,sfs2_obs)
+                plt.savefig(foldername + "/sfs2s vs Qsq " + str(simulation) + ".png")
+                plt.close()
 
-            plt.figure()
-            plt.scatter(sfs2_obs,sfs2_calc)
-            plt.savefig(foldername + "/Calc vs Obs " + str(simulation) + ".png")
-            plt.close()
+                plt.figure()
+                plt.scatter(sfs2_obs,sfs2_calc)
+                plt.savefig(foldername + "/Calc vs Obs " + str(simulation) + ".png")
+                plt.close()
 
-
-    #	zInit = model.atomListModel.atomModels[0].z.value
+#	    zInit = model.atomListModel.atomModels[0].z.value
             file.close()
 
 
@@ -349,28 +347,34 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
 
         plt.figure()
         plt.plot(list(range(num_sims)), final_zs)
-        plt.savefig(foldername + "/Z Approximations per Simulation")
+	plt.xlabel("Timestep")
+	plt.ylabel("Z Coordinate Approximation")
+	plt.suptitle("Z Approximations")
+        plt.savefig(foldername + "/Z Approximations over Time")
         plt.close()
 
         plt.figure()
         plt.plot(list(range(num_sims)), z_resids)
+	plt.xlabel("Simulation Number")
+	plt.ylabel("Z Residual")
+	plt.suptitle("Z Residuals per Simulation")
         plt.savefig(foldername + "/Z Approximation Residuals per Simulation")
         plt.close()
 
-        plt.figure()
-        plt.scatter(list(range(num_sims)), speeds)
-        plt.savefig(foldername + "/Speed of Simulations")
-        plt.close()
+#        plt.figure()
+#        plt.scatter(list(range(num_sims)), speeds)
+#        plt.savefig(foldername + "/Speed of Simulations")
+#        plt.close()
 
     #    plt.figure()
     #    plt.plot(list(range(num_sims)), total_rewards)
     #    plt.savefig("Total Reward per Simulation")
     #    plt.close()
-        plt.figure()
-        for j in z_progression:
-            plt.plot(list(range(len(j))), j)
-        plt.savefig(foldername + "/Z Approximation Comparison")
-        plt.close()
+#        plt.figure()
+#        for j in z_progression:
+#            plt.plot(list(range(len(j))), j)
+#        plt.savefig(foldername + "/Z Approximation Comparison")
+#        plt.close()
 	
 #        agent.epsilon = agent.epsilon + 0.1
     return
@@ -397,5 +401,5 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
 
 #agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
 agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 8, 500, len(refList), 1)
+test_algorithm(agent, refList, 2, 1, len(refList), 1)
 print("done")
