@@ -189,8 +189,8 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
 
         print("Training set #" + str(i))
 #	foldername = "set" + str(i) + "_" + str(agent.epsilon)
-	foldername = "set" + str(i) + "_anneal2"
-        os.system("mkdir " + foldername)
+	foldername = "mark15/set" + str(i) + "_anneal2"
+        os.system("mkdir -p " + foldername)
         #These are for graphing trends in the agent over time
         final_zs = np.zeros(num_sims)
         speeds = np.zeros(num_sims)                   #This is just how many hkls are visited per epoch
@@ -397,5 +397,5 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
 
 #agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
 agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 6, 500, len(refList), 1)
+test_algorithm(agent, refList, 8, 500, len(refList), 1)
 print("done")
