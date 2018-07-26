@@ -65,17 +65,19 @@ def setInitParams():
     #Define a model
     m = S.Model([], [], backg, wavelength, spaceGroup, cell,
                 [atomList], exclusions,
-                scale=0.062978, error=[],  extinction=[0.000105])
+                scale=0.2163, error=[],  extinction=[0.000105])
     #Set a range on the x value of the first atom in the model
 
-    #Praesydmium z coordinate
-    m.atomListModel.atomModels[0].z.value = 0.3 #zApprox
+
+    #Setting initial values and ranges of parameters to look at
+    m.atomListModel.atomModels[0].z.value = 0.4
 #    m.atomListModel.atomModels[0].z.value = random.random()/2
-    m.atomListModel.atomModels[0].z.range(0,0.5)
+    m.atomListModel.atomModels[0].z.range(0,1)
     #Oxygen d z coordinate
 #    m.atomListModel.atomModels[5].z.value = 0.2
 #    m.atomListModel.atomModels[5].z.range(0,0.5)
     return m
+
 
 def fit(model):
     #Create a problem from the model with bumps, then fit and solve it
@@ -401,5 +403,5 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
 
 #agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
 agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 2, 1, len(refList), 1)
+test_algorithm(agent, refList, 1, 3, len(refList), 1)
 print("done")
