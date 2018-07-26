@@ -1,0 +1,53 @@
+COMM simulation
+! Files => DAT-file: simulation,  PCR-file: simulation
+!Job Npr Nph Nba Nex Nsc Nor Dum Iwg Ilo Ias Res Ste Nre Cry Uni Cor Opt Aut
+   3   0   1   0   0   0   0   0   0   0   0   0   0   0   1   0   0   0   1
+!
+!Ipr Ppl Ioc Mat Pcr Ls1 Ls2 Ls3 NLI Prf Ins Rpa Sym Hkl Fou Sho Ana
+   0   0   1   0   1   0   4   0   0   3  10  -1   1   4   0   0   0
+!
+!NCY  Eps  R_at  R_an  R_pr  R_gl     Thmin       Step       Thmax    PSD    Sent0
+  1  0.20  1.00  1.00  1.00  1.00      0.0718   0.000000    89.9000   0.000   0.000
+!
+!
+      13    !Number of refined parameters
+!-------------------------------------------------------------------------------
+!  Data for PHASE number:   1  ==> Current R_Bragg for Pattern#  1:     0.00
+!-------------------------------------------------------------------------------
+MoTe2
+!
+!Nat Dis Ang Pr1 Pr2 Pr3 Jbt Irf Isy Str Furth       ATZ    Nvk Npr More
+   6   0   0 0.0 0.0 1.0   0   4   0   0   0       5618.240   0   0   0
+!
+!
+31                       <--Space group symbol
+!Atom   Typ       X        Y        Z     Biso       Occ     In Fin N_t Spc /Codes
+Mo1    Mo      0.00000  0.60360  0.44931  0.00000   1.00000   0   0   0    0  
+                  0.00    21.00    31.00     0.00      0.00
+Mo2    Mo      0.00000  0.03756 -0.02916  0.00000   1.00000   0   0   0    0  
+                  0.00    41.00    51.00     0.00      0.00
+Te1    Te      0.00000  0.86824  0.61616  0.00000   1.00000   0   0   0    0  
+                  0.00    61.00    71.00     0.00      0.00
+Te2    Te      0.00000  0.63439  0.07075  0.00000   1.00000   0   0   0    0  
+                  0.00    81.00    91.00     0.00      0.00
+Te3    Te      0.00000  0.29224  0.81714  0.00000   1.00000   0   0   0    0  
+                  0.00   101.00   111.00     0.00      0.00
+Te4    Te      0.00000  0.22920  0.36130  0.00000   1.00000   0   0   0    0  
+                  0.00   121.00   131.00     0.00      0.00
+!-------> Scale, Extinction and  Cell Parameters for Pattern #  1
+!  Scale Factors 
+!   Sc1        Sc2         Sc3         Sc4         Sc5         Sc6
+  0.2163       0.000       0.000       0.000       0.000       0.000    
+       11.00        0.00        0.00        0.00        0.00        0.00
+!  Extinction Parameters 
+! Ext1       Ext2       Ext3       Ext4       Ext5       Ext6       Ext7   Ext-Model
+  0.000      0.000      0.000      0.000      0.000      0.000      0.000       0
+       0.00       0.00       0.00       0.00       0.00       0.00       0.00
+!     a          b         c        alpha      beta       gamma      #Cell Info
+   6.330000   3.469000  13.919999  90.000000  90.000000  90.000000   #box -0.26 1.26 -0.26 1.26 -0.26 1.26
+    0.00000    0.00000    0.00000    0.00000    0.00000    0.00000
+! x-Lambda/2  +          Not yet used parameters
+     0.00000     0.00000     0.00000     0.00000     0.00000
+        0.00        0.00        0.00        0.00        0.00
+!  2Th1/TOF1    2Th2/TOF2  Pattern to plot
+       0.072      89.900       1
