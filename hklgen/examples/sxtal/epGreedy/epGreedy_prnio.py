@@ -41,8 +41,8 @@ np.seterr(divide="ignore",invalid="ignore")
 #Set data files
 DATAPATH = os.path.dirname(os.path.abspath(__file__))
 backgFile = None
-observedFile = os.path.join(DATAPATH,r"../simulation.int")
-infoFile = os.path.join(DATAPATH,r"../mote2.cfl")
+observedFile = os.path.join(DATAPATH,r"../prnio.int")
+infoFile = os.path.join(DATAPATH,r"../prnio.cfl")
 
 #Read data
 spaceGroup, crystalCell, atomList = H.readInfo(infoFile)
@@ -65,14 +65,14 @@ def setInitParams():
     #Define a model
     m = S.Model([], [], backg, wavelength, spaceGroup, cell,
                 [atomList], exclusions,
-                scale=0.2163, error=[],  extinction=[0.000105])
+                scale=0.062978, error=[],  extinction=[0.000105])
     #Set a range on the x value of the first atom in the model
 
 
     #Setting initial values and ranges of parameters to look at
     m.atomListModel.atomModels[0].z.value = 0.3
 #    m.atomListModel.atomModels[0].z.value = random.random()/2
-    m.atomListModel.atomModels[0].z.range(0,1)
+    m.atomListModel.atomModels[0].z.range(0,0.5)
     #Oxygen d z coordinate
 #    m.atomListModel.atomModels[5].z.value = 0.2
 #    m.atomListModel.atomModels[5].z.range(0,0.5)
@@ -116,7 +116,6 @@ class EpsilonGreedy():
     def getValues(self):
         return self.values
 
-    #Returns the indices of the HKL values with the best immediate reward
     #Returns the indices of the HKL values with the best immediate reward
     def bestReward(self):
         #rewardMax = -99999
@@ -179,7 +178,7 @@ class EpsilonGreedy():
         return
 
 
-#agent is the EpsilonGreedy() object, actions is a list of HKLs 
+#agent is the EpsilonGreedy() object, actions is a list of HKLs
 #(each element of the list is a length 3 list: [h, k, l]), num_sims is an int, horizon is an int
 def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
 
@@ -191,7 +190,8 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
 
         print("Training set #" + str(i))
 #	foldername = "set" + str(i) + "_" + str(agent.epsilon)
-	foldername = "TEST" + str(i) + "_anneal2"
+	#TODO Change the following line of code depending on what data one's using
+	foldername = "prnio/set" + str(i)
         os.system("mkdir -p " + foldername)
         #These are for graphing trends in the agent over time
         final_zs = np.zeros(num_sims)
@@ -276,6 +276,7 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
                 h = chosen_actionList[t].hkl[0]
                 k = chosen_actionList[t].hkl[1]
                 l = chosen_actionList[t].hkl[2]
+		#TODO Change the following line of code depending on what data one's using
                 A = 5.417799
                 B = 5.414600
                 C = 12.483399
@@ -292,7 +293,7 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
 
 
                 #output to files - hardcoded
-
+		#TODO Change the following line of code depending on what data one's using
                 file.write("\n" + str(chosen_actionList[t].hkl).replace("[","").replace("]","").replace(",",""))
                 file.write("\t\t\t" + str(round(reward,2)) + "\t\t" + str(round(total_rewards[simulation],2)) + "\t\t" + str(round(chiSq,2)) + "\t\t" + str(round(model.atomListModel.atomModels[0].z.value,5)))
                 file.write("\t" + str(error[chosen_action]) + "\t" + str(tt[chosen_action]) + "\t" + str(sfs2[chosen_action]))
@@ -303,7 +304,7 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
     #	    file.write("\t" + str(round(model.atomListModel.atomModels[4].B.value,2)))
     #	    file.write("\t" + str(round(model.atomListModel.atomModels[5].B.value,2)))
 
-                #TODO Maybe change this cutoff thing
+                #TODO Maybe change this cutoff - really important
                 if (((t > 13) and (chiSqs[t] > chiSqs[t-1]) and (chiSqs[t-1] > chiSqs[t-2]) and (chiSqs[t-2] > chiSqs[t-3])) or (t > 100)):
     #	    if ((t > 10) and (chiSq < 2)) or t > 100:
                     break
@@ -372,11 +373,11 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
     #    plt.plot(list(range(num_sims)), total_rewards)
     #    plt.savefig("Total Reward per Simulation")
     #    plt.close()
-#        plt.figure()
-#        for j in z_progression:
-#            plt.plot(list(range(len(j))), j)
-#        plt.savefig(foldername + "/Z Approximation Comparison")
-#        plt.close()
+        plt.figure()
+        for j in z_progression:
+            plt.plot(list(range(len(j))), j)
+        plt.savefig(foldername + "/Z Approximation Comparison")
+        plt.close()
 	
 #        agent.epsilon = agent.epsilon + 0.1
     return
@@ -401,7 +402,7 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
 #########################################################
 
 
-#agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
+#This is essentially the main function
 agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
 test_algorithm(agent, refList, 1, 3, len(refList), 1)
 print("done")

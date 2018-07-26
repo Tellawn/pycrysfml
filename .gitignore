@@ -34,3 +34,9 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+hklgen/examples/sxtal/epGreedy/TEST0_anneal2/epGreedyResults0.txt
+hklgen/examples/sxtal/epGreedy/TEST0_anneal2/epGreedyResults2.txt
+hklgen/examples/sxtal/epGreedy/TEST0_anneal2/Rewards0.txt
+hklgen/examples/sxtal/epGreedy/TEST0_anneal2/sfs2s vs Qsq 0.png
+hklgen/examples/sxtal/epGreedy/TEST0_anneal2/Z Approximation Residuals per Simulation.png
+hklgen/examples/sxtal/epGreedy/TEST0_anneal2/Z Approximations over Time.png
