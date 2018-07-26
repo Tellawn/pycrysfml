@@ -42,7 +42,7 @@ np.seterr(divide="ignore",invalid="ignore")
 DATAPATH = os.path.dirname(os.path.abspath(__file__))
 backgFile = None
 observedFile = os.path.join(DATAPATH,r"../simulation.int")
-infoFile = os.path.join(DATAPATH,r"../simulation.pcr")
+infoFile = os.path.join(DATAPATH,r"../mote2.cfl")
 
 #Read data
 spaceGroup, crystalCell, atomList = H.readInfo(infoFile)
