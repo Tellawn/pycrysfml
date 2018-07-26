@@ -70,7 +70,7 @@ def setInitParams():
 
 
     #Setting initial values and ranges of parameters to look at
-    m.atomListModel.atomModels[0].z.value = 0.4
+    m.atomListModel.atomModels[0].z.value = 0.2
 #    m.atomListModel.atomModels[0].z.value = random.random()/2
     m.atomListModel.atomModels[0].z.range(0,1)
     #Oxygen d z coordinate
@@ -403,5 +403,5 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
 
 #agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
 agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 1, 3, len(refList), 1)
+test_algorithm(agent, refList, 1, 40, len(refList), 1)
 print("done")
