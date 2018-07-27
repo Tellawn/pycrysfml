@@ -70,7 +70,7 @@ def setInitParams():
 
 
     #Setting initial values and ranges of parameters to look at
-    m.atomListModel.atomModels[0].z.value = 0.4
+    m.atomListModel.atomModels[0].z.value = 0.3
 #    m.atomListModel.atomModels[0].z.value = random.random()/2
     m.atomListModel.atomModels[0].z.range(0,1)
     #Oxygen d z coordinate
@@ -191,7 +191,7 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
 
         print("Training set #" + str(i))
 #	foldername = "set" + str(i) + "_" + str(agent.epsilon)
-	foldername = "TEST1" + str(i) + "_anneal2"
+	foldername = "mote2_1/set" + str(i)
         os.system("mkdir -p " + foldername)
         #These are for graphing trends in the agent over time
         final_zs = np.zeros(num_sims)
@@ -276,9 +276,9 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
                 h = chosen_actionList[t].hkl[0]
                 k = chosen_actionList[t].hkl[1]
                 l = chosen_actionList[t].hkl[2]
-                A = 5.417799
-                B = 5.414600
-                C = 12.483399
+                A = 6.33
+                B = 3.469
+                C = 13.919999
 
                 qsq = (h/A)**2 + (k/B)**2 + (l/C)**2
                 qSquared.append(qsq)
@@ -349,18 +349,18 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
 
         plt.figure()
         plt.plot(list(range(num_sims)), final_zs)
-	plt.xlabel("Timestep")
-	plt.ylabel("Z Coordinate Approximation")
-	plt.suptitle("Z Approximations")
-        plt.savefig(foldername + "/Z Approximations over Time")
+	plt.xlabel("Simulation Number")
+	plt.ylabel("Z-Coordinate Approximation")
+	plt.suptitle("Z-Approximations Over Simulations")
+        plt.savefig(foldername + "/ZApproxOverSims")
         plt.close()
 
         plt.figure()
         plt.plot(list(range(num_sims)), z_resids)
 	plt.xlabel("Simulation Number")
-	plt.ylabel("Z Residual")
-	plt.suptitle("Z Residuals per Simulation")
-        plt.savefig(foldername + "/Z Approximation Residuals per Simulation")
+	plt.ylabel("Residual")
+	plt.suptitle("Residuals Over Simulations")
+        plt.savefig(foldername + "/ZResidOverSims")
         plt.close()
 
 #        plt.figure()
@@ -375,7 +375,10 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
         plt.figure()
         for j in z_progression:
             plt.plot(list(range(len(j))), j)
-        plt.savefig(foldername + "/Z Approximation Comparison")
+	plt.xlabel("Timestep")
+	plt.ylabel("Z-Approximation")
+	plt.suptitle("Z-Approximation Convergence Over Various Simulations")
+        plt.savefig(foldername + "/ZConvOverVarSim")
         plt.close()
 	
 #        agent.epsilon = agent.epsilon + 0.1
@@ -403,5 +406,5 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
 
 #agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
 agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 1, 80, len(refList), 1)
+test_algorithm(agent, refList, 5, 800, len(refList), 1)
 print("done")
