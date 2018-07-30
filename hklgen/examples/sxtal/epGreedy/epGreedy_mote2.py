@@ -69,7 +69,7 @@ def setInitParams():
 
 
     #Setting initial values and ranges of parameters to look at
-    m.atomListModel.atomModels[0].z.value = 0.3
+    m.atomListModel.atomModels[0].z.value = 0.5
 #    m.atomListModel.atomModels[0].z.value = random.random()/2
     m.atomListModel.atomModels[0].z.range(0,1)
     #Oxygen d z coordinate
@@ -190,7 +190,7 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
 
         print("Training set #" + str(i))
 #	foldername = "set" + str(i) + "_" + str(agent.epsilon)
-	foldername = "mote2_1/set" + str(i)
+	foldername = "mote2_05/set" + str(i)
         os.system("mkdir -p " + foldername)
         #These are for graphing trends in the agent over time
         final_zs = np.zeros(num_sims)
@@ -300,7 +300,7 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
 #                if ((t > 10) and (chiSq < 2)) or t > 100:
                     break
 
-	    agent.epsilon = 1 / (np.log(t + 0.0000001) / np.log(3))
+	    agent.epsilon = 1 / (np.log(simulation + 0.0000001) / np.log(3))
 
 	    speeds[simulation] = t
 
@@ -380,5 +380,5 @@ def test_algorithm(agent, actions, num_sets, num_sims, horizon, numParameters):
 
 #This is essentially the main function
 agent = EpsilonGreedy(1, np.zeros(len(refList)), np.ones(len(refList)))
-test_algorithm(agent, refList, 1, 3, len(refList), 1)
+test_algorithm(agent, refList, 50, 800, len(refList), 1)
 print("done")
